@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+/.vs/Engine/v15
+/bin
+/build
+/external/glad-noext
+/external
