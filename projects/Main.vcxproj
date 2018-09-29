@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\glfw\bin\win32\debug;$(LibraryPath)</LibraryPath>
     <ExcludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x86);</ExcludePath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
@@ -80,21 +80,21 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\glfw\bin\x64\debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\glfw\bin\win32\release;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)src;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(LibraryPath);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)external\glfw\bin\x64\release;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
@@ -195,6 +195,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\external\imgui\imgui_impl_glfw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\external\imgui\imgui_impl_opengl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\external\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -207,6 +219,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\core\Logger.cpp" />
     <ClCompile Include="..\src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -232,10 +245,19 @@
     <ClCompile Include="..\src\scene\Transform.cpp" />
     <ClCompile Include="..\src\view\Window.cpp" />
     <ClCompile Include="..\src\view\WindowSystem.cpp" />
+    <ClInclude Include="..\external\imgui\imconfig.h" />
+    <ClInclude Include="..\external\imgui\imgui.h" />
+    <ClInclude Include="..\external\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="..\external\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\external\imgui\imgui_internal.h" />
+    <ClInclude Include="..\external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\external\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\external\imgui\imstb_truetype.h" />
     <ClInclude Include="..\src\component\IComponent.hpp" />
     <ClInclude Include="..\src\component\Components.hpp" />
     <ClInclude Include="..\src\component\Query.hpp" />
     <ClInclude Include="..\src\component\System.hpp" />
+    <ClInclude Include="..\src\core\Logger.hpp" />
     <ClInclude Include="..\src\core\Traits.hpp" />
     <ClInclude Include="..\src\graphics\Mesh.hpp" />
     <ClInclude Include="..\src\graphics\RenderSystem.hpp" />

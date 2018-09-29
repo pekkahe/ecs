@@ -8,34 +8,84 @@ using namespace eng;
 
 CameraController::CameraController(
 	Camera& camera, 
-	int2 viewportSize) :
+	std::shared_ptr<Window> window) :
 	m_camera(camera),
-	m_lastX((float) viewportSize.x / 2),
-	m_lastY((float) viewportSize.y / 2)
+	m_window(std::move(window))
 {
+	auto windowSize = m_window->size();
+
+	m_lastX = static_cast<double>(windowSize.x) / 2;
+	m_lastY = static_cast<double>(windowSize.y) / 2;
 }
 
-void CameraController::onKeyPress(int keyCode)
+void CameraController::update()
 {
-	float cameraSpeed = 2.5f * Time::deltaTime();
+	if (!m_enabled)
+	{
+		return;
+	}
 
-	if (keyCode == GLFW_KEY_W)
+	float cameraSpeed = speed * Time::deltaTime();
+
+	auto checkMovement = [this](CameraMovement movement)
+	{
+		return (m_movement & movement) == movement;
+	};
+
+	if (checkMovement(CameraMovement::Forward))
 	{
 		m_camera.m_position += m_camera.front() * cameraSpeed;
 	}
-	else if (keyCode == GLFW_KEY_S)
+
+	if (checkMovement(CameraMovement::Backward))
 	{
 		m_camera.m_position -= m_camera.front() * cameraSpeed;
 	}
-	else if (keyCode == GLFW_KEY_A)
+
+	if (checkMovement(CameraMovement::Left))
 	{
 		m_camera.m_position -= glm::normalize(
 			glm::cross(m_camera.front(), m_camera.up())) * cameraSpeed;
 	}
-	else if (keyCode == GLFW_KEY_D)
+
+	if (checkMovement(CameraMovement::Right))
 	{
 		m_camera.m_position += glm::normalize(
 			glm::cross(m_camera.front(), m_camera.up())) * cameraSpeed;
+	}
+}
+
+void CameraController::onKeyInput(int key, int action, int mods)
+{
+	auto updateMovement = [&](int ifKey, CameraMovement movement)
+	{
+		if (key == ifKey)
+		{
+			if (action != GLFW_RELEASE)
+			{
+				m_movement |= movement;
+			}
+			else
+			{
+				m_movement &= ~movement;
+			}
+		}
+	};
+
+	updateMovement(GLFW_KEY_W, CameraMovement::Forward);
+	updateMovement(GLFW_KEY_S, CameraMovement::Backward);
+	updateMovement(GLFW_KEY_A, CameraMovement::Left);
+	updateMovement(GLFW_KEY_D, CameraMovement::Right);
+}
+
+void CameraController::onMouseButton(int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT)
+	{
+		m_enabled = action == GLFW_PRESS;
+		m_enabledCursorDelay = m_enabled ? 1 : 0;
+
+		m_window->captureMouseCursor(m_enabled);
 	}
 }
 
@@ -43,23 +93,40 @@ void CameraController::onMouseCursor(double2 screenPosition)
 {
 	if (m_firstMouse)
 	{
-		m_lastX = static_cast<float>(screenPosition.x);
-		m_lastY = static_cast<float>(screenPosition.y);
+		m_lastX = screenPosition.x;
+		m_lastY = screenPosition.y;
 		m_firstMouse = false;
 	}
 
 	// Reversed y-coordinates since range is from bottom to top
-	float xoffset = static_cast<float>(screenPosition.x) - m_lastX;
-	float yoffset = m_lastY - static_cast<float>(screenPosition.y);
+	double xoffset = screenPosition.x - m_lastX;
+	double yoffset = m_lastY - screenPosition.y;
 
-	m_lastX = static_cast<float>(screenPosition.x);
-	m_lastY = static_cast<float>(screenPosition.y);
+	// Store screen position always to keep offset calculation up-to-date
+	m_lastX = screenPosition.x;
+	m_lastY = screenPosition.y;
+
+	if (!m_enabled)
+	{
+		return;
+	}
+
+	// When toggling mouse cursor capture, GLFW does its own saving and restoring of
+	// the cursor position. The position appears to jump incorrectly in some cases right
+	// after mouse capture is enabled. To prevent this from wildly changing our camera
+	// rotation, we ignore the one excessive offset calculation after the change.
+
+	if (m_enabledCursorDelay > 0)
+	{
+		m_enabledCursorDelay--;
+		return;
+	}
 
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
-	m_yaw += xoffset;
-	m_pitch += yoffset;
+	m_yaw   += static_cast<float>(xoffset);
+	m_pitch += static_cast<float>(yoffset);
 
 	if (m_pitch > 89.0f)
 	{

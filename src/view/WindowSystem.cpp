@@ -2,6 +2,11 @@
 #include <view/WindowSystem.hpp>
 #include <view/Window.hpp>
 
+#define IMGUI_IMPL_OPENGL_LOADER_GLAD
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -11,46 +16,45 @@ namespace
 {
 	void onGlfwError(int error, const char* description)
 	{
-		std::cerr << "Error: " << description << std::endl;
+		SHOE_LOG_ERROR("%s [GLFW #%d]", description, error);
 	}
 }
 
-WindowSystem::WindowSystem()
+WindowSystem::WindowSystem() 
 {
 	glfwSetErrorCallback(onGlfwError);
+
 	if (!glfwInit())
 	{
 		throw std::runtime_error("Error: Failed to initialize GLFW.");
 	}
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	//const char* glsl_version = "#version 330 core"; // core -> es
+	ImGui_ImplOpenGL3_Init(NULL); // Use default
+	//auto io = ImGui::GetIO();
 }
 
 WindowSystem::~WindowSystem()
 {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	m_windows.clear();
+
 	glfwTerminate();
 }
 
 std::shared_ptr<Window> WindowSystem::createWindow(int width, int height, const std::string& title)
 {
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	m_windows.emplace_back(std::make_shared<Window>(width, height, title));
 
-	GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
-	if (!window)
-	{
-		throw std::runtime_error("Error: Window or OpenGL context creation failed.");
-	}
-
-	glfwMakeContextCurrent(window);
-
-	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-	{
-		throw std::runtime_error("Error: Failed to initialize GLAD.");
-	}
-
-	glfwSwapInterval(1);
-
-	m_windows.emplace_back(std::make_shared<Window>(window));
 	return m_windows.back();
 }
 

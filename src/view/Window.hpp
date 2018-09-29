@@ -6,49 +6,48 @@ struct GLFWwindow;
 
 namespace eng
 {
-	class Window
+	class Window : public trait::non_copyable_nor_movable
 	{
 	public:
 		class EventListener
 		{
 		public:
-			virtual void onKeyPress(int keyCode) {}
+			virtual void onKeyInput(int key, int action, int mods) {}
+			virtual void onMouseButton(int button, int action, int mods) {}
 			virtual void onMouseCursor(double2 position) {}
 			virtual void onMouseScroll(double2 offset) {}
 			virtual void onWindowResize(int2 size) {}
 		};
 
 	public:
-		Window(GLFWwindow* glfwWindow);
+		Window(int width, int height, const std::string& title);
 		~Window();
-		
-		// Always held by pointer.
-		Window(const Window&) = delete;
-		Window& operator=(const Window&) = delete;
-		Window(Window&&) = delete;
-		Window& operator=(Window&&) = delete;
 
 		// The height and width of this window.
 		int2 size() const;
-		// Check the close flag of this window.
-		bool shouldClose() const;
+		
+		// Poll and handle events (input, window resizing, etc.)
+		// Returns false if window should be closed.
+		bool pollEvents();
 
-		// Polls and processes window and input events.
-		void pollEvents();
 		// Swap the front and back buffers of this window.
 		void swapBuffers();
+
+		void captureMouseCursor(bool capture);
+		double2 cursorPosition() const;
 
 		// Add an input and message event listener to this window.
 		void addListener(std::shared_ptr<EventListener> listener);
 
 	private:
 		static void onKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods);
+		static void onMouseButton(GLFWwindow* window, int button, int action, int mods);
 		static void onMouseCursor(GLFWwindow* window, double xpos, double ypos);
 		static void onMouseScroll(GLFWwindow* window, double xoffset, double yoffset);
 		static void onFramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
 	private:
-		GLFWwindow* m_glfwWindow = nullptr;
+		GLFWwindow* m_window = nullptr;
 		std::vector<std::shared_ptr<EventListener>> m_eventListeners;
 	};
 }

@@ -6,7 +6,7 @@
 namespace eng
 {
 	class Window;
-	class WindowSystem
+	class WindowSystem : public trait::non_copyable_nor_movable
 	{
 	public:
 		WindowSystem();

@@ -41,7 +41,6 @@ namespace eng
 
 		TransformSystem m_transformSystem;
 		RenderSystem m_renderSystem;
-
 		Camera m_camera;
 	};
 }

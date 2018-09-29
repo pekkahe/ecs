@@ -4,14 +4,14 @@
 using namespace eng;
 
 float Time::m_deltaTime = 0.0f;
+double Time::m_lastFrameTime = 0.0f;
 
 Time::Time()
 {
-	m_deltaTime = 0.0f;
 }
 
-void Time::update(float frameTime)
+void Time::update(double frameTime)
 {
-	m_deltaTime = frameTime - m_lastFrameTime;
+	m_deltaTime = static_cast<float>(frameTime - m_lastFrameTime);
 	m_lastFrameTime = frameTime;
 }
