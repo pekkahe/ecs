@@ -6,15 +6,15 @@
 
 namespace eng
 {
-	class TransformSystem : public System
-	{
-	public:
-		TransformSystem(Database& db);
-		~TransformSystem();
+    class TransformSystem : public System
+    {
+    public:
+        TransformSystem(Database& db);
+        ~TransformSystem();
 
-		virtual void update() override;
+        virtual void update() override;
 
-	private:
-		TableRef<Transform> m_transforms;
-	};
+    private:
+        TableRef<Transform> m_transforms;
+    };
 }

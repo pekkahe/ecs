@@ -5,18 +5,18 @@
 
 namespace eng
 {
-	class Window;
-	class WindowSystem : public trait::non_copyable_nor_movable
-	{
-	public:
-		WindowSystem();
-		~WindowSystem();
+    class Window;
+    class WindowSystem : public trait::non_copyable_nor_movable
+    {
+    public:
+        WindowSystem();
+        ~WindowSystem();
 
-		std::shared_ptr<Window> createWindow(int width, int height, const std::string& title);
-		std::shared_ptr<Window> mainWindow() const;
+        std::shared_ptr<Window> createWindow(int width, int height, const std::string& title);
+        std::shared_ptr<Window> mainWindow() const;
 
-	private:
-		std::vector<std::shared_ptr<Window>> m_windows;
-	};
+    private:
+        std::vector<std::shared_ptr<Window>> m_windows;
+    };
 }
 

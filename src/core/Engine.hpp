@@ -6,22 +6,22 @@
 
 namespace eng
 {
-	class Engine
-	{
-	public:
-		Engine();
-		~Engine();
+    class Engine
+    {
+    public:
+        Engine();
+        ~Engine();
 
-		// Begin game loop. Must be called from main thread.
-		void execute();
-		// Signal termination.
-		void terminate();
+        // Begin game loop. Must be called from main thread.
+        void execute();
+        // Signal termination.
+        void terminate();
 
-	private:
-		WindowSystem m_windowSystem;
-		SceneSystem m_sceneSystem;
-		//RenderSystem m_renderSystem;
+    private:
+        WindowSystem m_windowSystem;
+        SceneSystem m_sceneSystem;
+        //RenderSystem m_renderSystem;
 
-		bool m_running = false;
-	};
+        bool m_running = false;
+    };
 }

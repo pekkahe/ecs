@@ -14,9 +14,9 @@ SceneSystem::~SceneSystem()
 
 std::shared_ptr<Scene> SceneSystem::createScene()
 {
-	auto scene = std::make_shared<Scene>();
+    auto scene = std::make_shared<Scene>();
 
-	m_scenes.emplace_back(scene);
+    m_scenes.emplace_back(scene);
 
-	return scene;
+    return scene;
 }

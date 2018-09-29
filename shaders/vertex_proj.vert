@@ -13,9 +13,9 @@ uniform mat4 projection;
 
 void main()
 {
-	// Note that we read the multiplication from right to left
-	gl_Position = projection * view * model * vec4(Pos, 1.0);
+    // Note that we read the multiplication from right to left
+    gl_Position = projection * view * model * vec4(Pos, 1.0);
     outPos = Pos;
-	outColor = Color;
-	outTexCoord = TexCoord;
+    outColor = Color;
+    outTexCoord = TexCoord;
 }

@@ -3,7 +3,7 @@
 
 using namespace eng;
 
-Query<> query(Database& database)
+Query<> query(const Database& database)
 {
-	return Query<>(database);
+    return Query<>(database);
 }

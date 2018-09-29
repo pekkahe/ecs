@@ -2,9 +2,9 @@
 
 namespace eng
 {
-	class IComponent
-	{
-	public:
-		virtual ~IComponent() {}
-	};
+    class IComponent
+    {
+    public:
+        virtual ~IComponent() {}
+    };
 }

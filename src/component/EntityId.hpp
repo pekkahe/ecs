@@ -2,5 +2,5 @@
 
 namespace eng
 {
-	using EntityId = uint32_t;
+    using EntityId = uint32_t;
 }

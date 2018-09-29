@@ -10,37 +10,37 @@
 
 namespace eng
 {
-	class Scene : public trait::non_copyable
-	{
-	public:
-		Scene();
-		~Scene();
-		Scene(Scene&&) = default;
-		Scene& operator=(Scene&&) = default;
+    class Scene : public trait::non_copyable
+    {
+    public:
+        Scene();
+        ~Scene();
+        Scene(Scene&&) = default;
+        Scene& operator=(Scene&&) = default;
 
-		void createTestMesh();
+        void createTestMesh();
 
-		void update();
+        void update();
 
-		EntityId createEntity();
+        EntityId createEntity();
 
-		RenderSystem& renderer() { return m_renderSystem; }
+        RenderSystem& renderer() { return m_renderSystem; }
 
-		Camera& camera() { return m_camera; }
-		const Camera& camera() const { return m_camera; }
+        Camera& camera() { return m_camera; }
+        const Camera& camera() const { return m_camera; }
 
-		Query<> query() const;
+        Query<> query() const;
 
-	private:
-		void registerSystem(System& system);
+    private:
+        void registerSystem(System& system);
 
-	private:
-		Database m_database;
-		
-		std::vector<System*> m_systems;
+    private:
+        Database m_database;
+        
+        std::vector<System*> m_systems;
 
-		TransformSystem m_transformSystem;
-		RenderSystem m_renderSystem;
-		Camera m_camera;
-	};
+        TransformSystem m_transformSystem;
+        RenderSystem m_renderSystem;
+        Camera m_camera;
+    };
 }

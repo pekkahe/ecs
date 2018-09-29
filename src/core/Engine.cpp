@@ -20,18 +20,18 @@ using namespace eng::gfx;
 
 namespace imgui
 {
-	void startFrame()
-	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-	}
+    void startFrame()
+    {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+    }
 
-	void endFrame()
-	{
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
+    void endFrame()
+    {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
 }
 
 Engine::Engine()
@@ -44,43 +44,43 @@ Engine::~Engine()
 
 void Engine::execute()
 {
-	m_running = true;
-	//gfx::Renderer oldRenderer;
+    m_running = true;
+    //gfx::Renderer oldRenderer;
 
-	auto window = m_windowSystem.createWindow(640, 480, "Shoe");
-	auto scene = m_sceneSystem.createScene();
+    auto window = m_windowSystem.createWindow(640, 480, "Shoe");
+    auto scene = m_sceneSystem.createScene();
 
-	scene->createTestMesh();
+    scene->createTestMesh();
 
-	auto cameraController = std::make_shared<CameraController>(scene->camera(), window);
+    auto cameraController = std::make_shared<CameraController>(scene->camera(), window);
 
-	window->addListener(cameraController);
+    window->addListener(cameraController);
 
-	while (window->pollEvents())
-	{
-		imgui::startFrame();
+    while (window->pollEvents())
+    {
+        imgui::startFrame();
 
-		bool open = true;
-		ImGui::ShowDemoWindow(&open);
+        bool open = true;
+        ImGui::ShowDemoWindow(&open);
 
-		// Logic thread?
-		scene->update();
-		cameraController->update();
+        // Logic thread?
+        scene->update();
+        cameraController->update();
 
-		// Render thread?
-		scene->renderer().beginFrame();
-		scene->renderer().render(*scene);
-		scene->renderer().endFrame();
-		//oldRenderer.drawRectangle();
+        // Render thread?
+        scene->renderer().beginFrame();
+        scene->renderer().render(*scene);
+        scene->renderer().endFrame();
+        //oldRenderer.drawRectangle();
 
-		imgui::endFrame();
-		window->swapBuffers();
-		
-		Time::update(glfwGetTime());
-	}
+        imgui::endFrame();
+        window->swapBuffers();
+        
+        Time::update(glfwGetTime());
+    }
 }
 
 void Engine::terminate()
 {
-	m_running = false;
+    m_running = false;
 }

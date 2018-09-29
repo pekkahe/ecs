@@ -4,8 +4,8 @@
 using namespace eng;
 
 TransformSystem::TransformSystem(Database& db) :
-	System::System(db),
-	m_transforms(createTable<Transform>(db))
+    System::System(db),
+    m_transforms(createTable<Transform>(db))
 {
 }
 

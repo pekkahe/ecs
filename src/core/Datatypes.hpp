@@ -9,35 +9,35 @@
 
 namespace eng
 {
-	template <typename T>
-	struct Point2
-	{
-		T x;
-		T y;
-	};
+    template <typename T>
+    struct Point2
+    {
+        T x;
+        T y;
+    };
 
-	using int2 = Point2<int>;
-	using float2 = Point2<float>;
-	using double2 = Point2<double>;
-	
-	using ivec1 = glm::ivec1;
-	using ivec2 = glm::ivec2;
-	using ivec3 = glm::ivec3;
-	using ivec4 = glm::ivec4;
+    using int2 = Point2<int>;
+    using float2 = Point2<float>;
+    using double2 = Point2<double>;
+    
+    using ivec1 = glm::ivec1;
+    using ivec2 = glm::ivec2;
+    using ivec3 = glm::ivec3;
+    using ivec4 = glm::ivec4;
 
-	using uvec1 = glm::uvec1;
-	using uvec2 = glm::uvec2;
-	using uvec3 = glm::uvec3;
-	using uvec4 = glm::uvec4;
+    using uvec1 = glm::uvec1;
+    using uvec2 = glm::uvec2;
+    using uvec3 = glm::uvec3;
+    using uvec4 = glm::uvec4;
 
-	using vec1 = glm::vec1;
-	using vec2 = glm::vec2;
-	using vec3 = glm::vec3;
-	using vec4 = glm::vec4;
+    using vec1 = glm::vec1;
+    using vec2 = glm::vec2;
+    using vec3 = glm::vec3;
+    using vec4 = glm::vec4;
 
-	using mat2 = glm::mat2;
-	using mat3 = glm::mat3;
-	using mat4 = glm::mat4;
+    using mat2 = glm::mat2;
+    using mat3 = glm::mat3;
+    using mat4 = glm::mat4;
 
-	using qua = glm::quat;
+    using qua = glm::quat;
 }

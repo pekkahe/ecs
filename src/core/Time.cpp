@@ -12,6 +12,6 @@ Time::Time()
 
 void Time::update(double frameTime)
 {
-	m_deltaTime = static_cast<float>(frameTime - m_lastFrameTime);
-	m_lastFrameTime = frameTime;
+    m_deltaTime = static_cast<float>(frameTime - m_lastFrameTime);
+    m_lastFrameTime = frameTime;
 }
