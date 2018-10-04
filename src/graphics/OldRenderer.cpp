@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
-#include <graphics/Renderer.hpp>
+#include <graphics/OldRenderer.hpp>
 #include <scene/Camera.hpp>
-#include <view/Window.hpp>
+#include <ui/Window.hpp>
 
 #include <component/Query.hpp>
 
@@ -445,8 +445,8 @@ void Renderer::drawCube(const Camera& camera)
     m_shaders[3].setInt("texture1", 0);
     m_shaders[3].setInt("texture2", 1);
 
-    m_shaders[3].setMatrix("view", camera.view());
-    m_shaders[3].setMatrix("projection", camera.projection());
+    m_shaders[3].setMatrix("view", camera.view);
+    m_shaders[3].setMatrix("projection", camera.projection);
 
     //! Render loop
     // Activate the texture unit first before binding texture

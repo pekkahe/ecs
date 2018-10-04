@@ -2,76 +2,73 @@
 
 #include <component/Query.hpp>
 #include <core/Engine.hpp>
+#include <graphics/OldRenderer.hpp>
 #include <scene/Scene.hpp>
 #include <scene/Camera.hpp>
-#include <scene/CameraController.hpp>
+#include <ui/ImGui.hpp>
 
-#include <graphics/Renderer.hpp>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
+#define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 using namespace eng;
 using namespace eng::gfx;
 
-namespace imgui
+namespace
 {
-    void startFrame()
+    void onGlfwError(int error, const char* description)
     {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-    }
-
-    void endFrame()
-    {
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        SHOE_LOG_ERROR("%s [GLFW #%d]", description, error);
     }
 }
 
 Engine::Engine()
 {
+    glfwSetErrorCallback(onGlfwError);
+
+    if (!glfwInit())
+    {
+        throw std::runtime_error("Error: Failed to initialize GLFW.");
+    }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    imgui::init();
 }
 
 Engine::~Engine()
 {
+    imgui::deinit();
+
+    glfwTerminate();
 }
 
 void Engine::execute()
 {
-    m_running = true;
-    //gfx::Renderer oldRenderer;
+    auto window = std::make_shared<Window>(640, 480, "Shoe");
+    auto scene = std::make_shared<Scene>(window);
 
-    auto window = m_windowSystem.createWindow(640, 480, "Shoe");
-    auto scene = m_sceneSystem.createScene();
+    scene->createTestEntities();
 
-    scene->createTestMesh();
-
-    auto cameraController = std::make_shared<CameraController>(scene->camera(), window);
-
-    window->addListener(cameraController);
-
-    while (window->pollEvents())
+    while (window->pollEvents() && !m_terminate)
     {
         imgui::startFrame();
 
-        bool open = true;
-        ImGui::ShowDemoWindow(&open);
+        // todo: fixed framerate 30 fps?
 
         // Logic thread?
         scene->update();
-        cameraController->update();
 
         // Render thread?
         scene->renderer().beginFrame();
-        scene->renderer().render(*scene);
+        scene->renderer().render();
         scene->renderer().endFrame();
-        //oldRenderer.drawRectangle();
 
         imgui::endFrame();
         window->swapBuffers();
@@ -82,5 +79,5 @@ void Engine::execute()
 
 void Engine::terminate()
 {
-    m_running = false;
+    m_terminate = true;
 }

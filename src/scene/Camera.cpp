@@ -15,42 +15,40 @@ using namespace eng;
 const glm::vec3 Camera::WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 Camera::Camera() :
-    m_front(vec3(0.0f, 0.0f, -1.0f)),
-    m_right(glm::normalize(glm::cross(m_front, WorldUp))),
-    m_up(glm::normalize(glm::cross(m_right, m_front)))
+    front(vec3(0.0f, 0.0f, -1.0f)),
+    right(glm::normalize(glm::cross(front, WorldUp))),
+    up(glm::normalize(glm::cross(right, front)))
 {
+    projection = glm::perspective(glm::radians(fov), aspectRatio, 0.1f, 100.0f);
 }
 
 void Camera::zoom(float offset)
 {
-    if (m_fov >= 1.0f && m_fov <= 45.0f)
+    if (fov >= 1.0f && fov <= 45.0f)
     {
-        m_fov -= offset;
+        fov -= offset;
     }
 
-    if (m_fov <= 1.0f)
+    if (fov <= 1.0f)
     {
-        m_fov = 1.0f;
+        fov = 1.0f;
     }
-    else if (m_fov >= 45.0f)
+    else if (fov >= 45.0f)
     {
-        m_fov = 45.0f;
+        fov = 45.0f;
     }
+
+    projection = glm::perspective(glm::radians(fov), aspectRatio, 0.1f, 100.0f);
 }
 
-void Camera::lookAt(glm::vec3 target)
+void Camera::lookAt(vec3 from, glm::vec3 target)
 {
-    m_front = glm::normalize(target - m_position);
-    m_right = glm::normalize(glm::cross(m_front, WorldUp));
-    m_up	= glm::normalize(glm::cross(m_right, m_front));
+    front = glm::normalize(target - from);
+    right = glm::normalize(glm::cross(front, WorldUp));
+    up	= glm::normalize(glm::cross(right, front));
 }
 
-glm::mat4 Camera::view() const
+void Camera::computeViewMatrix(vec3 position)
 {
-    return glm::lookAt(m_position, m_position + m_front, m_up);
-}
-
-glm::mat4 Camera::projection() const
-{
-    return glm::perspective(glm::radians(m_fov), m_aspectRatio, 0.1f, 100.0f);
+    view = glm::lookAt(position, position + front, up);
 }

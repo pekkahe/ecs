@@ -5,7 +5,8 @@
 
 namespace eng
 {
-    // Read-only query builder
+    // todo: tests
+
     template <typename... Tables>
     class Query : public trait::non_copyable
     {
@@ -18,62 +19,102 @@ namespace eng
         Query(Query&&) = default;
         Query& operator=(Query&&) = default;
 
+        // Transform query to filter against a read-only component table.
         template <typename Component>
         auto hasComponent()
         {
-            static_assert(std::is_base_of<IComponent, Component>::value,
-                "Query argument must be a component");
+            assertComponent<Component>();
 
-            return hasComponentImpl<Component>(std::index_sequence_for<Tables...>());
+            return newQuery(m_database.table<Component>(), std::index_sequence_for<Tables...>());
         }
 
+        // Transform query to filter against a mutable component table.
+        template <typename Component>
+        auto hasComponent(TableRef<Component> table)
+        {
+            assertComponent<Component>();
+
+            return newQuery(table, std::index_sequence_for<Tables...>());
+        }
+
+        // Execute query against all matching entities.
         template <typename F>
         void execute(F&& process)
         {
+            for (auto&& id : ids())
+            {
+                processImpl(id, process, std::index_sequence_for<Tables...>());
+            }
+        }
+
+        // Return component data of first entity which matches the query arguments,
+        // or nullptr if no matches were found.
+        template <typename Component>
+        const Component* find()
+        {
+            assertComponent<Component>();
+
+            auto ids = hasComponent<Component>().ids();
+            if (!ids.empty())
+            {
+                return m_database.table<Component>()[ids[0]];
+            }
+            return nullptr;
+        }
+
+        // Return entity ids which match the query arguments.
+        std::vector<EntityId> ids()
+        {
+            // Use multiset to conveniently check how many matches
+            // per id we receive within our query tables
             std::unordered_multiset<EntityId> ids;
 
-            // todo: optimize
-
-            // Collect ids
+            // Insert all ids from query tables into multiset
             forEach(std::index_sequence_for<Tables...>(), m_tables,
-                [&](const auto& table) 
+                [&](const auto& table)
+            {
+                for (auto& id : table.ids())
                 {
-                    for (auto& id : table.ids())
-                    {
-                        ids.insert(id);
-                    }
-                });
+                    ids.insert(id);
+                }
+            });
 
-            // Filter ids
+            // Remove ids from multiset which we're not added exactly
+            // the amount of times than there are query tables; this
+            // would indicate that the id was not located in all tables
             auto it = ids.begin();
             while (it != ids.end())
             {
                 auto id = *it;
+
                 if (ids.count(id) != sizeof...(Tables))
                 {
                     it = ids.erase(it);
                 }
                 else
                 {
-                    // Entity exists in all tables
-
-                    processImpl(id, process, std::index_sequence_for<Tables...>());
                     it++;
                 }
             }
 
-            //static_assert(sizeof...(Tables) == sizeof...(Components), 
-            //	"Mismatching number of Table and Component parameters.");
+            return std::vector<EntityId>(ids.begin(), ids.end());
         }
 
     private:
-        template <typename Component, size_t... Is>
-        auto hasComponentImpl(std::index_sequence<Is...>)
+        template <typename Component>
+        constexpr void assertComponent()
         {
-            return Query<Tables..., const TableRef<Component>>(
+            static_assert(std::is_base_of<IComponent, Component>::value,
+                "Query argument must be a component");
+        }
+
+        template <typename T, size_t... Is>
+        auto newQuery(T&& table, std::index_sequence<Is...>)
+        {
+            return Query<Tables..., decltype(table)>(
                 m_database,
                 std::get<Is>(m_tables)...,
-                m_database.table<Component>());
+                table);
         }
 
         template <size_t... Is, typename Tuple, typename F>
@@ -94,75 +135,20 @@ namespace eng
         template <typename F, size_t... Is>
         void processImpl(EntityId id, F&& f, std::index_sequence<Is...>)
         {
-            const auto& getComponent = [](EntityId id, const auto& table)
+            decltype(auto) getComponent = [](EntityId id, auto& table)
             {
-                return *table[id];
+                return table[id];
             };
 
-            f(id, getComponent(id, std::get<Is>(m_tables))...);
+            f(id, *getComponent(id, std::get<Is>(m_tables))...);
         }
 
     private:
         const Database& m_database;
+
         std::tuple<Tables...> m_tables;
     };
 
     // Read-only query entry point
     Query<> query(const Database& database);
-
-    template <typename Component>
-    void query(
-        Table<Component>& table, 
-        std::function<void(EntityId)>&& process)
-    {
-        table.forEach(std::move(process));
-    }
-
-    template <typename Component>
-    void query(
-        Table<Component>& table, 
-        std::function<void(EntityId, Component&)>&& process)
-    {
-        table.forEach(std::move(process));
-    }
-
-    template <typename Component>
-    void query(
-        const Table<Component>& table, 
-        std::function<void(EntityId, const Component&)>&& process)
-    {
-        table.forEach(std::move(process));
-    }
-
-    template <typename Component>
-    void query(
-        const Table<Component>& table, 
-        std::function<void(EntityId)>&& process)
-    {
-        table.forEach(std::move(process));
-    }
-    
-    //template <typename Component>
-    //void query(Table<Component>& table, std::function<void(EntityId)>&& process)
-    //{
-    //	table.forEach(std::move(process));
-    //}
-
-    //template <typename Component>
-    //void query(Table<Component>& table, std::function<void(EntityId, Component&)>&& process)
-    //{
-    //	table.forEach(std::move(process));
-    //}
-
-    //template <typename Component>
-    //void query(const Table<Component>& table, std::function<void(EntityId)>&& process)
-    //{
-    //	table.forEach(std::move(process));
-    //}
-
-    //template <typename Component>
-    //void query(const Table<Component>& table, std::function<void(EntityId, const Component&)>&& process)
-    //{
-    //	table.forEach(std::move(process));
-    //}
 }

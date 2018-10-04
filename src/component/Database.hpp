@@ -6,12 +6,8 @@
 
 namespace eng
 {
-    // todo: consider removing this and moving table ownership to systems
-    // todo: then, createEntity() should be somewhere else
-    // - there can be multiple 'databases' or 'stages' in world
-    // - can entity ids conflict between 'stages'?
-    //   - if not, we must separate entity creation from 'database'
-    //   - if yes, it should be ok to keep entity creation in 'database'
+    // Central storage of the Entity Component System.
+    // Stores entities and their components.
     class Database : public trait::non_copyable
     {
     public:
@@ -30,16 +26,17 @@ namespace eng
 
         EntityId createEntity();
 
-        template <typename Component>
-        void addComponent(EntityId id, Component&& component);
-
     private:
         using TableId = size_t;
+
         template <typename Component>
         TableId tableId() const;
 
     private:
         std::unordered_map<TableId, std::unique_ptr<ITable>> m_tables;
+
+        // todo: consider changing this to 'mutable' to allow 
+        //       entity creation from const database reference.
         EntityId m_nextEntityId = 0u;
     };
 
@@ -71,19 +68,11 @@ namespace eng
     template <typename Component>
     inline const TableRef<Component> Database::table() const
     {
-        // todo: duplication
-
         static TableId id = tableId<Component>();
 
         assert(m_tables.count(id) && "No such table");
 
         return static_cast<const TableRef<Component>>(*m_tables.at(id));
-    }
-
-    template <typename Component>
-    inline void Database::addComponent(EntityId id, Component&& component)
-    {
-        table<Component>().assign(id, std::forward<Component>(component));
     }
 
     template <typename Component>

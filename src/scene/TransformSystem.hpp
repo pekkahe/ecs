@@ -9,12 +9,15 @@ namespace eng
     class TransformSystem : public System
     {
     public:
+        ADD_COMPONENT_FUNCTION(Transform, m_transformTable);
+
+    public:
         TransformSystem(Database& db);
         ~TransformSystem();
 
-        virtual void update() override;
+        void update(const Scene& scene) override;
 
     private:
-        TableRef<Transform> m_transforms;
+        TableRef<Transform> m_transformTable;
     };
 }

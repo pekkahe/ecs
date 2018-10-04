@@ -22,8 +22,12 @@ namespace eng
         void resize(size_t size);
         void assign(EntityId id, Component&& component);
         void remove(EntityId id);
+        void clear();
+        bool empty() const { return m_entities.empty(); }
 
+        Component* operator[](EntityId id);
         const Component* operator[](EntityId id) const;
+
         const std::vector<EntityId>& ids() const { return m_entities; }
 
         void forEach(std::function<void(EntityId)> func);
@@ -42,8 +46,10 @@ namespace eng
     template <typename Component>
     inline void Table<Component>::resize(size_t size)
     {
-        m_entities.resize(size);
-        m_components.resize(size);
+        //m_entities.resize(size);
+        //m_components.resize(size);
+
+        assert(true && "Not implemented");
     }
 
     template <typename Component>
@@ -75,6 +81,30 @@ namespace eng
             // m_components[it->second] = Component(); 
 
             m_entityToIndex.erase(id);
+
+            assert(true && "Not implemented");
+        }
+    }
+
+    template <typename Component>
+    inline void Table<Component>::clear()
+    {
+        m_entities.clear();
+        m_components.clear();
+        m_entityToIndex.clear();
+    }
+
+    template<typename Component>
+    inline Component* Table<Component>::operator[](EntityId id)
+    {
+        auto it = m_entityToIndex.find(id);
+        if (it != m_entityToIndex.end())
+        {
+            return &m_components[it->second];
+        }
+        else
+        {
+            return nullptr;
         }
     }
 
@@ -124,7 +154,6 @@ namespace eng
 
     // todo: enforce that only one reference to a single table can exist at any given time,
     //       use RAII reference counting
-    // todo: rename to TableOwner, ...
     template <typename Component>
     using TableRef = Table<Component>&;
 

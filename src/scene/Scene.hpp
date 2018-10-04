@@ -5,42 +5,44 @@
 
 #include <graphics/RenderSystem.hpp>
 
-#include <scene/Camera.hpp>
+#include <scene/CameraSystem.hpp>
+#include <scene/CameraControlSystem.hpp>
 #include <scene/TransformSystem.hpp>
+
+#include <ui/GizmoSystem.hpp>
 
 namespace eng
 {
     class Scene : public trait::non_copyable
     {
     public:
-        Scene();
+        Scene(std::shared_ptr<Window> window);
         ~Scene();
         Scene(Scene&&) = default;
         Scene& operator=(Scene&&) = default;
 
-        void createTestMesh();
+        void createTestEntities();
 
+        void registerSystem(ISystem& system);
         void update();
 
         EntityId createEntity();
 
         RenderSystem& renderer() { return m_renderSystem; }
 
-        Camera& camera() { return m_camera; }
-        const Camera& camera() const { return m_camera; }
-
-        Query<> query() const;
-
-    private:
-        void registerSystem(System& system);
+        // Receive read-only access to scene database. Only 
+        // subsystems are allowed to modify database content.
+        const Database& database() const { return m_database; }
 
     private:
         Database m_database;
-        
-        std::vector<System*> m_systems;
+
+        std::vector<ISystem*> m_systems;
 
         TransformSystem m_transformSystem;
         RenderSystem m_renderSystem;
-        Camera m_camera;
+        CameraSystem m_cameraSystem;
+        std::shared_ptr<CameraControlSystem> m_cameraControlSystem;
+        std::shared_ptr<GizmoSystem> m_gizmoSystem;
     };
 }

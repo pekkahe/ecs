@@ -1,20 +1,46 @@
 #include <Precompiled.hpp>
-
-#include <component/Components.hpp>
 #include <scene/Scene.hpp>
+
+#include <component/Table.hpp>
+#include <component/Query.hpp>
+
+#include <scene/Transform.hpp>
+#include <graphics/Mesh.hpp>
+#include <ui/Gizmo.hpp>
 
 using namespace eng;
 
-Scene::Scene() :
+Scene::Scene(std::shared_ptr<Window> window) :
     m_transformSystem(m_database),
-    m_renderSystem(m_database)
+    m_renderSystem(m_database),
+    m_cameraSystem(m_database),
+    m_cameraControlSystem(std::make_shared<CameraControlSystem>(m_database)),
+    m_gizmoSystem(std::make_shared<GizmoSystem>(m_database))
 {
     registerSystem(m_transformSystem);
     registerSystem(m_renderSystem);
+    registerSystem(m_cameraSystem);
+    registerSystem(*m_cameraControlSystem);
+    registerSystem(*m_gizmoSystem);
+
+    window->addEventListener(m_cameraControlSystem);
+    window->addEventListener(m_gizmoSystem);
+
+    window->onWindowResize([&](int2 size) 
+    {
+        m_cameraSystem.setAspectRatio(static_cast<float>(size.x) / size.y);
+    });
 }
 
 Scene::~Scene()
 {
+}
+
+void Scene::registerSystem(ISystem& system)
+{
+    m_systems.emplace_back(&system);
+
+    system.onRegistered(*this);
 }
 
 void Scene::update()
@@ -23,13 +49,21 @@ void Scene::update()
 
     for (auto system : m_systems)
     {
-        system->update();
+        system->update(*this);
     }
 
     // sync()
 }
 
-void Scene::createTestMesh()
+EntityId Scene::createEntity()
+{
+    auto id = m_database.createEntity();
+
+    return id;
+}
+
+// Test scene setup code
+void Scene::createTestEntities()
 {
     Mesh mesh;
     mesh.vertices = std::vector<vec3>
@@ -65,25 +99,12 @@ void Scene::createTestMesh()
         5, 1, 0
     };
 
-    auto id = createEntity();
+    auto meshId = createEntity();
+    m_renderSystem.addMesh(meshId, std::move(mesh));
+    m_transformSystem.addTransform(meshId, Transform());
+    m_gizmoSystem->addGizmo(meshId, Gizmo());
 
-    m_renderSystem.addComponent(id, std::move(mesh));
-    m_transformSystem.addComponent(id, Transform());
-}
-
-EntityId Scene::createEntity()
-{
-    auto id = m_database.createEntity();
-
-    return id;
-}
-
-Query<> Scene::query() const
-{
-    return Query<>(m_database);
-}
-
-void Scene::registerSystem(System& system)
-{
-    m_systems.emplace_back(&system);
+    auto cameraId = createEntity();
+    m_cameraSystem.addCamera(cameraId, Camera());
+    m_transformSystem.addTransform(cameraId, Transform());
 }

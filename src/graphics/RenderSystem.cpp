@@ -1,11 +1,11 @@
 #include <Precompiled.hpp>
+#include <graphics/RenderSystem.hpp>
 
 #include <component/Query.hpp>
-#include <graphics/RenderSystem.hpp>
 
 #include <scene/Scene.hpp>
 #include <scene/Transform.hpp>
-#include <view/Window.hpp>
+#include <ui/Window.hpp>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,8 +21,7 @@ using namespace eng;
 using namespace eng::gfx;
 
 RenderSystem::RenderSystem(Database& db) :
-    System::System(db),
-    m_meshes(createTable<Mesh>(db))
+    m_meshTable(db.createTable<Mesh>())
 {
     m_shaders.emplace_back(Shader(
         "../shaders/vertex_proj.vert",
@@ -36,15 +35,20 @@ RenderSystem::RenderSystem(Database& db) :
 
 RenderSystem::~RenderSystem()
 {
-    // glDeleteVertexArrays(1, &VAO);
-    // glDeleteBuffers(1, &VBO);
 }
 
-void RenderSystem::update()
+void RenderSystem::update(const Scene&)
 {
-    query<Mesh>(m_meshes,
-        [&](EntityId id, Mesh& mesh)
+    query()
+        .hasComponent(m_meshTable)
+        .execute([&](EntityId id, Mesh& mesh)
     {
+        // todo: new tag components: 
+        //       Updated,
+        //       Deleted
+        // glDeleteVertexArrays(1, &VAO);
+        // glDeleteBuffers(1, &VBO);
+
         // Generate objects
         glGenVertexArrays(1, &mesh.VAO);
         glGenBuffers(1, &mesh.VBO);
@@ -75,41 +79,26 @@ void RenderSystem::beginFrame()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void RenderSystem::render(const Scene& scene)
+void RenderSystem::render()
 {
-    auto& camera = scene.camera();
-    
-    scene.query()
+    auto camera = query().find<Camera>();
+
+    assert(camera != nullptr && "Camera doesn't exist");
+
+    query()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
         .execute([&](EntityId id, const Transform& transform, const Mesh& mesh)
     {
-        glm::mat4 model(1.0f);
-        model = glm::translate(model, transform.position);
-        model *= glm::mat4_cast(transform.rotation);
-
         m_shaders[0].use();
-        m_shaders[0].setMatrix("view", camera.view());
-        m_shaders[0].setMatrix("projection", camera.projection());
-        m_shaders[0].setMatrix("model", model);
+        m_shaders[0].setMatrix("view", camera->view);
+        m_shaders[0].setMatrix("projection", camera->projection);
+        m_shaders[0].setMatrix("model", transform.modelMatrix());
 
         glBindVertexArray(mesh.VAO);
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     });
-
-    //query<Mesh>(m_meshes,
-    //	[&](EntityId id, const Mesh& mesh)
-    //{
-    //	m_shaders[0].use();
-    //	m_shaders[0].setMatrix("view", camera.view());
-    //	m_shaders[0].setMatrix("projection", camera.projection());
-    //	m_shaders[0].setMatrix("model", glm::mat4(1.0f));
-
-    //	glBindVertexArray(mesh.VAO);
-    //	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
-    //	glBindVertexArray(0);
-    //});
 }
 
 void RenderSystem::endFrame()

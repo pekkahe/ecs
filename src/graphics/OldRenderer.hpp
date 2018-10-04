@@ -4,7 +4,7 @@
 #include <graphics/Shader.hpp>
 #include <graphics/Texture.hpp>
 #include <scene/Scene.hpp>
-#include <view/Window.hpp>
+#include <ui/Window.hpp>
 
 namespace eng
 {

@@ -10,9 +10,6 @@
     <ClCompile Include="..\src\component\Query.cpp">
       <Filter>component</Filter>
     </ClCompile>
-    <ClInclude Include="..\src\component\Components.hpp">
-      <Filter>component</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\component\Database.hpp">
       <Filter>component</Filter>
     </ClInclude>
@@ -52,9 +49,6 @@
     <ClInclude Include="..\src\core\Traits.hpp">
       <Filter>core</Filter>
     </ClInclude>
-    <ClCompile Include="..\src\graphics\Renderer.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\Shader.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -65,9 +59,6 @@
       <Filter>graphics</Filter>
     </ClCompile>
     <ClInclude Include="..\src\graphics\Id.hpp">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\graphics\Renderer.hpp">
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\src\graphics\Shader.hpp">
@@ -85,13 +76,7 @@
     <ClCompile Include="..\src\scene\Camera.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scene\CameraController.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\scene\Scene.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\SceneSystem.cpp">
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="..\src\scene\TransformSystem.cpp">
@@ -103,9 +88,6 @@
     <ClInclude Include="..\src\scene\Scene.hpp">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\scene\SceneSystem.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\scene\TransformSystem.hpp">
       <Filter>scene</Filter>
     </ClInclude>
@@ -115,52 +97,29 @@
     <ClInclude Include="..\src\scene\Camera.hpp">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\scene\CameraController.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClCompile Include="..\src\view\Window.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\view\WindowSystem.cpp">
-      <Filter>view</Filter>
-    </ClCompile>
-    <ClInclude Include="..\src\view\Window.hpp">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\view\WindowSystem.hpp">
-      <Filter>view</Filter>
-    </ClInclude>
-    <ClCompile Include="..\external\imguizmo\ImGuizmo.cpp">
-      <Filter>external\imguizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui_impl_glfw.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui_impl_opengl3.cpp">
-      <Filter>external\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\Logger.cpp">
       <Filter>core</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\external\glad\src\glad.c">
-      <Filter>external\glad</Filter>
+    <ClCompile Include="..\src\graphics\OldRenderer.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui.cpp">
-      <Filter>external\imgui</Filter>
+    <ClCompile Include="..\src\ui\Window.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui_demo.cpp">
-      <Filter>external\imgui</Filter>
+    <ClCompile Include="..\src\ui\ImGui.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui_draw.cpp">
-      <Filter>external\imgui</Filter>
+    <ClCompile Include="..\src\scene\CameraSystem.cpp">
+      <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\external\imgui\imgui_widgets.cpp">
-      <Filter>external\imgui</Filter>
+    <ClCompile Include="..\src\component\System.cpp">
+      <Filter>component</Filter>
     </ClCompile>
-    <ClCompile Include="..\external\stb\src\stb_image.cpp">
-      <Filter>external\stb</Filter>
+    <ClCompile Include="..\src\scene\CameraControlSystem.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ui\GizmoSystem.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +143,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="external">
-      <UniqueIdentifier>{018cd639-936f-4c72-b257-861ac19efdb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="core">
       <UniqueIdentifier>{e7ba11f1-3174-45d3-b84f-5ebc5a638db7}</UniqueIdentifier>
     </Filter>
@@ -196,58 +152,43 @@
     <Filter Include="component">
       <UniqueIdentifier>{7974a17d-86d7-4eaf-8bc7-1a3858138f33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="view">
-      <UniqueIdentifier>{ee6e0e7c-a664-438d-9eb4-159a3bb78c08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics">
       <UniqueIdentifier>{76cdbd70-c246-47df-b714-079b614fc86c}</UniqueIdentifier>
     </Filter>
     <Filter Include="graphics\shaders">
       <UniqueIdentifier>{8e369c0e-bda2-487c-92d0-2dd24019499e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="external\glad">
-      <UniqueIdentifier>{31e0be34-7420-4dec-9f7d-307fc49aaa83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\imgui">
-      <UniqueIdentifier>{570e2713-f0c8-4516-8e40-f07f5c74239a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\stb">
-      <UniqueIdentifier>{99ce29f6-ead7-4229-a437-755624df0830}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\imguizmo">
-      <UniqueIdentifier>{044bb293-2612-4ae2-b12e-44cd7659a876}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{9ddd19d5-8806-4105-b090-c77810da0b17}</UniqueIdentifier>
+    <Filter Include="ui">
+      <UniqueIdentifier>{3bf46815-95b2-4330-a98e-85d0d84759b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\external\imgui\imgui_impl_glfw.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imgui_impl_opengl3.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imconfig.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imgui.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imgui_internal.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imstb_rectpack.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imstb_textedit.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\external\imgui\imstb_truetype.h">
-      <Filter>external\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Logger.hpp">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\graphics\OldRenderer.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\ImGui.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\Window.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\Gizmo.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\CameraSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\CameraControl.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\CameraControlSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\GizmoSystem.hpp">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

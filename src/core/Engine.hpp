@@ -1,9 +1,5 @@
 #pragma once
 
-#include <graphics/RenderSystem.hpp>
-#include <scene/SceneSystem.hpp>
-#include <view/WindowSystem.hpp>
-
 namespace eng
 {
     class Engine
@@ -18,10 +14,6 @@ namespace eng
         void terminate();
 
     private:
-        WindowSystem m_windowSystem;
-        SceneSystem m_sceneSystem;
-        //RenderSystem m_renderSystem;
-
-        bool m_running = false;
+        bool m_terminate = false;
     };
 }

@@ -12,13 +12,16 @@ namespace eng
     class RenderSystem : public System
     {
     public:
-        RenderSystem(Database& db);
-        virtual ~RenderSystem() override;
+        ADD_COMPONENT_FUNCTION(Mesh, m_meshTable);
 
-        virtual void update() override;
+    public:
+        RenderSystem(Database& db);
+        ~RenderSystem() override;
+
+        void update(const Scene& scene) override;
 
         void beginFrame();
-        void render(const Scene& scene);
+        void render();
         void endFrame();
 
         // - owns components and operates on them
@@ -27,7 +30,7 @@ namespace eng
         // - sync points for adding/removing components?
 
     private:
-        TableRef<Mesh> m_meshes;
+        TableRef<Mesh> m_meshTable;
 
         std::vector<gfx::Shader> m_shaders;
         std::vector<gfx::Texture> m_textures;

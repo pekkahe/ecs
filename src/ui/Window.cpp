@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <view/Window.hpp>
+#include <ui/Window.hpp>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -88,9 +88,16 @@ double2 Window::cursorPosition() const
     return pos;
 }
 
-void Window::addListener(std::shared_ptr<EventListener> listener)
+void Window::addEventListener(std::shared_ptr<IWindowEventListener> listener)
 {
-    m_eventListeners.emplace_back(std::move(listener));
+    m_eventListeners.emplace_back(listener);
+
+    listener->onWindowResize(*this, size());
+}
+
+void Window::onWindowResize(WindowResizeCallback callback)
+{
+    m_windowResizeCallbacks.emplace_back(callback);
 }
 
 void Window::onKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -105,7 +112,7 @@ void Window::onKeyInput(GLFWwindow* window, int key, int scancode, int action, i
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onKeyInput(key, action, mods);
+        l->onKeyInput(*w, { key, action, mods });
     }
 }
 
@@ -115,7 +122,7 @@ void Window::onMouseButton(GLFWwindow* window, int button, int action, int mods)
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onMouseButton(button, action, mods);
+        l->onMouseButton(*w, { button, action, mods });
     }
 }
 
@@ -125,7 +132,7 @@ void Window::onMouseCursor(GLFWwindow* window, double xpos, double ypos)
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onMouseCursor(double2 { xpos, ypos });
+        l->onMouseCursor(*w, { xpos, ypos });
     }
 }
 
@@ -135,7 +142,7 @@ void Window::onMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onMouseScroll(double2 { xoffset, yoffset });
+        l->onMouseScroll(*w, { xoffset, yoffset });
     }
 }
 
@@ -147,6 +154,11 @@ void Window::onFramebufferSizeCallback(GLFWwindow* window, int width, int height
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onWindowResize(int2 { width, height });
+        l->onWindowResize(*w, { width, height });
+    }
+
+    for (auto& c : w->m_windowResizeCallbacks)
+    {
+        c({ width, height });
     }
 }
