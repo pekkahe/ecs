@@ -1,5 +1,5 @@
 # anon-engine
-A simple, yet unnamed, potentially service oriented game or, more likely, just 3D rendering engine, and very much WIP.
+A simple, yet unnamed, potentially service oriented, game or more likely just 3D rendering, engine, and very much WIP.
 
 Developed with C++ using Visual Studio 2017 version 15.8.
 
