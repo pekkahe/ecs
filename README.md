@@ -1,9 +1,9 @@
 # anon-engine
-A simple service oriented game engine, very much WIP.
+A simple, yet unnamed, potentially service oriented game or, more likely, just 3D rendering engine, and very much WIP.
 
 Developed with C++ using Visual Studio 2017 version 15.8.
 
-Dependencies (awaiting to be pruned and added to repository):
+Dependencies:
 - [glad](https://github.com/Dav1dde/glad)
 - [GLFW](https://github.com/glfw/glfw)
 - [GLM](https://github.com/g-truc/glm)
