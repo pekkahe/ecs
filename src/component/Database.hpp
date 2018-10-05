@@ -11,7 +11,7 @@ namespace eng
     class Database : public trait::non_copyable
     {
     public:
-        Database() = default;
+        Database();
         Database(Database&&) = default;
         Database& operator=(Database&&) = default;
 
@@ -24,6 +24,11 @@ namespace eng
         template <typename Component>
         const TableRef<Component> table() const;
 
+        // Remove all Added, Updated, and Deleted components from entities.
+        void clearTags();
+        // Remove all entities with the Deleted component from the database.
+        void purgeDeleted();
+
         EntityId createEntity();
 
     private:
@@ -33,7 +38,12 @@ namespace eng
         TableId tableId() const;
 
     private:
+        // Container for all tables created from this database.
         std::unordered_map<TableId, std::unique_ptr<ITable>> m_tables;
+
+        TableRef<Added>   m_added;
+        TableRef<Updated> m_updated;
+        TableRef<Deleted> m_deleted;
 
         // todo: consider changing this to 'mutable' to allow 
         //       entity creation from const database reference.

@@ -190,5 +190,17 @@
     <ClInclude Include="..\src\ui\GizmoSystem.hpp">
       <Filter>ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\Math.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Updated.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Deleted.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Added.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

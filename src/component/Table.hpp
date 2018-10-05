@@ -8,6 +8,10 @@ namespace eng
     {
     public:
         virtual ~ITable() {}
+
+        virtual void remove(EntityId id) = 0;
+        virtual void clear() = 0;
+        virtual bool empty() const = 0;
     };
 
     template <typename Component>
@@ -15,15 +19,15 @@ namespace eng
     {
     public:
         Table() = default;
-        virtual ~Table() override {}
+        ~Table() override = default;
         Table(Table&&) = default;
         Table& operator=(Table&&) = default;
 
         void resize(size_t size);
         void assign(EntityId id, Component&& component);
-        void remove(EntityId id);
-        void clear();
-        bool empty() const { return m_entities.empty(); }
+        void remove(EntityId id) override;
+        void clear() override;
+        bool empty() const override { return m_entities.empty(); }
 
         Component* operator[](EntityId id);
         const Component* operator[](EntityId id) const;
@@ -36,8 +40,8 @@ namespace eng
         void forEach(std::function<void(EntityId, Component&)> func) const;
 
     private:
-        // todo: assert read/write
-        // todo: use sparse index for entity ids
+        // todo: assert no concurrent read & writes
+        // todo: implement sparse index data structure
         std::unordered_map<EntityId, size_t> m_entityToIndex;
         std::vector<EntityId>  m_entities;
         std::vector<Component> m_components;
@@ -46,9 +50,6 @@ namespace eng
     template <typename Component>
     inline void Table<Component>::resize(size_t size)
     {
-        //m_entities.resize(size);
-        //m_components.resize(size);
-
         assert(true && "Not implemented");
     }
 
@@ -77,12 +78,10 @@ namespace eng
         auto it = m_entityToIndex.find(id);
         if (it != m_entityToIndex.end())
         {
-            // todo: use memory slot for next entity?
-            // m_components[it->second] = Component(); 
+            // todo: data is now left hanging in table,
+            // fixed once we move to a better data structure
 
             m_entityToIndex.erase(id);
-
-            assert(true && "Not implemented");
         }
     }
 
@@ -152,8 +151,10 @@ namespace eng
         forEach(func);
     }
 
-    // todo: enforce that only one reference to a single table can exist at any given time,
-    //       use RAII reference counting
+    // todo: enforce that only one reference to a table can be held at any given time?
+    //       or invert Table ownership Database <-> System
+    //       use RAII reference counting?
+
     template <typename Component>
     using TableRef = Table<Component>&;
 

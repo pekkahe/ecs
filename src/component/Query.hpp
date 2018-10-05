@@ -19,7 +19,7 @@ namespace eng
         Query(Query&&) = default;
         Query& operator=(Query&&) = default;
 
-        // Transform query to filter against a read-only component table.
+        // Transform query filter to include a read-only component table.
         template <typename Component>
         auto hasComponent()
         {
@@ -28,7 +28,7 @@ namespace eng
             return newQuery(m_database.table<Component>(), std::index_sequence_for<Tables...>());
         }
 
-        // Transform query to filter against a mutable component table.
+        // Transform query filter to include a mutable component table.
         template <typename Component>
         auto hasComponent(TableRef<Component> table)
         {

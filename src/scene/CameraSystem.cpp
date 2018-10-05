@@ -20,18 +20,48 @@ CameraSystem::~CameraSystem()
 void CameraSystem::update(const Scene&)
 {
     query()
-        .hasComponent<Transform>()
+        .hasComponent<Updated>()
         .hasComponent<CameraControl>()
         .hasComponent<Camera>(m_cameraTable)
         .execute([&](
             EntityId id, 
-            const Transform& transform,
+            const Updated&,
             const CameraControl& controller,
             Camera& camera)
     {
+        vec3 front;
+        front.x = cos(glm::radians(controller.pitch)) * cos(glm::radians(controller.yaw));
+        front.y = sin(glm::radians(controller.pitch));
+        front.z = cos(glm::radians(controller.pitch)) * sin(glm::radians(controller.yaw));
+        glm::normalize(front);
+
+        camera.align(front);
         camera.zoom(controller.zoom);
-        camera.lookAt(transform.position, transform.position + controller.front);
-        camera.computeViewMatrix(transform.position);
+    });
+
+    query()
+        .hasComponent<Updated>()
+        .hasComponent<Transform>()
+        .hasComponent<Camera>(m_cameraTable)
+        .execute([&](
+            EntityId id,
+            const Updated&,
+            const Transform& transform,
+            Camera& camera)
+    {
+        camera.view = Camera::viewMatrix(camera, transform.position);
+        camera.projection = Camera::projectionMatrix(camera);
+    });
+
+    query()
+        .hasComponent<Transform>()
+        .hasComponent<Camera>(m_cameraTable)
+        .execute([&](
+            EntityId id,
+            const Transform& transform,
+            Camera& camera)
+    {
+        //camera.aspectRatio = aspectRatio;
     });
 }
 

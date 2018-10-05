@@ -16,15 +16,23 @@ namespace eng
         vec3 front;
         vec3 right;
         vec3 up;
+
         mat4 view = mat4(1.0f);
         mat4 projection = mat4(1.0f);
 
     public:
+        // Compute a view matrix from specific position.
+        static mat4 viewMatrix(const Camera& camera, vec3 position);
+        // Compute a perspective projection matrix.
+        static mat4 projectionMatrix(const Camera& camera);
+
+    public:
         Camera();
 
+        // Recompute axis using given front vector.
+        void align(vec3 front);
+        // Modify field of view by given offset.
         void zoom(float offset);
-        void lookAt(vec3 from, vec3 target);
-        void computeViewMatrix(vec3 position);
     };
 }
 

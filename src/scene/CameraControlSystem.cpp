@@ -23,30 +23,17 @@ CameraControlSystem::~CameraControlSystem()
 
 void CameraControlSystem::update(const Scene&)
 {
-    if (m_enabled)
+    if (!m_cameraControlChanged)
     {
-        if (m_cameraControlTable.empty())
-        { 
-            auto ids = query()
-                .hasComponent<Camera>()
-                .ids();
-
-            if (!ids.empty())
-            {
-                m_cameraControlTable.assign(ids[0], CameraControl());
-            }
-        }
+        return;
     }
-    else
-    {
-        m_cameraControlTable.clear();
-    }
+    m_cameraControlChanged = false;
 
-    query()
-        .hasComponent(m_cameraControlTable)
-        .execute([&](EntityId id, CameraControl& control)
+    m_cameraControlTable.forEach([&](EntityId id, CameraControl& control)
     {
         control = m_cameraControl;
+
+        markUpdated(id);
     });
 }
 
@@ -71,6 +58,8 @@ void CameraControlSystem::onKeyInput(Window&, const InputEvent& input)
     updateMovement(GLFW_KEY_S, CameraMovement::Backward);
     updateMovement(GLFW_KEY_A, CameraMovement::Left);
     updateMovement(GLFW_KEY_D, CameraMovement::Right);
+
+    m_cameraControlChanged = true;
 }
 
 void CameraControlSystem::onMouseButton(Window& window, const InputEvent& input)
@@ -123,26 +112,14 @@ void CameraControlSystem::onMouseCursor(Window&, double2 screenPosition)
     m_cameraControl.yaw   += static_cast<float>(xoffset);
     m_cameraControl.pitch += static_cast<float>(yoffset);
 
-    if (m_cameraControl.pitch > 89.0f)
-    {
-        m_cameraControl.pitch = 89.0f;
-    }
-    else if (m_cameraControl.pitch < -89.0f)
-    {
-        m_cameraControl.pitch = -89.0f;
-    }
+    math::clamp(m_cameraControl.pitch, -89.0f, 89.0f);
 
-    // Look at
-    vec3 front;
-    front.x = cos(glm::radians(m_cameraControl.pitch)) * cos(glm::radians(m_cameraControl.yaw));
-    front.y = sin(glm::radians(m_cameraControl.pitch));
-    front.z = cos(glm::radians(m_cameraControl.pitch)) * sin(glm::radians(m_cameraControl.yaw));
-    glm::normalize(front);
-
-    m_cameraControl.front = std::move(front);
+    m_cameraControlChanged = true;
 }
 
 void CameraControlSystem::onMouseScroll(Window&, double2 offset)
 {
     m_cameraControl.zoom = static_cast<float>(offset.y);
+
+    m_cameraControlChanged = true;
 }

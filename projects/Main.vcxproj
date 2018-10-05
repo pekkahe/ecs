@@ -201,8 +201,12 @@
     <ClInclude Include="..\src\component\IComponent.hpp" />
     <ClInclude Include="..\src\component\Query.hpp" />
     <ClInclude Include="..\src\component\System.hpp" />
+    <ClInclude Include="..\src\core\Added.hpp" />
+    <ClInclude Include="..\src\core\Deleted.hpp" />
     <ClInclude Include="..\src\core\Logger.hpp" />
+    <ClInclude Include="..\src\core\Math.hpp" />
     <ClInclude Include="..\src\core\Traits.hpp" />
+    <ClInclude Include="..\src\core\Updated.hpp" />
     <ClInclude Include="..\src\graphics\Mesh.hpp" />
     <ClInclude Include="..\src\graphics\RenderSystem.hpp" />
     <ClInclude Include="..\src\scene\CameraControl.hpp" />

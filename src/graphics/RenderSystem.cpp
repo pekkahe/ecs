@@ -40,15 +40,13 @@ RenderSystem::~RenderSystem()
 void RenderSystem::update(const Scene&)
 {
     query()
+        .hasComponent<Added>()
         .hasComponent(m_meshTable)
-        .execute([&](EntityId id, Mesh& mesh)
+        .execute([&](
+            EntityId id,
+            const Added&,
+            Mesh& mesh)
     {
-        // todo: new tag components: 
-        //       Updated,
-        //       Deleted
-        // glDeleteVertexArrays(1, &VAO);
-        // glDeleteBuffers(1, &VBO);
-
         // Generate objects
         glGenVertexArrays(1, &mesh.VAO);
         glGenBuffers(1, &mesh.VBO);
@@ -69,6 +67,19 @@ void RenderSystem::update(const Scene&)
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0); // shader: vec3 Pos
         glEnableVertexAttribArray(0);
     });
+
+    query()
+        .hasComponent<Deleted>()
+        .hasComponent(m_meshTable)
+        .execute([&](
+            EntityId id, 
+            const Deleted&,
+            Mesh& mesh)
+    {
+        glDeleteVertexArrays(1, &mesh.VAO);
+        glDeleteBuffers(1, &mesh.VBO);
+        glDeleteBuffers(1, &mesh.EBO);
+    });
 }
 
 void RenderSystem::beginFrame()
@@ -82,13 +93,15 @@ void RenderSystem::beginFrame()
 void RenderSystem::render()
 {
     auto camera = query().find<Camera>();
-
-    assert(camera != nullptr && "Camera doesn't exist");
+    assert(camera != nullptr && "No camera in scene");
 
     query()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
-        .execute([&](EntityId id, const Transform& transform, const Mesh& mesh)
+        .execute([&](
+            EntityId id, 
+            const Transform& transform,
+            const Mesh& mesh)
     {
         m_shaders[0].use();
         m_shaders[0].setMatrix("view", camera->view);

@@ -27,7 +27,7 @@ namespace
 void eng::imgui::init()
 {
     IMGUI_CHECKVERSION();
-    ::ImGui::CreateContext();
+    ImGui::CreateContext();
     //const char* glsl_version = "#version 330 core"; // core -> es
     ImGui_ImplOpenGL3_Init(NULL); // Use default GLSL version
 }
@@ -36,7 +36,7 @@ void eng::imgui::deinit()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
-    ::ImGui::DestroyContext();
+    ImGui::DestroyContext();
 }
 
 //bool open = true;
@@ -44,7 +44,7 @@ void eng::imgui::startFrame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
-    ::ImGui::NewFrame();
+    ImGui::NewFrame();
     ImGuizmo::BeginFrame();
     
     //::ImGui::ShowDemoWindow(&open);
@@ -52,7 +52,7 @@ void eng::imgui::startFrame()
 
 void eng::imgui::endFrame()
 {
-    ::ImGui::Render();
+    ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }
 
@@ -66,8 +66,9 @@ void eng::imgui::gizmoManipulate(
     auto viewMatrix = unwrapMatrix(view);
     auto projectionMatrix = unwrapMatrix(projection);
 
-    auto& io = ::ImGui::GetIO();
+    auto& io = ImGui::GetIO();
     ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+    
     ImGuizmo::Manipulate(
         &viewMatrix[0],
         &projectionMatrix[0],

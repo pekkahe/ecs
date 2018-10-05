@@ -29,13 +29,15 @@ TransformSystem::~TransformSystem()
 
 void TransformSystem::update(const Scene&)
 {
-    // Move camera
+    // Move input controlled cameras
     query()
+        .hasComponent<Updated>()
         .hasComponent<Camera>()
         .hasComponent<CameraControl>()
         .hasComponent<Transform>(m_transformTable)
         .execute([&](
-            EntityId id, 
+            EntityId, 
+            const Updated&,
             const Camera& camera, 
             const CameraControl& controller,
             Transform& transform)
@@ -70,15 +72,17 @@ void TransformSystem::update(const Scene&)
         }
     });
 
-    // Apply gizmo
     auto camera = query().find<Camera>();
+    assert(camera != nullptr && "No camera in scene");
 
-    assert(camera != nullptr && "Camera doesn't exist");
-
+    // Move gizmo manipulated transforms
     query()
         .hasComponent<Gizmo>()
         .hasComponent<Transform>(m_transformTable)
-        .execute([&](EntityId id, const Gizmo& gizmo, Transform& transform)
+        .execute([&](
+            EntityId id, 
+            const Gizmo& gizmo, 
+            Transform& transform)
     {
         mat4 modelMatrix = transform.modelMatrix();
 
@@ -88,6 +92,11 @@ void TransformSystem::update(const Scene&)
             camera->projection,
             gizmo.operation);
 
+        if (!ImGuizmo::IsUsing())
+        {
+            return;
+        }
+
         // Decompose manipulated values back into component
         glm::decompose(
             modelMatrix,
@@ -96,6 +105,8 @@ void TransformSystem::update(const Scene&)
             transform.position,
             vec3(),
             vec4());
+
+        markUpdated(id);
     });
 }
 

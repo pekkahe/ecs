@@ -26,7 +26,5 @@ namespace eng
 
         float yaw = -90.0f; // Default front is -z
         float pitch = 0.0f;
-
-        vec3 front = vec3(0.0f, 0.0f, 0.0f);
     };
 }

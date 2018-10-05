@@ -36,5 +36,6 @@ namespace eng
 
         // Local control component, copied to table each update
         CameraControl m_cameraControl;
+        bool m_cameraControlChanged = false;
     };
 }

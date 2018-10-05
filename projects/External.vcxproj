@@ -189,10 +189,6 @@
     <ClInclude Include="..\external\imgui\imgui.h" />
     <ClInclude Include="..\external\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="..\external\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="..\external\imgui\imgui_internal.h" />
-    <ClInclude Include="..\external\imgui\imstb_rectpack.h" />
-    <ClInclude Include="..\external\imgui\imstb_textedit.h" />
-    <ClInclude Include="..\external\imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -26,5 +26,6 @@ namespace eng
         TableRef<Gizmo> m_gizmoTable;
 
         ImGuizmo::OPERATION m_gizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+        bool m_gizmoOperationChanged = false;
     };
 }

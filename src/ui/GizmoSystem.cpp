@@ -26,11 +26,17 @@ GizmoSystem::~GizmoSystem()
 
 void GizmoSystem::update(const Scene&)
 {
-    query()
-        .hasComponent(m_gizmoTable)
-        .execute([&](EntityId id, Gizmo& gizmo)
+    if (!m_gizmoOperationChanged)
+    {
+        return;
+    }
+    m_gizmoOperationChanged = false;
+
+    m_gizmoTable.forEach([&](EntityId id, Gizmo& gizmo) 
     {
         gizmo.operation = m_gizmoOperation;
+
+        markUpdated(id);
     });
 }
 
@@ -38,10 +44,17 @@ void GizmoSystem::onKeyInput(Window&, const InputEvent& input)
 {
     if (input.key == GLFW_KEY_SPACE && input.action == GLFW_PRESS)
     {
-        int size = static_cast<int>(gizmoOperations.size());
+        auto nextOperation = [&]()
+        {
+            int numberOfOperations = static_cast<int>(gizmoOperations.size());
+            int indexOfNextOperation =
+                m_gizmoOperation < numberOfOperations - 1 ?
+                m_gizmoOperation + 1 : 0;
 
-        m_gizmoOperation = gizmoOperations[
-            m_gizmoOperation < size - 1 ?
-                m_gizmoOperation + 1 : 0];
+            return gizmoOperations[indexOfNextOperation];
+        };
+
+        m_gizmoOperation = nextOperation();
+        m_gizmoOperationChanged = true;
     }
 }
