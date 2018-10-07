@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\tests\Precompiled.cpp" />
+    <ClCompile Include="..\tests\component\Test_Query.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\tests\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\tests\Precompiled.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="component">
+      <UniqueIdentifier>{6c3b6a13-f1a9-4c8f-b8e1-ce7f49558a0e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
