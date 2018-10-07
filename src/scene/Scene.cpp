@@ -80,6 +80,18 @@ void Scene::createTestEntities()
         vec3(-0.5f, -0.5f,  0.5f),
         vec3(-0.5f,  0.5f,  0.5f)
     };
+    mesh.colors = std::vector<vec3>
+    {
+        vec3(0.9f, 0.9f, 0.9f),
+        vec3(0.9f, 0.9f, 0.9f),
+        vec3(0.9f, 0.9f, 0.9f),
+        vec3(0.9f, 0.9f, 0.9f),
+
+        vec3(0.6f, 0.6f, 0.6f),
+        vec3(0.6f, 0.6f, 0.6f),
+        vec3(0.6f, 0.6f, 0.6f),
+        vec3(0.6f, 0.6f, 0.6f)
+    };
     mesh.indices = std::vector<unsigned>
     {
         0, 1, 3, // front

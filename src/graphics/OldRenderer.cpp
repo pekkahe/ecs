@@ -237,7 +237,7 @@ void Renderer::drawTwoTrianglesWithOwnBuffersAndPrograms()
 
     glBindVertexArray(VAO[1]);
     glDrawArrays(GL_TRIANGLES, 0, 3);
-    //glBindVertexArray(0);
+    glBindVertexArray(0);
 }
 
 void Renderer::drawRectangle()

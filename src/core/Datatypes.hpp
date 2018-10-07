@@ -1,5 +1,7 @@
 #pragma once
 
+#include <component/EntityId.hpp>
+
 #include <utility>
 
 #include <glm/glm.hpp>

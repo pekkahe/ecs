@@ -97,9 +97,6 @@
     <ClInclude Include="..\src\scene\Camera.hpp">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClCompile Include="..\src\core\Logger.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\graphics\OldRenderer.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -126,9 +123,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\shaders\vertex.vert">
-      <Filter>graphics\shaders</Filter>
-    </None>
     <None Include="..\shaders\vertex_tex.vert">
       <Filter>graphics\shaders</Filter>
     </None>
@@ -138,10 +132,7 @@
     <None Include="..\shaders\fragment.frag">
       <Filter>graphics\shaders</Filter>
     </None>
-    <None Include="..\shaders\vertex_proj.vert">
-      <Filter>graphics\shaders</Filter>
-    </None>
-    <None Include="..\shaders\fragment_col.frag">
+    <None Include="..\shaders\vertex.vert">
       <Filter>graphics\shaders</Filter>
     </None>
   </ItemGroup>

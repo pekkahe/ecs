@@ -28,6 +28,8 @@ void eng::imgui::init()
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+    
     //const char* glsl_version = "#version 330 core"; // core -> es
     ImGui_ImplOpenGL3_Init(NULL); // Use default GLSL version
 }

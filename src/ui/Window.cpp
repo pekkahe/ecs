@@ -41,9 +41,8 @@ Window::Window(int width, int height, const std::string& title)
     glfwSetScrollCallback(m_window, onMouseScroll);
     glfwSetFramebufferSizeCallback(m_window, onFramebufferSizeCallback);
 
-    ImGui_ImplGlfw_InitForOpenGL(m_window, false); // 'true' steals input
-    
-    ImGui::StyleColorsDark();
+    // note: 'true' steals input from GLFW
+    ImGui_ImplGlfw_InitForOpenGL(m_window, false); 
 }
 
 Window::~Window()

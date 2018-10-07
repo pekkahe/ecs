@@ -1,7 +1,9 @@
 #pragma once
 
+#include <component/EntityId.hpp>
 #include <component/IComponent.hpp>
 #include <component/Table.hpp>
+
 #include <core/Defines.hpp>
 
 namespace eng

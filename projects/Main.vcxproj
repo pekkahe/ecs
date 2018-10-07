@@ -171,7 +171,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\component\System.cpp" />
-    <ClCompile Include="..\src\core\Logger.cpp" />
     <ClCompile Include="..\src\scene\CameraSystem.cpp" />
     <ClCompile Include="..\src\ui\CameraController.cpp" />
     <ClCompile Include="..\src\ui\ImGui.cpp" />
@@ -237,10 +236,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\fragment.frag" />
-    <None Include="..\shaders\fragment_col.frag" />
     <None Include="..\shaders\fragment_tex.frag" />
     <None Include="..\shaders\vertex.vert" />
-    <None Include="..\shaders\vertex_proj.vert" />
     <None Include="..\shaders\vertex_tex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

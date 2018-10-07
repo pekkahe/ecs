@@ -7,6 +7,8 @@ namespace eng
 {
     // todo: unit test
     // todo: stress test and optimize
+    // fixme: now execute function is ran multiple times for entity,
+    //        could be related to amount of query filter components?    
 
     template <typename... Tables>
     class Query : public trait::non_copyable

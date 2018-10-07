@@ -51,16 +51,14 @@
         ENUM_FLAG_OPERATOR(T, &) \
         enum class T
 
-// Common system headers
-#include <component/EntityId.hpp>
-
+// Core system headers
 #include <core/Datatypes.hpp>
 #include <core/Logger.hpp>
 #include <core/Math.hpp>
 #include <core/Time.hpp>
 #include <core/Traits.hpp>
 
-// Common tag components
+// Core tag components
 #include <core/Added.hpp>
 #include <core/Deleted.hpp>
 #include <core/Updated.hpp>
