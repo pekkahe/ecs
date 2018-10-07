@@ -172,9 +172,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\component\System.cpp" />
     <ClCompile Include="..\src\core\Logger.cpp" />
-    <ClCompile Include="..\src\scene\CameraController.cpp" />
     <ClCompile Include="..\src\scene\CameraSystem.cpp" />
-    <ClCompile Include="..\src\scene\TransformGizmoController.cpp" />
+    <ClCompile Include="..\src\ui\CameraController.cpp" />
     <ClCompile Include="..\src\ui\ImGui.cpp" />
     <ClCompile Include="..\src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -198,6 +197,7 @@
     <ClCompile Include="..\src\core\Time.cpp" />
     <ClCompile Include="..\src\scene\Transform.cpp" />
     <ClCompile Include="..\src\ui\InputBindings.cpp" />
+    <ClCompile Include="..\src\ui\TransformGizmoController.cpp" />
     <ClCompile Include="..\src\ui\Window.cpp" />
     <ClInclude Include="..\src\component\IComponent.hpp" />
     <ClInclude Include="..\src\component\Query.hpp" />
@@ -211,10 +211,9 @@
     <ClInclude Include="..\src\graphics\Mesh.hpp" />
     <ClInclude Include="..\src\graphics\RenderSystem.hpp" />
     <ClInclude Include="..\src\scene\CameraControl.hpp" />
-    <ClInclude Include="..\src\scene\CameraController.hpp" />
     <ClInclude Include="..\src\scene\CameraSystem.hpp" />
     <ClInclude Include="..\src\scene\TransformGizmo.hpp" />
-    <ClInclude Include="..\src\scene\TransformGizmoController.hpp" />
+    <ClInclude Include="..\src\ui\CameraController.hpp" />
     <ClInclude Include="..\src\ui\ImGui.hpp" />
     <ClInclude Include="..\src\scene\TransformSystem.hpp" />
     <ClInclude Include="..\src\scene\Camera.hpp" />
@@ -233,6 +232,7 @@
     <ClInclude Include="..\src\core\Time.hpp" />
     <ClInclude Include="..\src\scene\Transform.hpp" />
     <ClInclude Include="..\src\ui\InputBindings.hpp" />
+    <ClInclude Include="..\src\ui\TransformGizmoController.hpp" />
     <ClInclude Include="..\src\ui\Window.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,9 @@
 #pragma once
 
 #include <component/System.hpp>
-
 #include <scene/Transform.hpp>
 #include <scene/TransformGizmo.hpp>
-#include <scene/TransformGizmoController.hpp>;
+#include <ui/TransformGizmoController.hpp>
 
 namespace eng
 {

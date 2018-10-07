@@ -30,7 +30,6 @@ namespace eng
         double m_lastY = 0.0f;
         float m_offsetX = 0.0f;
         float m_offsetY = 0.0f;
-
         float m_zoom = 0.0f;
     };
 }

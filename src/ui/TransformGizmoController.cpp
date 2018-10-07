@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <scene/TransformGizmoController.hpp>
+#include <ui/TransformGizmoController.hpp>
 
 #include <GLFW/glfw3.h>
 

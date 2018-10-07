@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <scene/CameraController.hpp>
+#include <ui/CameraController.hpp>
 
 #include <GLFW/glfw3.h>
 

@@ -118,11 +118,11 @@
     <ClCompile Include="..\src\ui\InputBindings.cpp">
       <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scene\CameraController.cpp">
-      <Filter>scene</Filter>
+    <ClCompile Include="..\src\ui\CameraController.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scene\TransformGizmoController.cpp">
-      <Filter>scene</Filter>
+    <ClCompile Include="..\src\ui\TransformGizmoController.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,14 +199,14 @@
     <ClInclude Include="..\src\ui\InputBindings.hpp">
       <Filter>ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\scene\CameraController.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\scene\TransformGizmo.hpp">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\scene\TransformGizmoController.hpp">
-      <Filter>scene</Filter>
+    <ClInclude Include="..\src\ui\CameraController.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\TransformGizmoController.hpp">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
