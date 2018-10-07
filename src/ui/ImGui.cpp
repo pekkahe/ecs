@@ -40,7 +40,7 @@ void eng::imgui::deinit()
 }
 
 //bool open = true;
-void eng::imgui::startFrame()
+void eng::imgui::beginFrame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -56,7 +56,7 @@ void eng::imgui::endFrame()
     ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }
 
-void eng::imgui::gizmoManipulate(
+bool eng::imgui::gizmoManipulate(
     mat4& model,
     const mat4& view,
     const mat4& projection,
@@ -69,6 +69,7 @@ void eng::imgui::gizmoManipulate(
     auto& io = ImGui::GetIO();
     ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
     
+    // Setup gizmo to be drawed
     ImGuizmo::Manipulate(
         &viewMatrix[0],
         &projectionMatrix[0],
@@ -81,6 +82,9 @@ void eng::imgui::gizmoManipulate(
         nullptr); // boundSizingSnap ? boundsSnap 
 
     model = glm::make_mat4(&modelMatrix[0]);
+
+    // Return whether gizmo was manipulated this frame or not
+    return ImGuizmo::IsUsing();
 }
 
 //ImGuizmo::DrawCube(viewMatrix, projectionMatrix, modelMatrix);

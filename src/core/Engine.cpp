@@ -58,22 +58,20 @@ void Engine::execute()
 
     while (window->pollEvents() && !m_terminate)
     {
-        imgui::startFrame();
+        imgui::beginFrame();
 
-        // todo: fixed framerate 30 fps?
-
-        // Logic thread?
+        // todo: logic thread
         scene->update();
 
-        // Render thread?
+        // todo: render thread
         scene->renderer().beginFrame();
         scene->renderer().render();
         scene->renderer().endFrame();
 
         imgui::endFrame();
         window->swapBuffers();
-        
-        Time::update(glfwGetTime());
+
+        Time::endFrame();
     }
 }
 

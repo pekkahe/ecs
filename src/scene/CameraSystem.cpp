@@ -1,16 +1,18 @@
 #include <Precompiled.hpp>
 #include <scene/CameraSystem.hpp>
 
-#include <scene/CameraControlSystem.hpp>
 #include <scene/Transform.hpp>
-
-#include <glm/gtc/matrix_transform.hpp>
 
 using namespace eng;
 
-CameraSystem::CameraSystem(Database& db) :
-    m_cameraTable(db.createTable<Camera>())
+CameraSystem::CameraSystem(
+    Database& db,
+    std::shared_ptr<Window> window) :
+    m_cameraTable(db.createTable<Camera>()),
+    m_cameraControlTable(db.createTable<CameraControl>()),
+    m_cameraController(std::make_shared<CameraController>(window->size()))
 {
+    window->addEventListener(m_cameraController);
 }
 
 CameraSystem::~CameraSystem()
@@ -19,24 +21,30 @@ CameraSystem::~CameraSystem()
 
 void CameraSystem::update(const Scene&)
 {
+    auto cameraControls = m_cameraControlTable.ids();
+    if (!cameraControls.empty())
+    {
+        auto cameraControlId = cameraControls[0];
+        auto cameraControl = m_cameraControlTable[cameraControlId];
+
+        if (m_cameraController->update(*cameraControl))
+        {
+            markUpdated(cameraControlId);
+        }
+    }
+
     query()
         .hasComponent<Updated>()
         .hasComponent<CameraControl>()
         .hasComponent<Camera>(m_cameraTable)
         .execute([&](
-            EntityId id, 
+            EntityId, 
             const Updated&,
-            const CameraControl& controller,
+            const CameraControl& control,
             Camera& camera)
     {
-        vec3 front;
-        front.x = cos(glm::radians(controller.pitch)) * cos(glm::radians(controller.yaw));
-        front.y = sin(glm::radians(controller.pitch));
-        front.z = cos(glm::radians(controller.pitch)) * sin(glm::radians(controller.yaw));
-        glm::normalize(front);
-
-        camera.align(front);
-        camera.zoom(controller.zoom);
+        camera.fov -= control.zoom;
+        camera.fov = math::clamp(camera.fov, 10.0f, 45.0f);
     });
 
     query()
@@ -44,25 +52,34 @@ void CameraSystem::update(const Scene&)
         .hasComponent<Transform>()
         .hasComponent<Camera>(m_cameraTable)
         .execute([&](
-            EntityId id,
+            EntityId,
             const Updated&,
             const Transform& transform,
             Camera& camera)
     {
-        camera.view = Camera::viewMatrix(camera, transform.position);
-        camera.projection = Camera::projectionMatrix(camera);
+        mat4 model = transform.modelMatrix();
+        
+        // To get the camera's view matrix, 
+        // we just inverse its model matrix
+        camera.view = glm::inverse(model);
+
+        camera.projection = glm::perspective(
+            glm::radians(camera.fov),
+            camera.aspectRatio,
+            camera.nearPlane,
+            camera.farPlane);
     });
 
-    query()
-        .hasComponent<Transform>()
-        .hasComponent<Camera>(m_cameraTable)
-        .execute([&](
-            EntityId id,
-            const Transform& transform,
-            Camera& camera)
-    {
-        //camera.aspectRatio = aspectRatio;
-    });
+    //query()
+    //    .hasComponent<Transform>()
+    //    .hasComponent<Camera>(m_cameraTable)
+    //    .execute([&](
+    //        EntityId id,
+    //        const Transform& transform,
+    //        Camera& camera)
+    //{
+    //    camera.aspectRatio = aspectRatio;
+    //});
 }
 
 void CameraSystem::setAspectRatio(float aspectRatio)
@@ -70,7 +87,7 @@ void CameraSystem::setAspectRatio(float aspectRatio)
     query()
         .hasComponent<Camera>(m_cameraTable)
         .execute([&](
-            EntityId id,
+            EntityId,
             Camera& camera)
     {
         camera.aspectRatio = aspectRatio;

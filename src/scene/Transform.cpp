@@ -8,16 +8,14 @@ using namespace eng;
 
 mat4 Transform::modelMatrix() const
 {
-    mat4 model(1.0f);
-    model = glm::translate(model, position);
-    model *= glm::mat4_cast(rotation);
-    model = glm::scale(model, scale);
-    // translate * rotate * scale
+    //mat4 model(1.0f);
+    //model = glm::translate(model, position);
+    //model *= glm::mat4_cast(rotation);
+    //model = glm::scale(model, scale);
 
-    //glm::mat4 translate = glm::translate(glm::mat4(1.0), position);
-    //glm::mat4 rotate = glm::mat4_cast(rotation);
-    //glm::mat4 scale = glm::scale(glm::mat4(1.0f), this->scale);
-    //glm::mat4 model = translate * rotate * scale;
+    mat4 translate = glm::translate(mat4(1.0f), position);
+    mat4 rotate    = glm::mat4_cast(rotation);
+    mat4 scale_    = glm::scale(mat4(1.0f), scale);
 
-    return model;
+    return translate * rotate * scale_;
 }

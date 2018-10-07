@@ -20,11 +20,16 @@ namespace eng
     public:
         float speed = 2.0f;
         float sensitivity = 0.05f;
-
         float zoom = 0.0f;
-        CameraMovement movement = CameraMovement::None;
-
         float yaw = -90.0f; // Default front is -z
         float pitch = 0.0f;
+
+        CameraMovement movement = CameraMovement::None;
+
+    public:
+        bool isMoving(const CameraMovement& towards) const
+        {
+            return (movement & towards) == towards;
+        }
     };
 }

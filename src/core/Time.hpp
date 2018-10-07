@@ -5,17 +5,14 @@ namespace eng
     class Time
     {
     public:
-        static void update(double frameTime);
+        static void endFrame();
 
-        static float deltaTime() { return m_deltaTime; }
-
-    private:
-        Time();
+        // Last frame time in seconds.
+        static float deltaTime();
 
     private:
-        // Time between current frame and last frame.
+        static double m_frameTime;
         static float m_deltaTime;
-        // Time at last frame.
-        static double m_lastFrameTime;
     };
+
 }

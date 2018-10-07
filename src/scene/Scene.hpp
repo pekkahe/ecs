@@ -6,7 +6,6 @@
 #include <graphics/RenderSystem.hpp>
 
 #include <scene/CameraSystem.hpp>
-#include <scene/CameraControlSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
 #include <ui/GizmoSystem.hpp>
@@ -42,7 +41,5 @@ namespace eng
         TransformSystem m_transformSystem;
         RenderSystem m_renderSystem;
         CameraSystem m_cameraSystem;
-        std::shared_ptr<CameraControlSystem> m_cameraControlSystem;
-        std::shared_ptr<GizmoSystem> m_gizmoSystem;
     };
 }

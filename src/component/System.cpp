@@ -10,9 +10,9 @@ void System::onRegistered(const Scene& scene)
     m_database = &scene.database();
 }
 
-void System::commitUpdated(Database& database)
+void System::commitUpdated(Database& db)
 {
-    auto& updated = database.table<Updated>();
+    auto& updated = db.table<Updated>();
 
     m_updated.forEach([&](EntityId id, Updated&) 
     {
@@ -21,9 +21,9 @@ void System::commitUpdated(Database& database)
     m_updated.clear();
 }
 
-void System::commitDeleted(Database& database)
+void System::commitDeleted(Database& db)
 {
-    auto& deleted = database.table<Deleted>();
+    auto& deleted = db.table<Deleted>();
 
     m_deleted.forEach([&](EntityId id, Deleted&)
     {

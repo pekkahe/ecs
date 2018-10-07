@@ -115,11 +115,14 @@
     <ClCompile Include="..\src\component\System.cpp">
       <Filter>component</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\scene\CameraControlSystem.cpp">
+    <ClCompile Include="..\src\ui\InputBindings.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene\CameraController.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ui\GizmoSystem.cpp">
-      <Filter>ui</Filter>
+    <ClCompile Include="..\src\scene\TransformGizmoController.cpp">
+      <Filter>scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,20 +178,11 @@
     <ClInclude Include="..\src\ui\Window.hpp">
       <Filter>ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ui\Gizmo.hpp">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\scene\CameraSystem.hpp">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="..\src\scene\CameraControl.hpp">
       <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\CameraControlSystem.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ui\GizmoSystem.hpp">
-      <Filter>ui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Math.hpp">
       <Filter>core</Filter>
@@ -201,6 +195,18 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Added.hpp">
       <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ui\InputBindings.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\CameraController.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\TransformGizmo.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene\TransformGizmoController.hpp">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

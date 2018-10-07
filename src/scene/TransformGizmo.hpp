@@ -6,7 +6,7 @@
 
 namespace eng
 {
-    class Gizmo : public IComponent
+    class TransformGizmo : public IComponent
     {
     public:
         ImGuizmo::OPERATION operation = ImGuizmo::OPERATION::TRANSLATE;

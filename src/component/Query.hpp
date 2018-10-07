@@ -5,7 +5,8 @@
 
 namespace eng
 {
-    // todo: tests
+    // todo: unit test
+    // todo: stress test and optimize
 
     template <typename... Tables>
     class Query : public trait::non_copyable
@@ -19,7 +20,7 @@ namespace eng
         Query(Query&&) = default;
         Query& operator=(Query&&) = default;
 
-        // Transform query filter to include a read-only component table.
+        // Transform this query filter to include a read-only component table.
         template <typename Component>
         auto hasComponent()
         {
@@ -28,7 +29,7 @@ namespace eng
             return newQuery(m_database.table<Component>(), std::index_sequence_for<Tables...>());
         }
 
-        // Transform query filter to include a mutable component table.
+        // Transform this query filter to include a mutable component table.
         template <typename Component>
         auto hasComponent(TableRef<Component> table)
         {
@@ -37,7 +38,9 @@ namespace eng
             return newQuery(table, std::index_sequence_for<Tables...>());
         }
 
-        // Execute query against all matching entities.
+        // Execute a function for all entities which match the query filter.
+        // The function parameters must adhere to the order and constness of
+        // the query filter arguments.
         template <typename F>
         void execute(F&& process)
         {
@@ -47,7 +50,7 @@ namespace eng
             }
         }
 
-        // Return component data of first entity which matches the query arguments,
+        // Return component data of first entity which matches the query filter,
         // or nullptr if no matches were found.
         template <typename Component>
         const Component* find()
@@ -62,7 +65,7 @@ namespace eng
             return nullptr;
         }
 
-        // Return entity ids which match the query arguments.
+        // Return all entity ids which match the query filter.
         std::vector<EntityId> ids()
         {
             // Use multiset to conveniently check how many matches
@@ -149,6 +152,6 @@ namespace eng
         std::tuple<Tables...> m_tables;
     };
 
-    // Read-only query entry point
+    // Build a query with pre-built read-only database access.
     Query<> query(const Database& database);
 }

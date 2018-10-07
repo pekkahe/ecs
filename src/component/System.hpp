@@ -17,12 +17,16 @@ namespace eng
     class ISystem : public trait::non_copyable
     {
     public:
+        // Notification on the system's registration to a scene.
         virtual void onRegistered(const Scene& scene) = 0;
-        
+
+        // System logic update executed once per frame.
         virtual void update(const Scene& scene) = 0;
 
-        virtual void commitUpdated(Database& database) = 0;
-        virtual void commitDeleted(Database& database) = 0;
+        // Push the system's Updated tags into the database.
+        virtual void commitUpdated(Database& db) = 0;
+        // Push the system's Deleted tags into the database.
+        virtual void commitDeleted(Database& db) = 0;
     };
 
     class System : public ISystem
@@ -39,18 +43,24 @@ namespace eng
         template <typename Component>
         TableRef<Component> createTable(Database& db);
         
-        // Build a query with read-only access to database tables.
+        // Build a query with pre-built read-only access to the scene database.
         Query<> query() const { return Query<>(*m_database); }
 
+        // Mark an entity with the Updated tag, for one whole frame,
+        // starting from the next frame.
         void markUpdated(EntityId id);
+        // Mark an entity with the Deleted tag, for one whole frame,
+        // starting from the next frame, after which the entity is
+        // removed from the scene database.
         void markDeleted(EntityId id);
 
     private:
         const Database* m_database;
 
-        // Each system has their own Updated and Deleted tables,
-        // which are synchronized with the database at the start
-        // and end of each frame.
+        // Each system has their own tag component tables, which are synchronized
+        // with the scene database at the start of each frame. This ensures that 
+        // all systems can react to tags regardless of their update order, and 
+        // provides a thread-safety mechanism for concurrent system updated (TBD).
 
         Table<Updated> m_updated;
         Table<Deleted> m_deleted;
@@ -59,6 +69,10 @@ namespace eng
     template<typename Component>
     inline TableRef<Component> System::createTable(Database& db)
     {
+        // todo: unnecessary at the moment, but can be an entry point for the system's
+        // table registration, i.e. a way to get rid of the ADD_COMPONENT_FUNCTION macro,
+        // maybe with some template metaprogramming..?
+
         return db.createTable<Component>();
     }
 

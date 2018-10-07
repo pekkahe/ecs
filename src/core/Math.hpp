@@ -5,16 +5,17 @@ namespace eng
     namespace math
     {
         template <typename T>
-        void clamp(T& value, const T& min, const T& max)
+        T clamp(const T& value, const T& min, const T& max)
         {
             if (value < min)
             {
-                value = min;
+                return min;
             }
-            else if (value > max)
+            if (value > max)
             {
-                value = max;
+                return max;
             }
+            return value;
         }
     }
 }

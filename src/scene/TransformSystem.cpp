@@ -4,23 +4,24 @@
 #include <component/Query.hpp>
 #include <scene/Scene.hpp>
 #include <scene/Camera.hpp>
-#include <scene/CameraControlSystem.hpp>
+#include <scene/CameraControl.hpp>
 
 #include <ui/GizmoSystem.hpp>
 #include <ui/ImGui.hpp>
-
-#include <glm/glm.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/matrix_decompose.hpp>
 
 #include <imgui.h>
 #include <ImGuizmo.h>
 
 using namespace eng;
 
-TransformSystem::TransformSystem(Database& db) :
-    m_transformTable(db.createTable<Transform>())
+TransformSystem::TransformSystem(
+    Database& db,
+    std::shared_ptr<Window> window) :
+    m_transformTable(db.createTable<Transform>()),
+    m_transformGizmoTable(db.createTable<TransformGizmo>()),
+    m_transformGizmoController(std::make_shared<TransformGizmoController>())
 {
+    window->addEventListener(m_transformGizmoController);
 }
 
 TransformSystem::~TransformSystem()
@@ -29,47 +30,57 @@ TransformSystem::~TransformSystem()
 
 void TransformSystem::update(const Scene&)
 {
-    // Move input controlled cameras
+    // Move camera controlled transforms
+    // todo: we could extend CameraControl into a "TransformControl" 
+    // component which allows input and program control to any entity
+    // with a transform, with this it might be best to expect that the
+    // front vector is precomputed
     query()
         .hasComponent<Updated>()
-        .hasComponent<Camera>()
         .hasComponent<CameraControl>()
         .hasComponent<Transform>(m_transformTable)
         .execute([&](
             EntityId, 
             const Updated&,
-            const Camera& camera, 
-            const CameraControl& controller,
+            const CameraControl& control,
             Transform& transform)
     {
-        float cameraSpeed = controller.speed * Time::deltaTime();
+        vec3 cameraFront;
+        cameraFront.x = cos(glm::radians(control.pitch)) * cos(glm::radians(control.yaw));
+        cameraFront.y = sin(glm::radians(control.pitch));
+        cameraFront.z = cos(glm::radians(control.pitch)) * sin(glm::radians(control.yaw));
+        glm::normalize(cameraFront);
 
-        auto checkMovement = [&controller](const CameraMovement& movement)
-        {
-            return (controller.movement & movement) == movement;
-        };
+        vec3 cameraRight = glm::normalize(glm::cross(cameraFront, Camera::WorldUp));
+        vec3 cameraUp    = glm::normalize(glm::cross(cameraRight, cameraFront));
+        
+        float cameraSpeed = control.speed * Time::deltaTime();
 
-        if (checkMovement(CameraMovement::Forward))
+        // Move camera
+        if (control.isMoving(CameraMovement::Forward))
         {
-            transform.position += camera.front * cameraSpeed;
+            transform.position += cameraFront * cameraSpeed;
         }
 
-        if (checkMovement(CameraMovement::Backward))
+        if (control.isMoving(CameraMovement::Backward))
         {
-            transform.position -= camera.front * cameraSpeed;
+            transform.position -= cameraFront * cameraSpeed;
         }
 
-        if (checkMovement(CameraMovement::Left))
+        if (control.isMoving(CameraMovement::Left))
         {
             transform.position -= glm::normalize(
-                glm::cross(camera.front, camera.up)) * cameraSpeed;
+                glm::cross(cameraFront, cameraUp)) * cameraSpeed;
         }
 
-        if (checkMovement(CameraMovement::Right))
+        if (control.isMoving(CameraMovement::Right))
         {
             transform.position += glm::normalize(
-                glm::cross(camera.front, camera.up)) * cameraSpeed;
+                glm::cross(cameraFront, cameraUp)) * cameraSpeed;
         }
+
+        // Rotate camera
+        transform.rotation = glm::quatLookAt(cameraFront, Camera::WorldUp);
     });
 
     auto camera = query().find<Camera>();
@@ -77,36 +88,34 @@ void TransformSystem::update(const Scene&)
 
     // Move gizmo manipulated transforms
     query()
-        .hasComponent<Gizmo>()
         .hasComponent<Transform>(m_transformTable)
+        .hasComponent<TransformGizmo>(m_transformGizmoTable)
         .execute([&](
             EntityId id, 
-            const Gizmo& gizmo, 
-            Transform& transform)
+            Transform& transform,
+            TransformGizmo& transformGizmo)
     {
+        m_transformGizmoController->update(transformGizmo);
+
         mat4 modelMatrix = transform.modelMatrix();
 
-        imgui::gizmoManipulate(
+        if (imgui::gizmoManipulate(
             modelMatrix,
             camera->view,
             camera->projection,
-            gizmo.operation);
-
-        if (!ImGuizmo::IsUsing())
+            transformGizmo.operation))
         {
-            return;
+            // Decompose manipulated values back into component
+            glm::decompose(
+                modelMatrix,
+                transform.scale,
+                transform.rotation,
+                transform.position,
+                vec3(),
+                vec4());
+
+            markUpdated(id);
         }
-
-        // Decompose manipulated values back into component
-        glm::decompose(
-            modelMatrix,
-            transform.scale,
-            transform.rotation,
-            transform.position,
-            vec3(),
-            vec4());
-
-        markUpdated(id);
     });
 }
 

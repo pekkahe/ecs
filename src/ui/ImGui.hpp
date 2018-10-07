@@ -12,11 +12,11 @@ namespace eng
 
         void deinit();
 
-        void startFrame();
+        void beginFrame();
 
         void endFrame();
 
-        void gizmoManipulate(
+        bool gizmoManipulate(
             mat4& model,
             const mat4& view, const
             mat4& projection,

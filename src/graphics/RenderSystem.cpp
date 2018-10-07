@@ -41,7 +41,7 @@ void RenderSystem::update(const Scene&)
 {
     query()
         .hasComponent<Added>()
-        .hasComponent(m_meshTable)
+        .hasComponent<Mesh>(m_meshTable)
         .execute([&](
             EntityId id,
             const Added&,
@@ -70,7 +70,7 @@ void RenderSystem::update(const Scene&)
 
     query()
         .hasComponent<Deleted>()
-        .hasComponent(m_meshTable)
+        .hasComponent<Mesh>(m_meshTable)
         .execute([&](
             EntityId id, 
             const Deleted&,
