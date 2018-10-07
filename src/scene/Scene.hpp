@@ -8,8 +8,6 @@
 #include <scene/CameraSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
-#include <ui/GizmoSystem.hpp>
-
 namespace eng
 {
     class Scene : public trait::non_copyable

@@ -6,7 +6,6 @@
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
 
-#include <ui/GizmoSystem.hpp>
 #include <ui/ImGui.hpp>
 
 #include <imgui.h>
