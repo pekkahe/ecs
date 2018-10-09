@@ -11,6 +11,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tests\Precompiled.hpp" />
+    <ClInclude Include="..\tests\component\TestComponents.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="component">

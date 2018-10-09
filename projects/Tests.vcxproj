@@ -35,24 +35,29 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src\lib;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\glfw\bin\win32\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src\lib;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\glfw\bin\win32\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src\lib;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\glfw\bin\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)tests;$(SolutionDir)src\lib;$(SolutionDir)external\glfw\include;$(SolutionDir)external\glad\include;$(SolutionDir)external\stb;$(SolutionDir)external\imgui;$(SolutionDir)external\imguizmo;$(SolutionDir)external\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)external\glfw\bin\x64\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemGroup>
+    <ClInclude Include="..\tests\component\TestComponents.hpp" />
     <ClInclude Include="..\tests\Precompiled.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +96,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Lib.lib;External.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -107,6 +114,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Lib.lib;External.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,6 +132,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Lib.lib;External.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,6 +150,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Lib.lib;External.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

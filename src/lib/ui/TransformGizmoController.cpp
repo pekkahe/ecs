@@ -23,15 +23,15 @@ void TransformGizmoController::onKeyInput(Window &, const InputEvent & input)
         ImGuizmo::OPERATION::ROTATE,
         ImGuizmo::OPERATION::SCALE
     };
+    static constexpr size_t operationsCount = operations.size();
 
     if (input.key == GLFW_KEY_SPACE && input.action == GLFW_PRESS)
     {
         auto nextOperation = [&](const ImGuizmo::OPERATION& current)
         {
-            int numberOfOperations = static_cast<int>(operations.size());
-            int indexOfNextOperation = current < numberOfOperations - 1 ? current + 1 : 0;
+            size_t nextOperationIndex = current < (operationsCount - 1) ? current + 1 : 0;
 
-            return operations[indexOfNextOperation];
+            return operations[nextOperationIndex];
         };
 
         m_operation = nextOperation(m_operation);

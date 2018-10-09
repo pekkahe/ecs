@@ -49,7 +49,7 @@ namespace eng
 
         // todo: consider changing this to 'mutable' to allow 
         //       entity creation from const database reference.
-        EntityId m_nextEntityId = 0u;
+        EntityId m_nextEntityId = 1u;
     };
 
     template <typename Component>

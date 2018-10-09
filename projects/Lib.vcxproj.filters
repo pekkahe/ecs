@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\lib\Precompiled.cpp" />
+    <ClInclude Include="..\src\lib\Precompiled.hpp" />
+    <ClCompile Include="..\src\lib\component\Database.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\component\Query.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClInclude Include="..\src\lib\component\Database.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\component\EntityId.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\component\IComponent.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\component\Query.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\component\System.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\component\Table.hpp">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\lib\core\Engine.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\core\Time.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClInclude Include="..\src\lib\core\Engine.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Time.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Datatypes.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Defines.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Traits.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\lib\graphics\Shader.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\graphics\Texture.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\graphics\RenderSystem.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClInclude Include="..\src\lib\graphics\Id.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\Shader.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\Texture.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\Mesh.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\RenderSystem.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\lib\scene\Scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\TransformSystem.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\Transform.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClInclude Include="..\src\lib\scene\Scene.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\TransformSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\Transform.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\Camera.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\lib\graphics\OldRenderer.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\Window.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\ImGui.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\CameraSystem.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\component\System.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\InputBindings.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\CameraController.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\TransformGizmoController.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\Camera.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\shaders\vertex_tex.vert">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\fragment_tex.frag">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\fragment.frag">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\vertex.vert">
+      <Filter>graphics\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{e7ba11f1-3174-45d3-b84f-5ebc5a638db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{a34f6d64-2ce4-4234-837f-069c62f28970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="component">
+      <UniqueIdentifier>{7974a17d-86d7-4eaf-8bc7-1a3858138f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{76cdbd70-c246-47df-b714-079b614fc86c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\shaders">
+      <UniqueIdentifier>{8e369c0e-bda2-487c-92d0-2dd24019499e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{3bf46815-95b2-4330-a98e-85d0d84759b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\lib\core\Logger.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\OldRenderer.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\ImGui.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\Window.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\CameraSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\CameraControl.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Math.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Updated.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Deleted.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\core\Added.hpp">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\InputBindings.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\TransformGizmo.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\CameraController.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\TransformGizmoController.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

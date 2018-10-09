@@ -1,8 +1,6 @@
 #include <Precompiled.hpp>
 #include <scene/Camera.hpp>
 
-#include <glm/gtc/matrix_transform.hpp>
-
 using namespace eng;
 
 // By convention, OpenGL is a right-handed system:
