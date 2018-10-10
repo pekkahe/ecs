@@ -5,7 +5,6 @@
 
 namespace eng
 {
-    // todo: unit test
     // todo: stress test and optimize
     // fixme: now execute function is ran multiple times for entity,
     //        could be related to amount of query filter components?    
@@ -70,39 +69,32 @@ namespace eng
         // Return all entity ids which match the query filter.
         std::vector<EntityId> ids()
         {
-            // Use multiset to conveniently check how many matches
-            // per id we receive within our query tables
-            std::unordered_multiset<EntityId> ids;
-
-            // Insert all ids from query tables into multiset
+            std::unordered_map<EntityId, unsigned> idCounts;
+            
             forEach(std::index_sequence_for<Tables...>(), m_tables,
                 [&](const auto& table)
             {
+                // Insert all ids from query tables into map,
+                // incrementing occurrence counter as we go
                 for (auto& id : table.ids())
                 {
-                    ids.insert(id);
+                    idCounts[id]++;
                 }
             });
 
-            // Remove ids from multiset which we're not added exactly
-            // the amount of times than there are query tables; this
-            // would indicate that the id was not located in all tables
-            auto it = ids.begin();
-            while (it != ids.end())
-            {
-                auto id = *it;
+            std::vector<EntityId> ids;
 
-                if (ids.count(id) != sizeof...(Tables))
+            for (auto& kv : idCounts)
+            {
+                // If id count matches the amount of query tables,
+                // the id was located in all tables and is a match
+                if (kv.second == sizeof...(Tables))
                 {
-                    it = ids.erase(it);
-                }
-                else
-                {
-                    it++;
+                    ids.emplace_back(kv.first);
                 }
             }
 
-            return std::vector<EntityId>(ids.begin(), ids.end());
+            return ids;
         }
 
     private:

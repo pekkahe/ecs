@@ -3,7 +3,7 @@
 
 using namespace eng;
 
-Query<> query(const Database& database)
+eng::Query<> eng::query(const Database& database)
 {
     return Query<>(database);
 }
