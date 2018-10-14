@@ -39,3 +39,40 @@ float Time::deltaTime()
 {
     return m_deltaTime;
 }
+
+Timer::Timer()
+{
+}
+
+Timer::~Timer()
+{
+}
+
+void Timer::begin()
+{
+    m_begin = std::chrono::steady_clock::now();
+}
+
+double Timer::elapsed() const
+{
+    using namespace std::chrono;
+
+    return duration_cast<microseconds>(
+        steady_clock::now() - m_begin).count() / 1'000'000.0;
+}
+
+double Timer::reset()
+{
+    using namespace std::chrono;
+
+    double e = elapsed();
+    begin();
+    return e;
+}
+
+Timer Timer::start()
+{
+    Timer timer;
+    timer.begin();
+    return timer;
+}

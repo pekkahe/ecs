@@ -66,11 +66,29 @@ namespace eng
             return nullptr;
         }
 
+        SparseIndex index() const
+        {
+            if (sizeof...(Tables) == 0)
+            {
+                return SparseIndex();
+            }
+
+            SparseIndex index = std::get<1>(m_tables).index();
+
+            forEach(std::index_sequence_for<Tables...>(), m_tables,
+                [&](const auto& table)
+            {
+                index &= table.index();
+            });
+
+            return index;
+        }
+
         // Return all entity ids which match the query filter.
         std::vector<EntityId> ids()
         {
             std::unordered_map<EntityId, unsigned> idCounts;
-            
+
             forEach(std::index_sequence_for<Tables...>(), m_tables,
                 [&](const auto& table)
             {
@@ -134,6 +152,7 @@ namespace eng
         {
             decltype(auto) getComponent = [](EntityId id, auto& table)
             {
+                assert(table[id] != nullptr && "Entity doesn't have component");
                 return table[id];
             };
 

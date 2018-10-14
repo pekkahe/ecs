@@ -6,7 +6,7 @@
 
 using namespace eng;
 
-TEST(Query, OneEntityWithOneComponent)
+TEST(Query, IsExecutedOnceWhenComponentMatches)
 {
     Database database;
     
@@ -22,7 +22,7 @@ TEST(Query, OneEntityWithOneComponent)
         .hasComponent<BoolComponent>()
         .execute([&](EntityId id, const BoolComponent& c)
     {
-        results.emplace_back(std::make_pair(id, c.boolean));
+        results.emplace_back(std::make_pair(id, c.value));
     });
 
     ASSERT_EQ(1u,   results.size());
@@ -30,7 +30,7 @@ TEST(Query, OneEntityWithOneComponent)
     EXPECT_EQ(true, results[0].second);
 }
 
-TEST(Query, OneEntityWithMultipleComponents)
+TEST(Query, IsExecutedOnceWhenAllComponentsMatch)
 {
     Database database;
 
@@ -59,9 +59,9 @@ TEST(Query, OneEntityWithMultipleComponents)
     {
         results.emplace_back(std::make_tuple(
             id, 
-            c1.boolean,
-            c2.number,
-            c3.text));
+            c1.value,
+            c2.value,
+            c3.value));
     });
 
     ASSERT_EQ(1u,   results.size());
@@ -71,7 +71,7 @@ TEST(Query, OneEntityWithMultipleComponents)
     EXPECT_EQ("id", std::get<3>(results[0]));
 }
 
-TEST(Query, MultipleEntitiesWithMultipleComponents)
+TEST(Query, IsExecutedOnceForEachEntity)
 {
     Database database;
 
@@ -104,7 +104,7 @@ TEST(Query, MultipleEntitiesWithMultipleComponents)
         {
             results.emplace_back(std::make_tuple(
                 id,
-                c.boolean));
+                c.value));
         });
 
         ASSERT_EQ(3u,       results.size());
@@ -130,8 +130,8 @@ TEST(Query, MultipleEntitiesWithMultipleComponents)
         {
             results.emplace_back(std::make_tuple(
                 id,
-                c1.boolean,
-                c2.number));
+                c1.value,
+                c2.value));
         });
 
         ASSERT_EQ(2u,       results.size());
@@ -159,15 +159,100 @@ TEST(Query, MultipleEntitiesWithMultipleComponents)
         {
             results.emplace_back(std::make_tuple(
                 id,
-                c1.boolean,
-                c2.number,
-                c3.text));
+                c1.value,
+                c2.value,
+                c3.value));
         });
 
         ASSERT_EQ(1u,       results.size());
         EXPECT_EQ(ids[0],   std::get<0>(results[0]));
         EXPECT_EQ(true,     std::get<1>(results[0]));
         EXPECT_EQ(10,       std::get<2>(results[0]));
-        EXPECT_EQ("id0",     std::get<3>(results[0]));
+        EXPECT_EQ("id0",    std::get<3>(results[0]));
     }
+}
+
+TEST(Query, ReturnsIdsOfMatchingEntities)
+{
+    Database database;
+
+    auto& table1 = database.createTable<BoolComponent>();
+    auto& table2 = database.createTable<NumberComponent>();
+    auto& table3 = database.createTable<TextComponent>();
+
+    std::vector<EntityId> ids;
+    ids.emplace_back(database.createEntity());
+    ids.emplace_back(database.createEntity());
+    ids.emplace_back(database.createEntity());
+
+    table1.assign(ids[0], BoolComponent(true));
+    table2.assign(ids[0], NumberComponent(0));
+    table3.assign(ids[0], TextComponent(""));
+    table2.assign(ids[1], NumberComponent(0));
+    table1.assign(ids[1], BoolComponent(true));
+    table1.assign(ids[2], BoolComponent(true));
+    table3.assign(ids[2], TextComponent(""));
+
+    {
+        auto results = query(database)
+            .hasComponent<BoolComponent>()
+            .ids();
+
+        ASSERT_EQ(3u, results.size());
+        EXPECT_EQ(ids[0], results[0]);
+        EXPECT_EQ(ids[1], results[1]);
+        EXPECT_EQ(ids[2], results[2]);
+    }
+
+    {
+        auto results = query(database)
+            .hasComponent<BoolComponent>()
+            .hasComponent<NumberComponent>()
+            .ids();
+
+        ASSERT_EQ(2u, results.size());
+        EXPECT_EQ(ids[0], results[0]);
+        EXPECT_EQ(ids[1], results[1]);
+    }
+
+    {
+        auto results = query(database)
+            .hasComponent<BoolComponent>()
+            .hasComponent<NumberComponent>()
+            .hasComponent<TextComponent>()
+            .ids();
+
+        ASSERT_EQ(1u,       results.size());
+        EXPECT_EQ(ids[0],   results[0]);
+    }
+}
+
+TEST(Query, FindsComponentOfFirstMatchingEntity)
+{
+    Database database;
+
+    auto& table1 = database.createTable<BoolComponent>();
+    auto& table2 = database.createTable<NumberComponent>();
+    auto& table3 = database.createTable<TextComponent>();
+
+    std::vector<EntityId> ids;
+    ids.emplace_back(database.createEntity());
+    ids.emplace_back(database.createEntity());
+    ids.emplace_back(database.createEntity());
+
+    table1.assign(ids[0], BoolComponent(true));
+    table2.assign(ids[1], NumberComponent(10));
+    table1.assign(ids[1], BoolComponent(false));
+    table1.assign(ids[2], BoolComponent(false));
+    table2.assign(ids[2], NumberComponent(0));
+
+    auto result1 = query(database).find<BoolComponent>();
+    auto result2 = query(database).find<NumberComponent>();
+    auto result3 = query(database).find<TextComponent>();
+
+    ASSERT_TRUE(result1 != nullptr);
+    EXPECT_EQ(true, result1->value);
+    ASSERT_TRUE(result2 != nullptr);
+    EXPECT_EQ(10, result2->value);
+    ASSERT_TRUE(result3 == nullptr);
 }

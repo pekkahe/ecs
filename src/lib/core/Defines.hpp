@@ -12,6 +12,7 @@
 
 #include <array>
 #include <vector>
+#include <deque>
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>

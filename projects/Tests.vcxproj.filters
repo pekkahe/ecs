@@ -5,6 +5,12 @@
     <ClCompile Include="..\tests\component\Test_Query.cpp">
       <Filter>component</Filter>
     </ClCompile>
+    <ClCompile Include="..\tests\component\Test_SparseIndex.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tests\component\Test_Table.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests\packages.config" />

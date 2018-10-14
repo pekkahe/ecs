@@ -9,36 +9,25 @@ namespace eng
 {
     struct BoolComponent : public IComponent
     {
-        bool boolean = false;
+        bool value = false;
 
-        BoolComponent(bool value) : boolean(value) {}
+        BoolComponent() = default;
+        BoolComponent(bool value) : value(value) {}
     };
 
     struct NumberComponent : public IComponent
     {
-        int number = 0;
+        int value = 0;
 
-        NumberComponent(int value) : number(value) {}
+        NumberComponent() = default;
+        NumberComponent(int value) : value(value) {}
     };
 
     struct TextComponent : public IComponent
     {
-        std::string text;
+        std::string value;
 
-        TextComponent(std::string value) : text(value) {}
-    };
-
-    struct ListComponent : public IComponent
-    {
-        std::vector<std::string> list;
-    };
-
-    struct FieldComponent : public IComponent
-    {
-        bool boolean = false;
-        int number = 10;
-        double decimal = 5.15f;
-        std::string text = "text";
-        std::vector<std::string> list = { "item1", "item2", "item3" };
+        TextComponent() = default;
+        TextComponent(std::string value) : value(value) {}
     };
 }

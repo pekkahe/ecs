@@ -18,7 +18,7 @@ namespace eng
     class CameraControl : public IComponent
     {
     public:
-        float speed = 2.0f;
+        float speed = 3.0f;
         float sensitivity = 0.05f;
         float zoom = 0.0f;
         float yaw = -90.0f; // Default front is -z
