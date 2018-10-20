@@ -17,21 +17,17 @@ namespace eng
         static float m_deltaTime;
     };
 
-
     class Timer 
     {
     public:
-        Timer();
-        ~Timer();
-        Timer(Timer&&) = default;
-        Timer& operator=(Timer&&) = default;
+        static Timer start();
 
         void begin();
 
+        // Reset timer and return elapsed time in milliseconds.
         double reset();
+        // Return elapsed time in milliseconds.
         double elapsed() const;
-
-        static Timer start();
 
     private:
         std::chrono::steady_clock::time_point m_begin;

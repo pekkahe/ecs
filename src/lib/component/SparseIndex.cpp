@@ -3,6 +3,27 @@
 
 using namespace eng;
 
+namespace
+{
+    size_t skipEmptyBits(
+        const SparseIndex& index,
+        size_t from,
+        size_t size)
+    {
+        while (!index.check(static_cast<EntityId>(from)))
+        {
+            if (from >= size)
+            {
+                break;
+            }
+
+            ++from;
+        }
+
+        return from;
+    }
+}
+
 SparseIndex::Position SparseIndex::bitPos(uint32_t pos)
 {
     size_t index = pos / k_bitsPerBlock;
@@ -170,8 +191,9 @@ void SparseIndex::allocateBlock()
 SparseIndex::Iterator SparseIndex::begin()
 {
     size_t size = m_bits.size() * k_bitsPerBlock;
+    size_t pos = skipEmptyBits(*this, 0u, size);
 
-    return Iterator(*this, size);
+    return Iterator(*this, size, pos);
 }
 
 SparseIndex::Iterator SparseIndex::end()
@@ -183,18 +205,7 @@ SparseIndex::Iterator SparseIndex::end()
 
 SparseIndex::Iterator& SparseIndex::Iterator::operator++()
 {
-    // Skip empty bits
-    do
-    {
-        ++m_pos;
-
-        if (m_pos >= m_size)
-        {
-            break;
-        }
-    } 
-    while (!m_container.check(static_cast<EntityId>(m_pos)));
-
+    m_pos = skipEmptyBits(m_container, ++m_pos, m_size);
     return *this;
 }
 

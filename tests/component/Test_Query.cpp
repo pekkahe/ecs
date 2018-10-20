@@ -172,7 +172,7 @@ TEST(Query, IsExecutedOnceForEachEntity)
     }
 }
 
-TEST(Query, ReturnsIdsOfMatchingEntities)
+TEST(Query, IdsForMatchingEntities)
 {
     Database database;
 
@@ -227,7 +227,7 @@ TEST(Query, ReturnsIdsOfMatchingEntities)
     }
 }
 
-TEST(Query, FindsComponentOfFirstMatchingEntity)
+TEST(Query, FindComponentOfFirstMatchingEntity)
 {
     Database database;
 
@@ -255,4 +255,63 @@ TEST(Query, FindsComponentOfFirstMatchingEntity)
     ASSERT_TRUE(result2 != nullptr);
     EXPECT_EQ(10, result2->value);
     ASSERT_TRUE(result3 == nullptr);
+}
+
+TEST(Query, PerformanceTest)
+{
+    Database database;
+
+    auto& table1 = database.createTable<BoolComponent>();
+    auto& table2 = database.createTable<NumberComponent>();
+    auto& table3 = database.createTable<TextComponent>();
+
+    size_t count = 2000u;
+
+    std::vector<EntityId> ids;
+    for (size_t i = 0; i < count; ++i)
+    { 
+        ids.emplace_back(database.createEntity());
+        table1.assign(ids.back(), BoolComponent(true));
+        
+        ids.emplace_back(database.createEntity());
+        table1.assign(ids.back(), BoolComponent(false));
+        table2.assign(ids.back(), NumberComponent(10));
+
+        ids.emplace_back(database.createEntity());
+        table1.assign(ids.back(), BoolComponent(true));
+        table3.assign(ids.back(), TextComponent("text"));
+
+        ids.emplace_back(database.createEntity());
+        table2.assign(ids.back(), NumberComponent(100));
+        table3.assign(ids.back(), TextComponent("text"));
+
+        ids.emplace_back(database.createEntity());
+        table1.assign(ids.back(), BoolComponent(false));
+        table2.assign(ids.back(), NumberComponent(1000));
+        table3.assign(ids.back(), TextComponent("text"));
+    }
+    
+    size_t found = 0u;
+    Timer timer = Timer::start();
+
+    query(database)
+        .hasComponent<BoolComponent>()
+        .hasComponent<NumberComponent>()
+        .hasComponent<TextComponent>()
+        .execute([&](
+            EntityId id,
+            const BoolComponent& c1,
+            const NumberComponent& c2,
+            const TextComponent& c3) 
+    {
+        found++;
+    });
+
+    double elapsed = timer.reset();
+    EXPECT_EQ(found, count);
+
+    std::cout <<
+        "Entities: " << ids.size() << std::endl <<
+        "Matches:  " << found << std::endl <<
+        "Elapsed:  " << elapsed << " ms" << std::endl;
 }

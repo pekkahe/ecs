@@ -11,9 +11,11 @@
     <ClCompile Include="..\tests\component\Test_Table.cpp">
       <Filter>component</Filter>
     </ClCompile>
+    <ClCompile Include="..\tests\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests\packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tests\Precompiled.hpp" />

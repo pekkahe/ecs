@@ -24,11 +24,11 @@ namespace eng
         Table(Table&&) = default;
         Table& operator=(Table&&) = default;
 
-        //void resize(size_t size);
         void assign(EntityId id, Component&& component);
         void remove(EntityId id) override;
         void clear() override;
-        bool empty() const override { return m_components.empty(); }
+        bool empty() const override;
+        size_t size() const;
 
         const std::vector<EntityId>& ids() const;
         SparseIndex index() const;
@@ -44,14 +44,12 @@ namespace eng
     private:
         // todo: assert no concurrent read & writes
         SparseIndex m_index;
-        //
+        
         std::vector<EntityId> m_ids;
-        // Component data stored contiguously in memory
         std::vector<Component> m_components;
-        //
+
         std::unordered_map<EntityId, size_t> m_indexMap;
-        //
-        std::deque<size_t> m_indexPool;
+        std::deque<size_t> m_freeIndices;
 
         // Entity offset to its index to component vector.
         //std::vector<size_t> m_offsets;
@@ -62,10 +60,10 @@ namespace eng
     {
         size_t index = 0;
 
-        if (!m_indexPool.empty())
+        if (!m_freeIndices.empty())
         {
-            index = m_indexPool.front();
-            m_indexPool.pop_front();
+            index = m_freeIndices.front();
+            m_freeIndices.pop_front();
 
             m_ids[index] = id;
             m_components[index] = std::forward<Component>(component);
@@ -79,41 +77,14 @@ namespace eng
         }
         
         m_indexMap[id] = index;
-
-        //size_t index = m_freeIndices.pop_back();
-
-        //if (m_components.size() < index)
-        //{
-        //    m_components[index] = std::forward<Component>(component);
-        //}
-        //else
-        //{
-        //    m_components.emplace_back(std::forward<Component>(component));
-        //    m_ids.emplace_back(id);
-        //}
-
-        //size_t i = m_ids.size();
-        //m_components[id] = std::forward<Component>(component);
-
-        //auto it = m_entityToIndex.find(id);
-        //if (it != m_entityToIndex.end())
-        //{
-        //    m_components[it->second] = std::forward<Component>(component);
-        //}
-        //else
-        //{
-        //    auto index = m_entities.size();
-
-        //    m_entities.emplace_back(id);
-        //    m_components.emplace_back(std::forward<Component>(component));
-        //    
-        //    m_entityToIndex[id] = index;
-        //}
+        m_index.insert(id);
     }
 
     template <typename Component>
     inline void Table<Component>::remove(EntityId id)
     {
+        m_index.erase(id);
+
         auto it = m_indexMap.find(id);
         if (it != m_indexMap.end())
         {
@@ -122,7 +93,7 @@ namespace eng
 
             m_ids[index] = {};
             m_components[index] = {};
-            m_indexPool.emplace_back(index);
+            m_freeIndices.emplace_back(index);
         }
     }
 
@@ -134,6 +105,18 @@ namespace eng
         m_components.clear();
     }
 
+    template <typename Component>
+    inline bool Table<Component>::empty() const
+    {
+        return size() == 0u;
+    }
+
+    template <typename Component>
+    inline size_t Table<Component>::size() const
+    {
+        return m_indexMap.size();
+    }
+    
     template<typename Component>
     inline const std::vector<EntityId>& Table<Component>::ids() const
     {
@@ -143,7 +126,7 @@ namespace eng
     template<typename Component>
     inline SparseIndex Table<Component>::index() const
     {
-        return SparseIndex();
+        return m_index;
     }
 
     template<typename Component>

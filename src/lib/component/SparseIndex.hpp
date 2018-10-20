@@ -24,9 +24,9 @@ namespace eng
         SparseIndex& operator&=(const SparseIndex& other);
         SparseIndex& operator^=(const SparseIndex& other);
 
-        inline friend SparseIndex operator|(const SparseIndex& lhs, const SparseIndex& rhs);
-        inline friend SparseIndex operator&(const SparseIndex& lhs, const SparseIndex& rhs);
-        inline friend SparseIndex operator^(const SparseIndex& lhs, const SparseIndex& rhs);
+        friend SparseIndex operator|(const SparseIndex& lhs, const SparseIndex& rhs);
+        friend SparseIndex operator&(const SparseIndex& lhs, const SparseIndex& rhs);
+        friend SparseIndex operator^(const SparseIndex& lhs, const SparseIndex& rhs);
 
     public:
         class Iterator : public std::iterator<
@@ -40,7 +40,7 @@ namespace eng
             explicit Iterator(
                 SparseIndex& container,
                 size_t size,
-                size_t pos = 0) :
+                size_t pos) :
                 m_container(container),
                 m_size(size),
                 m_pos(pos)
@@ -76,7 +76,7 @@ namespace eng
         };
 
         static Position bitPos(uint32_t pos);
-
+        
     private:
         void allocateBlock();
 

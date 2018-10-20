@@ -5,10 +5,6 @@
 
 namespace eng
 {
-    // todo: stress test and optimize
-    // fixme: now execute function is ran multiple times for entity,
-    //        could be related to amount of query filter components?    
-
     template <typename... Tables>
     class Query : public trait::non_copyable
     {
@@ -66,14 +62,16 @@ namespace eng
             return nullptr;
         }
 
-        SparseIndex index() const
+        // Return sparse index containing all entity ids which match the query filter.
+        SparseIndex index()
         {
             if (sizeof...(Tables) == 0)
             {
                 return SparseIndex();
             }
 
-            SparseIndex index = std::get<1>(m_tables).index();
+            auto& table = std::get<0>(m_tables);
+            SparseIndex index = table.index();
 
             forEach(std::index_sequence_for<Tables...>(), m_tables,
                 [&](const auto& table)
@@ -86,6 +84,24 @@ namespace eng
 
         // Return all entity ids which match the query filter.
         std::vector<EntityId> ids()
+        {
+            std::vector<EntityId> ids;
+
+            auto idx = index();
+
+            auto it = idx.begin();
+            while (it != idx.end())
+            {
+                ids.emplace_back(*it);
+                ++it;
+            }
+
+            return ids;
+        }
+
+        // Old implementation for id fetch which is roughly 27 
+        // times slower than SparseIndex based implementation.
+        std::vector<EntityId> idsSlow()
         {
             std::unordered_map<EntityId, unsigned> idCounts;
 

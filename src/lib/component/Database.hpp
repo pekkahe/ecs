@@ -26,12 +26,12 @@ namespace eng
         template <typename Component>
         const TableRef<Component> table() const;
 
+        EntityId createEntity();
+
         // Remove all Added, Updated, and Deleted components from entities.
         void clearTags();
         // Remove all entities with the Deleted component from the database.
         void purgeDeleted();
-
-        EntityId createEntity();
 
     private:
         using TableId = size_t;
