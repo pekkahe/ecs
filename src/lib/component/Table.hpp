@@ -42,57 +42,61 @@ namespace eng
         void forEach(std::function<void(EntityId, Component&)> func) const;
 
     private:
-        // todo: assert no concurrent read & writes
-        SparseIndex m_index;
-        
-        std::vector<EntityId> m_ids;
-        std::vector<Component> m_components;
+        // TODO: Assert no concurrent read & writes
 
-        std::unordered_map<EntityId, size_t> m_indexMap;
+        SparseIndex m_index;
+        std::vector<EntityId> m_ids; // TODO: Replace with m_index and operator[]?
+        std::vector<Component> m_components;
+        std::unordered_map<EntityId, size_t> m_idToComponentIndex;
         std::deque<size_t> m_freeIndices;
 
-        // Entity offset to its index to component vector.
+        // TODO: Offset based entity component indexing?
         //std::vector<size_t> m_offsets;
     };
 
     template <typename Component>
     inline void Table<Component>::assign(EntityId id, Component&& component)
     {
-        size_t index = 0;
-
-        if (!m_freeIndices.empty())
+        size_t insertAt = 0u;
+        if (m_freeIndices.empty())
         {
-            index = m_freeIndices.front();
+            insertAt = m_components.size();
+        }
+        else
+        {
+            insertAt = m_freeIndices.front();
             m_freeIndices.pop_front();
+        }
 
-            m_ids[index] = id;
-            m_components[index] = std::forward<Component>(component);
+        if (insertAt < m_components.size())
+        {
+            m_ids[insertAt] = id;
+            m_components[insertAt] = std::forward<Component>(component);
+            m_idToComponentIndex[id] = insertAt;
         }
         else
         {
             m_ids.emplace_back(id);
             m_components.emplace_back(std::forward<Component>(component));
-
-            index = m_ids.size() - 1;
+            m_idToComponentIndex[id] = m_components.size() - 1;
         }
         
-        m_indexMap[id] = index;
         m_index.insert(id);
     }
 
     template <typename Component>
     inline void Table<Component>::remove(EntityId id)
     {
-        m_index.erase(id);
-
-        auto it = m_indexMap.find(id);
-        if (it != m_indexMap.end())
+        auto it = m_idToComponentIndex.find(id);
+        if (it != m_idToComponentIndex.end())
         {
             size_t index = it->second;
-            m_indexMap.erase(id);
 
+            m_index.erase(id);
             m_ids[index] = {};
             m_components[index] = {};
+            m_idToComponentIndex.erase(id);
+
             m_freeIndices.emplace_back(index);
         }
     }
@@ -100,9 +104,10 @@ namespace eng
     template <typename Component>
     inline void Table<Component>::clear()
     {
-        m_indexMap.clear();
+        m_index.clear();
         m_ids.clear();
         m_components.clear();
+        m_idToComponentIndex.clear();
     }
 
     template <typename Component>
@@ -114,13 +119,22 @@ namespace eng
     template <typename Component>
     inline size_t Table<Component>::size() const
     {
-        return m_indexMap.size();
+        return m_index.size();
     }
     
     template<typename Component>
     inline const std::vector<EntityId>& Table<Component>::ids() const
     {
-        return m_ids;
+        std::vector<EntityId> ids;
+
+        auto it = m_index.begin();
+        while (it != m_index.end())
+        {
+            ids.emplace_back(*it);
+            ++it;
+        }
+
+        return ids;
     }
 
     template<typename Component>
@@ -132,8 +146,8 @@ namespace eng
     template<typename Component>
     inline Component* Table<Component>::operator[](EntityId id)
     {
-        auto it = m_indexMap.find(id);
-        if (it != m_indexMap.end())
+        auto it = m_idToComponentIndex.find(id);
+        if (it != m_idToComponentIndex.end())
         {
             return &m_components[it->second];
         }
@@ -146,8 +160,8 @@ namespace eng
     template <typename Component>
     inline const Component* Table<Component>::operator[](EntityId id) const
     {
-        auto it = m_indexMap.find(id);
-        if (it != m_indexMap.end())
+        auto it = m_idToComponentIndex.find(id);
+        if (it != m_idToComponentIndex.end())
         {
             return &m_components[it->second];
         }
@@ -175,6 +189,11 @@ namespace eng
     template <typename Component>
     inline void Table<Component>::forEach(std::function<void(EntityId, Component&)> func)
     {
+        // TODO: This should be a faster iteration than using the indexing operator's 
+        // hash map search, yet the query API uses that. This is also the only reason
+        // why we still duplicate ids to 'm_ids'. Should we pick one and go with it,
+        // or study new other (e.g. index offset calculation based) solutions?
+
         for (size_t i = 0; i < m_ids.size(); ++i)
         {
             func(m_ids[i], m_components[i]);
@@ -187,9 +206,8 @@ namespace eng
         forEach(func);
     }
 
-    // todo: enforce that only one reference to a table can be held at any given time?
-    //       or invert Table ownership Database <-> System
-    //       use RAII reference counting?
+    // TODO: Enforce that only one reference to a table can be held at any given time?
+    // Invert Table ownership between Database and Systems? Use RAII reference counting?
 
     template <typename Component>
     using TableRef = Table<Component>&;

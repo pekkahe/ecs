@@ -14,7 +14,6 @@
     <ClCompile Include="..\tests\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\tests\packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

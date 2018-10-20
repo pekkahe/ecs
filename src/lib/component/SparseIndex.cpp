@@ -94,10 +94,10 @@ bool SparseIndex::empty() const
 
 SparseIndex& SparseIndex::operator|=(const SparseIndex& other)
 {
-    // Prepare by allocating empty bitsets if necessary
     size_t otherSize = other.m_bits.size();
     while (otherSize > m_bits.size())
     {
+        // Ensure we have enough blocks for ORing against other
         allocateBlock();
     }
 
@@ -106,9 +106,9 @@ SparseIndex& SparseIndex::operator|=(const SparseIndex& other)
 
     for (size_t i = 0; i < maxSize; ++i)
     {
-        // Other has no more bits to OR
         if (i >= otherSize)
         {
+            // Other has no more bits to OR
             break;
         }
 
@@ -126,16 +126,16 @@ SparseIndex& SparseIndex::operator&=(const SparseIndex& other)
 
     for (size_t i = 0; i < maxSize; ++i)
     {
-        // We have no more bits, no need to continue ANDing
         if (i >= thisSize)
         {
+            // We have no more bits to AND
             break;
         }
 
-        // Other has no more bits, reset our leftover bits
-        // to simulate ANDing
         if (i >= otherSize)
         {
+            // Other has no more bits, reset our 
+            // remaining bits because we're ANDing
             m_bits[i].reset();
         }
         else
@@ -149,10 +149,10 @@ SparseIndex& SparseIndex::operator&=(const SparseIndex& other)
 
 SparseIndex& SparseIndex::operator^=(const SparseIndex& other)
 {
-    // Prepare by allocating empty bitsets if necessary
     size_t otherSize = other.m_bits.size();
     while (otherSize > m_bits.size())
     {
+        // Ensure we have enough blocks for XORing against other
         allocateBlock();
     }
 
@@ -170,8 +170,8 @@ SparseIndex& SparseIndex::operator^=(const SparseIndex& other)
 
         if (otherHasNoMoreBits)
         {
-            // If other has no more bits, we need to XOR
-            // our remaining bits against an empty bitset
+            // Other has no more bits, so XOR our 
+            // remaining bits against empty bits
             m_bits[i] ^= DataBlock();
         }
         else
@@ -233,6 +233,8 @@ SparseIndex::Iterator::reference SparseIndex::Iterator::operator*() const
 
 eng::SparseIndex eng::operator|(const SparseIndex& lhs, const SparseIndex& rhs)
 {
+    // TODO: Share code with member operator overload
+
     SparseIndex out;
     size_t lhsSize = lhs.m_bits.size();
     size_t rhsSize = rhs.m_bits.size();
@@ -261,6 +263,8 @@ eng::SparseIndex eng::operator|(const SparseIndex& lhs, const SparseIndex& rhs)
 
 eng::SparseIndex eng::operator&(const SparseIndex& lhs, const SparseIndex& rhs)
 {
+    // TODO: Share code with member operator overload
+
     SparseIndex out;
     size_t lhsSize = lhs.m_bits.size();
     size_t rhsSize = rhs.m_bits.size();
@@ -289,6 +293,8 @@ eng::SparseIndex eng::operator&(const SparseIndex& lhs, const SparseIndex& rhs)
 
 eng::SparseIndex eng::operator^(const SparseIndex& lhs, const SparseIndex& rhs)
 {
+    // TODO: Share code with member operator overload
+
     constexpr auto emptyBits = SparseIndex::DataBlock();
 
     SparseIndex out;

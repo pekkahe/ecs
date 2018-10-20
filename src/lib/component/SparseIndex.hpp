@@ -8,6 +8,7 @@
 
 namespace eng
 {
+    // TODO: Rename to DynamicBitset?
     class SparseIndex
     {
     public:
@@ -77,12 +78,10 @@ namespace eng
 
         static Position bitPos(uint32_t pos);
         
-    private:
         void allocateBlock();
 
     private:
         static constexpr unsigned k_bitsPerBlock = 64;
-
         using DataBlock = std::bitset<k_bitsPerBlock>;
 
         std::vector<DataBlock> m_bits;

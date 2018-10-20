@@ -10,5 +10,4 @@ Dependencies:
 - [Dear ImGui](https://github.com/ocornut/imgui)
 - [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo)
 - [stb](https://github.com/nothings/stb)
-
-- [Google Test](https://github.com/google/googletest)
+- [Google Test + Google Mock](https://github.com/google/googletest)
