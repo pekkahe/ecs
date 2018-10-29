@@ -23,7 +23,7 @@ namespace eng
         std::fprintf(output, "\n");
 
 #ifdef _MSC_VER
-        char buffer[255]; \
+        char buffer[512]; \
         sprintf_s(buffer, sizeof(buffer), format, args...); \
         OutputDebugStringA(buffer);
         OutputDebugStringA("\n");

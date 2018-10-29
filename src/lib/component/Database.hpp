@@ -47,8 +47,8 @@ namespace eng
         TableRef<Updated> m_updated;
         TableRef<Deleted> m_deleted;
 
-        // todo: consider changing this to 'mutable' to allow 
-        //       entity creation from const database reference.
+        // TODO: consider changing this to 'mutable' to allow 
+        // entity creation from const database reference.
         EntityId m_nextEntityId = 1u;
     };
 

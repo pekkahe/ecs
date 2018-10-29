@@ -13,11 +13,13 @@ using namespace eng;
 Scene::Scene(std::shared_ptr<Window> window) :
     m_transformSystem(m_database, window),
     m_renderSystem(m_database),
-    m_cameraSystem(m_database, window)
+    m_cameraSystem(m_database, window),
+    m_selectionSystem(m_database, window)
 {
     registerSystem(m_transformSystem);
     registerSystem(m_cameraSystem);
     registerSystem(m_renderSystem);
+    registerSystem(m_selectionSystem);
 
     window->onWindowResize([&](int2 size) 
     {
@@ -46,7 +48,7 @@ void Scene::update()
         system->commitDeleted(m_database);
     }
 
-    // todo: multithreading; within system update or between updates?
+    // TODO: multithreading; within system update or between updates?
     // causality scheduling (const, non-const) for individual queries?
     for (auto system : m_systems)
     {
@@ -59,13 +61,28 @@ void Scene::update()
 
 EntityId Scene::createEntity()
 {
-    auto id = m_database.createEntity();
+    return m_database.createEntity();
+}
+
+EntityId Scene::createCamera()
+{
+    auto id = createEntity();
+
+    Transform transform;
+    transform.rotation = glm::quatLookAt(
+        vec3(0.0f, 0.0f, -1.0f), Camera::WorldUp);
+
+    m_cameraSystem.addCamera(id, Camera());
+    m_cameraSystem.addCameraControl(id, CameraControl());
+    m_transformSystem.addTransform(id, std::move(transform));
+
+    m_database.table<Added>().assign(id, Added());
+    m_database.table<Updated>().assign(id, Updated());
 
     return id;
 }
 
-// Test scene setup code
-void Scene::createTestEntities()
+EntityId Scene::createCube()
 {
     Mesh mesh;
     mesh.vertices = std::vector<vec3>
@@ -113,32 +130,17 @@ void Scene::createTestEntities()
         5, 1, 0
     };
 
-    auto meshId = createEntity();
+    auto id = createEntity();
 
-    {
-        Transform transform;
-        transform.position = vec3(0.f, 0.f, -3.f);
+    Transform transform;
+    transform.position = vec3(0.f, 0.f, -3.f);
 
-        m_renderSystem.addMesh(meshId, std::move(mesh));
-        m_transformSystem.addTransform(meshId, std::move(transform));
-        m_transformSystem.addTransformGizmo(meshId, TransformGizmo());
-    }
+    m_renderSystem.addMesh(id, std::move(mesh));
+    m_transformSystem.addTransform(id, std::move(transform));
+    m_transformSystem.addTransformGizmo(id, TransformGizmo());
 
-    m_database.table<Added>().assign(meshId, Added());
-    m_database.table<Updated>().assign(meshId, Updated());
+    m_database.table<Added>().assign(id, Added());
+    m_database.table<Updated>().assign(id, Updated());
 
-    auto cameraId = createEntity();
-
-    {
-        Transform transform;
-        transform.rotation = glm::quatLookAt(
-            vec3(0.0f, 0.0f, -1.0f), Camera::WorldUp);
-
-        m_cameraSystem.addCamera(cameraId, Camera());
-        m_cameraSystem.addCameraControl(cameraId, CameraControl());
-        m_transformSystem.addTransform(cameraId, std::move(transform));
-    }
-
-    m_database.table<Added>().assign(cameraId, Added());
-    m_database.table<Updated>().assign(cameraId, Updated());
+    return id;
 }

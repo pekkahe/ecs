@@ -123,6 +123,18 @@
     <ClCompile Include="..\src\lib\component\SparseIndex.cpp">
       <Filter>component</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\lib\ui\InputSystem.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\ui\SelectionSystem.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\graphics\BoundingBox.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\graphics\Raycast.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\vertex_tex.vert">
@@ -206,6 +218,27 @@
     </ClInclude>
     <ClInclude Include="..\src\lib\component\SparseSet.hpp">
       <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\Selected.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\Hovered.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\InputListener.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\InputSystem.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\SelectionSystem.hpp">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\BoundingBox.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\Raycast.hpp">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

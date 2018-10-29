@@ -71,6 +71,13 @@ void RenderSystem::update(const Scene&)
         // Bind element buffer object for vertex indices
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * mesh.indices.size(), &mesh.indices[0], GL_STATIC_DRAW);
+
+        // Compute bounding box
+        //mesh.aabb.clear();
+        for (auto& v : mesh.vertices)
+        {
+            mesh.aabb.expand(v);
+        }
     });
 
     query()
@@ -110,8 +117,8 @@ void RenderSystem::render()
             const Mesh& mesh)
     {
         m_shaders[0].use();
-        m_shaders[0].setMatrix("view", camera->view);
-        m_shaders[0].setMatrix("projection", camera->projection);
+        m_shaders[0].setMatrix("view", camera->viewMatrix);
+        m_shaders[0].setMatrix("projection", camera->projectionMatrix);
         m_shaders[0].setMatrix("model", transform.modelMatrix());
 
         glBindVertexArray(mesh.VAO);

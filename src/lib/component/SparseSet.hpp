@@ -10,9 +10,12 @@ namespace eng
 {
     // TODO: Fixed size sparse set container. Currently not used, because
     // of fixed size requirement, but could be faster than SparseIndex.
+    // Test this against SparseIndex i.e. DynamicBitset.
+    // TODO: Add iterator
     class SparseSet
     {
     private:
+        // TODO: Expose resizability
         static constexpr unsigned k_size = 256;
 
     public:

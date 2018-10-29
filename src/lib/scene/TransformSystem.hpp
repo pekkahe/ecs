@@ -24,5 +24,6 @@ namespace eng
         TableRef<TransformGizmo> m_transformGizmoTable;
 
         std::shared_ptr<TransformGizmoController> m_transformGizmoController;
+        std::shared_ptr<int> m_input;
     };
 }

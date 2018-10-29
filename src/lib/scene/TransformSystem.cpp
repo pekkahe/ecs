@@ -100,8 +100,8 @@ void TransformSystem::update(const Scene&)
 
         if (imgui::gizmoManipulate(
             modelMatrix,
-            camera->view,
-            camera->projection,
+            camera->viewMatrix,
+            camera->projectionMatrix,
             transformGizmo.operation))
         {
             // Decompose manipulated values back into component

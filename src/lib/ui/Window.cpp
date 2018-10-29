@@ -20,6 +20,7 @@ namespace
 Window::Window(int width, int height, const std::string& title)
 {
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    m_inputState.windowSize = { width, height };
 
     if (!m_window)
     {
@@ -51,13 +52,6 @@ Window::~Window()
     glfwDestroyWindow(m_window);
 }
 
-int2 Window::size() const
-{
-    int2 size {};
-    glfwGetWindowSize(m_window, &size.x, &size.y);
-    return size;
-}
-
 bool Window::pollEvents()
 {
     if (glfwWindowShouldClose(m_window))
@@ -65,7 +59,10 @@ bool Window::pollEvents()
         return false;
     }
 
+    m_inputState.cursorMoved = false;
+
     glfwPollEvents();
+
     return true;
 }
 
@@ -77,14 +74,14 @@ void Window::swapBuffers()
 
 void Window::captureMouseCursor(bool capture)
 {
-    glfwSetInputMode(m_window, GLFW_CURSOR, capture ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    m_inputState.cursorCaptured = capture;
+
+    glfwSetInputMode(m_window, GLFW_CURSOR, m_inputState.cursorCaptured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 }
 
-double2 Window::cursorPosition() const
+bool Window::isMouseCursorCaptured() const
 {
-    double2 pos;
-    glfwGetCursorPos(m_window, &pos.x, &pos.y);
-    return pos;
+    return m_inputState.cursorCaptured;
 }
 
 void Window::addEventListener(std::shared_ptr<IWindowEventListener> listener)
@@ -128,10 +125,12 @@ void Window::onMouseButton(GLFWwindow* window, int button, int action, int mods)
 void Window::onMouseCursor(GLFWwindow* window, double xpos, double ypos)
 {
     auto w = getUserWindow(window);
+    w->m_inputState.cursorPosition = { xpos, ypos };
+    w->m_inputState.cursorMoved = true;
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onMouseCursor(*w, { xpos, ypos });
+        l->onMouseCursor(*w, w->m_inputState.cursorPosition);
     }
 }
 
@@ -150,14 +149,37 @@ void Window::onFramebufferSizeCallback(GLFWwindow* window, int width, int height
     glViewport(0, 0, width, height);
 
     auto w = getUserWindow(window);
+    w->m_inputState.windowSize = { width, height };
 
     for (auto& l : w->m_eventListeners)
     {
-        l->onWindowResize(*w, { width, height });
+        l->onWindowResize(*w, w->m_inputState.windowSize);
     }
 
     for (auto& c : w->m_windowResizeCallbacks)
     {
-        c({ width, height });
+        c(w->m_inputState.windowSize);
     }
+}
+
+int2 Window::size() const
+{
+    return m_inputState.windowSize;
+}
+
+double2 Window::mouseCursorPosition() const
+{
+    return m_inputState.cursorPosition;
+}
+
+double2 Window::mouseCursorNormalizedPosition() const
+{
+    double x = (2.0f * m_inputState.cursorPosition.x) / m_inputState.windowSize.x - 1.0f;
+    double y = 1.0f - (2.0f * m_inputState.cursorPosition.y) / m_inputState.windowSize.y;
+    return { x, y };
+}
+
+bool Window::isMouseCursorMoved() const
+{
+    return m_inputState.cursorMoved;
 }

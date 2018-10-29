@@ -39,7 +39,7 @@ namespace eng
         {
         public:
             explicit Iterator(
-                SparseIndex& container,
+                const SparseIndex& container,
                 size_t size,
                 size_t pos) :
                 m_container(container),
@@ -56,7 +56,7 @@ namespace eng
             reference operator*() const;
 
         private:
-            SparseIndex& m_container;
+            const SparseIndex& m_container;
             // Total number of bits in iterated container.
             size_t m_size;
             // Current bit position of iterator.
@@ -64,8 +64,8 @@ namespace eng
         };
 
     public:
-        Iterator begin();
-        Iterator end();
+        Iterator begin() const;
+        Iterator end() const;
 
     private:
         struct Position

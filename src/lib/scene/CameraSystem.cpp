@@ -61,9 +61,9 @@ void CameraSystem::update(const Scene&)
         
         // To get the camera's view matrix, 
         // we just inverse its model matrix
-        camera.view = glm::inverse(model);
+        camera.viewMatrix = glm::inverse(model);
 
-        camera.projection = glm::perspective(
+        camera.projectionMatrix = glm::perspective(
             glm::radians(camera.fov),
             camera.aspectRatio,
             camera.nearPlane,

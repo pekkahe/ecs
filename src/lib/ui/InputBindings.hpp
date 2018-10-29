@@ -4,7 +4,7 @@
 
 namespace eng
 {
-    ENUM_FLAGS(EngineAction)
+    ENUM_FLAGS(InputAction)
     {
         None = 0,
         CameraMoveForward = 1 << 0,
@@ -14,11 +14,19 @@ namespace eng
         CameraZoom = 1 << 4,
         CameraToggleControl = 1 << 5,
         ChangeGizmoMode = 1 << 6,
-        QuitApplication = 1 << 7,
+        CreateCube = 1 << 7,
+        DeleteEntity = 1 << 8,
+        QuitApplication = 1 << 9,
     };
 
-    enum class CameraMovement_
+    class InputBindings
     {
 
+    };
+
+    class InputActions
+    {
+    public:
+        bool check(InputAction action) const;
     };
 }

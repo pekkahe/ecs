@@ -1,8 +1,8 @@
 #pragma once
 
 #include <component/IComponent.hpp>
-
 #include <core/Defines.hpp>
+#include <graphics/BoundingBox.hpp>
 
 namespace eng
 {
@@ -12,6 +12,8 @@ namespace eng
         std::vector<vec3> vertices;
         std::vector<vec3> colors;
         std::vector<unsigned> indices;
+
+        BoundingBox aabb;
 
         unsigned int VAO = 0u;
         unsigned int VBOV = 0u; // vertices

@@ -16,8 +16,8 @@ namespace eng
         float farPlane = 100.0f;
 
         // todo: these could be cached in a separate CameraMatrix component
-        mat4 view = mat4(1.0f);
-        mat4 projection = mat4(1.0f);
+        mat4 viewMatrix = mat4(1.0f);
+        mat4 projectionMatrix = mat4(1.0f);
     };
 }
 

@@ -445,8 +445,8 @@ void Renderer::drawCube(const Camera& camera)
     m_shaders[3].setInt("texture1", 0);
     m_shaders[3].setInt("texture2", 1);
 
-    m_shaders[3].setMatrix("view", camera.view);
-    m_shaders[3].setMatrix("projection", camera.projection);
+    m_shaders[3].setMatrix("view", camera.viewMatrix);
+    m_shaders[3].setMatrix("projection", camera.projectionMatrix);
 
     //! Render loop
     // Activate the texture unit first before binding texture

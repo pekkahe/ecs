@@ -2,6 +2,7 @@
 
 #include <core/Datatypes.hpp>
 
+#include <imgui.h>
 #include <ImGuizmo.h>
 
 namespace eng

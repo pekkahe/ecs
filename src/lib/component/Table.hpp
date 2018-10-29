@@ -30,8 +30,8 @@ namespace eng
         bool empty() const override;
         size_t size() const;
 
-        const std::vector<EntityId>& ids() const;
-        SparseIndex index() const;
+        std::vector<EntityId> ids() const;
+        const SparseIndex& index() const;
 
         Component* operator[](EntityId id);
         const Component* operator[](EntityId id) const;
@@ -42,7 +42,7 @@ namespace eng
         void forEach(std::function<void(EntityId, Component&)> func) const;
 
     private:
-        // TODO: Assert no concurrent read & writes
+        // TODO: Assert no concurrent read & write
 
         SparseIndex m_index;
         std::vector<EntityId> m_ids; // TODO: Replace with m_index and operator[]?
@@ -51,7 +51,16 @@ namespace eng
         std::deque<size_t> m_freeIndices;
 
         // TODO: Offset based entity component indexing?
-        //std::vector<size_t> m_offsets;
+        // * component data is stored sequentially in one large array and indexed 
+        //   by using separate arrays which store offset values to entity indices
+
+        // TODO: Signature based entity component queries?
+        // * each component is associated with a bit flag, up to a fixed maximum number
+        //   of component (e.g. 64 or 128)
+        // * each entity is associated with a bitmask describing the components it has
+        //   note: could force us to use sync points for component assignment and removal
+        // * the query constructs a bitmask, or "signature", for the searched components
+        //   and does a bitwise AND against all entities in order to find matches
     };
 
     template <typename Component>
@@ -123,7 +132,7 @@ namespace eng
     }
     
     template<typename Component>
-    inline const std::vector<EntityId>& Table<Component>::ids() const
+    inline std::vector<EntityId> Table<Component>::ids() const
     {
         std::vector<EntityId> ids;
 
@@ -138,7 +147,7 @@ namespace eng
     }
 
     template<typename Component>
-    inline SparseIndex Table<Component>::index() const
+    inline const SparseIndex& Table<Component>::index() const
     {
         return m_index;
     }

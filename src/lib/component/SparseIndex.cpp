@@ -188,7 +188,7 @@ void SparseIndex::allocateBlock()
     m_bits.emplace_back(DataBlock());
 }
 
-SparseIndex::Iterator SparseIndex::begin()
+SparseIndex::Iterator SparseIndex::begin() const
 {
     size_t size = m_bits.size() * k_bitsPerBlock;
     size_t pos = skipEmptyBits(*this, 0u, size);
@@ -196,7 +196,7 @@ SparseIndex::Iterator SparseIndex::begin()
     return Iterator(*this, size, pos);
 }
 
-SparseIndex::Iterator SparseIndex::end()
+SparseIndex::Iterator SparseIndex::end() const
 {
     size_t size = m_bits.size() * k_bitsPerBlock;
 

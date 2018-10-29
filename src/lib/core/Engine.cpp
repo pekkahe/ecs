@@ -54,16 +54,17 @@ void Engine::execute()
     auto window = std::make_shared<Window>(640, 480, "Shoe");
     auto scene = std::make_shared<Scene>(window);
 
-    scene->createTestEntities();
+    scene->createCamera();
+    scene->createCube();
 
     while (window->pollEvents() && !m_terminate)
     {
         imgui::beginFrame();
 
-        // todo: logic thread
+        // TODO: logic thread
         scene->update();
 
-        // todo: render thread
+        // TODO: render thread
         scene->renderer().beginFrame();
         scene->renderer().render();
         scene->renderer().endFrame();

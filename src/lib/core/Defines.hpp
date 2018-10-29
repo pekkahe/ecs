@@ -25,6 +25,8 @@
 #include <type_traits>
 #include <typeinfo> 
 
+#define NOMINMAX
+
 #define MOVABLE_ONLY(T) \
         T(const T&) = delete; \
         T(T&&) = default; \

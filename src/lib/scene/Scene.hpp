@@ -7,6 +7,7 @@
 
 #include <scene/CameraSystem.hpp>
 #include <scene/TransformSystem.hpp>
+#include <ui/SelectionSystem.hpp>
 
 namespace eng
 {
@@ -18,17 +19,18 @@ namespace eng
         Scene(Scene&&) = default;
         Scene& operator=(Scene&&) = default;
 
-        void createTestEntities();
-
         void registerSystem(ISystem& system);
         void update();
 
+        // TODO: entity creation; move into factory class?
         EntityId createEntity();
+        EntityId createCamera();
+        EntityId createCube();
 
         RenderSystem& renderer() { return m_renderSystem; }
 
-        // Receive read-only access to scene database. Only 
-        // subsystems are allowed to modify database content.
+        // Read-only access to scene database. Only systems
+        // are allowed to modify database content.
         const Database& database() const { return m_database; }
 
     private:
@@ -39,5 +41,6 @@ namespace eng
         TransformSystem m_transformSystem;
         RenderSystem m_renderSystem;
         CameraSystem m_cameraSystem;
+        SelectionSystem m_selectionSystem;
     };
 }
