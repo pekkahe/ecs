@@ -36,6 +36,7 @@ namespace eng
             const mat4& modelMatrix,
             float& intersectionDistance);
 
+        // Algorithms taken from "Game Physics Cookbook" chapter "3D Line Intersections"
 
         float raycast(const Ray& ray, const AABB& aabb);
 

@@ -166,7 +166,94 @@ float eng::gfx::raycast(const Ray& ray, const AABB& aabb)
     return 0.0f;
 }
 
+
 float eng::gfx::raycast(const Ray& ray, const OBB& obb)
 {
-    return 0.0f;
+    // Store half extents of the box
+    vec3 size = obb.halfExtents;
+
+    // Store each axis (X, Y, Z) of the OBB's rotation frame
+    vec3 x = obb.rotation[0];
+    vec3 y = obb.rotation[1];
+    vec3 z = obb.rotation[2];
+
+    // To test slabs, we first need to find a vector pointing from the origin
+    // of the ray to the OBB
+    vec3 p = obb.position - ray.origin;
+
+    // Next, we project the direction of the ray onto each of the axis of the OBB
+    vec3 f(
+        glm::dot(x, ray.direction),
+        glm::dot(y, ray.direction),
+        glm::dot(z, ray.direction));
+
+    // We project 'p' into every axis of the OBB's rotation frame,
+    // and store the result of each of these projections
+    vec3 e(
+        glm::dot(x, p),
+        glm::dot(y, p),
+        glm::dot(z, p));
+
+    // Next, we calculate the min and max intersection distances for each axis
+    // (tx_min, tx_max, ty_min, ty_max, tz_min, tz_max), and store these values
+    // in t[0..5]
+    float t[6] = { 0.f, 0.f, 0.f, 0.f, 0.f, 0.f };
+
+    constexpr float epsilon = 0.00001f;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        if (std::abs(f[i]) < epsilon)
+        {
+            // If the ray is parallel to the slab being tested, and the origin
+            // of the ray is not inside the slab, we have no hit
+            if (-e[i] - size[i] > 0.f || -e[i] + size[i] < 0.f)
+            {
+                return -1.f;
+            }
+            f[i] = epsilon; // Avoid div by 0!
+        }
+
+        t[i * 2 + 0] = (e[i] + size[i]) / f[i]; // min
+        t[i * 2 + 1] = (e[i] - size[i]) / f[i]; // max
+    }
+
+    // If the above loop finished executing, the ray hit all three slabs.
+    // To finish the raycast, we find the largest minimum (t_min) and smallest 
+    // maximum (t_max). We take care of any edge casesm and return the point
+    // closes to the origin of the ray.
+    float tmin = std::fmaxf(
+        std::fmaxf(
+            std::fminf(t[0], t[1]),  // x
+            std::fminf(t[2], t[3])), // y
+        std::fminf(t[4], t[5]));     // z
+
+    float tmax = std::fminf(
+        std::fminf(
+            std::fmaxf(t[0], t[1]),  // x
+            std::fmaxf(t[2], t[3])), // y
+        std::fmaxf(t[4], t[5]));     // z
+
+    // If 'tmax' is less than 0, the ray is intersecting the OBB in the negative
+    // direction. This means the OBB is behind the origin of the ray, and this
+    // should not count as an intersection.
+    if (tmax < 0.f)
+    {
+        return -1.f;
+    }
+
+    // If 'tmin' is greater than 'tmax', the ray does not intersect the OBB
+    if (tmin > tmax)
+    {
+        return -1.f;
+    }
+
+    // If 'tmin' is less than 0, the ray started inside the OBB. This means
+    // 'tmax' is a valid intersection.
+    if (tmin < 0.f)
+    {
+        return tmax;
+    }
+
+    return tmin;
 }

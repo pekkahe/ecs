@@ -52,24 +52,21 @@ void SelectionSystem::update(const Scene&)
             const Mesh& mesh,
             const Transform& transform)
     {
-        auto model = transform.modelMatrix();
-
-
-
-        // TODO: float raycast(Ray, OBB)
-
-        float distance = 0.0f;
-
-        if (gfx::raycastObb(
-            ray,
-            mesh.aabb, 
-            model,
-            distance))
+        if (gfx::raycast(ray, mesh.obb) > 0.f)
         {
-            //SHOE_LOG("Ray HIT");
-
             m_hoveredTable.assign(id, Hovered());
         }
+
+        //auto model = transform.modelMatrix();
+        //float distance = 0.0f;
+        //if (gfx::raycastObb(
+        //    ray,
+        //    mesh.aabb, 
+        //    model,
+        //    distance))
+        //{
+        //    m_hoveredTable.assign(id, Hovered());
+        //}
     });
 }
 

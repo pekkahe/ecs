@@ -80,7 +80,7 @@ void RenderSystem::update(const Scene&)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * mesh.indices.size(), &mesh.indices[0], GL_STATIC_DRAW);
     });
-
+        
     query()
         .hasComponent<Updated>()
         .hasComponent<Transform>()
@@ -93,23 +93,24 @@ void RenderSystem::update(const Scene&)
     {
         // Compute axis-aligned bounding box for updated rotation and scale,
         // so that it fully contains the mesh in any orientation
-
-        // TODO: Sooo... we might not want to orientate the AABB at all after its 
-        // initially constructed from the mesh vertices, but instead use and expose
-        // the OBB as the bounding volume for the mesh.
-
-        mesh.aabb.clear();
-
-        mat4 rotate = glm::mat4_cast(transform.rotation);
-        mat4 scale = glm::scale(mat4(1.0f), transform.scale);
-        mat4 mat = rotate * scale;
-
-        for (auto& v : mesh.vertices)
         {
-            vec4 p = mat * vec4(v, 1.0f);
-            // p /= p.w; // Always 1.0 since we ignore position
+            // TODO: Sooo... we might not want to orientate the AABB at all after its 
+            // initially constructed from the mesh vertices, but instead use and expose
+            // the OBB as the bounding volume for the mesh.
 
-            mesh.aabb.expand(p);
+            mesh.aabb.clear();
+
+            mat4 rotate = glm::mat4_cast(transform.rotation);
+            mat4 scale = glm::scale(mat4(1.0f), transform.scale);
+            mat4 mat = rotate * scale;
+
+            for (auto& v : mesh.vertices)
+            {
+                vec4 p = mat * vec4(v, 1.0f);
+                // p /= p.w; // Always 1.0 since we ignore position
+
+                mesh.aabb.expand(p);
+            }
         }
 
         {
@@ -135,21 +136,30 @@ void RenderSystem::update(const Scene&)
         }
 
         // Compute object oriented bounding box
-        // NOTE: Use untransformed AABB so mesh rotation doesn't affect extents
-        AABB aabb;
-        for (auto& v : mesh.vertices)
         {
-            aabb.expand(v);
+            // NOTE: Use untransformed AABB so mesh rotation doesn't affect extents
+            AABB aabb;
+            for (auto& v : mesh.vertices)
+            {
+                aabb.expand(v);
+            }
+
+            mat4 scale = glm::scale(mat4(1.0f), transform.scale);
+
+            mesh.obb.halfExtents = scale * vec4(aabb.halfExtents(), 1.0f);
+
+            // Don't include scale in model matrix, because scale should only affect
+            // the OBB's half extents
+            mat4 translate = glm::translate(mat4(1.0f), transform.position);
+            mat4 rotate = glm::mat4_cast(transform.rotation);
+            mat4 model = translate * rotate;
+
+            vec4 pos = model * vec4(aabb.center(), 1.0f);
+            pos /= pos.w;
+
+            mesh.obb.position = vec3(pos);
+            mesh.obb.rotation = mat3(model);
         }
-
-        mesh.obb.halfExtents = aabb.halfExtents();
-
-        mat4 model = transform.modelMatrix();
-        vec4 pos = model * vec4(aabb.center(), 1.0f);
-        pos /= pos.w;
-
-        mesh.obb.position = vec3(pos);
-        mesh.obb.rotation = mat3(model);
     });
 
     query()
@@ -185,6 +195,7 @@ void RenderSystem::render()
     auto camera = query().find<Camera>();
     assert(camera != nullptr && "No camera in scene");
 
+    // Draw meshes
     query()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
@@ -211,6 +222,7 @@ void RenderSystem::render()
         glDisable(GL_STENCIL_TEST);
     });
 
+    // Draw meshes' mouse hover outline
     query()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
@@ -232,8 +244,7 @@ void RenderSystem::render()
         m_shaders[1].setMat4("view", camera->viewMatrix);
         m_shaders[1].setMat4("projection", camera->projectionMatrix);
         m_shaders[1].setMat4("model", transform.modelMatrix());
-        //m_shaders[1].setVec3("color", vec3(1.0f, 0.95f, 0.33f));  // yellow
-        m_shaders[1].setVec3("color", vec3(1.0f, 0.70f, 0.35f));
+        m_shaders[1].setVec3("color", vec3(0.2f, 1.0f, 0.4f));
 
         glBindVertexArray(mesh.VAO);
         glLineWidth(4.0f);
@@ -415,11 +426,17 @@ void RenderSystem::render()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
         glEnableVertexAttribArray(0);
 
-        mat4 translate = glm::translate(mat4(1.0f), transform.position);
+        mat4 translate = glm::translate(mat4(1.0f), pos);
         mat4 rotate = mat4(rot);
+        //mat4 rotate = mat4(
+        //    vec4(rot[0],  0),
+        //    vec4(rot[1],  0),
+        //    vec4(rot[2],  0),
+        //    vec4(0, 0, 0, 1));
+        //rotate = mat4(1);
         mat4 scale = glm::scale(mat4(1.0f), vec3(1.0f));
         mat4 model = translate * rotate * scale;
 
@@ -432,11 +449,6 @@ void RenderSystem::render()
         glBindVertexArray(VAO);
         glDrawArrays(GL_LINES, 0, vertices.size());
         glBindVertexArray(0);
-
-        //glm::mat4 trans(1.0f);
-        //trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-        //trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-        //m_shaders[2].setMat4("transform", trans);
     });
 }
 
