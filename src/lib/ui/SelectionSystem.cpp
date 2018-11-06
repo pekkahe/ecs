@@ -34,13 +34,13 @@ void SelectionSystem::update(const Scene&)
 
     gfx::Ray ray = gfx::cursorPosToWorldRay(cursorPos, *camera);
 
-    SHOE_LOG("\n "
-        "Cursor (%f %f) \n "
-        "Ray ori (%f %f %f) \n "
-        "Ray dir (%f %f %f) \n ",
-        cursorPos.x, cursorPos.y, 
-        ray.origin.x, ray.origin.y, ray.origin.z,
-        ray.direction.x, ray.direction.y, ray.direction.z);
+    //SHOE_LOG("\n "
+    //    "Cursor (%f %f) \n "
+    //    "Ray ori (%f %f %f) \n "
+    //    "Ray dir (%f %f %f) \n ",
+    //    cursorPos.x, cursorPos.y, 
+    //    ray.origin.x, ray.origin.y, ray.origin.z,
+    //    ray.direction.x, ray.direction.y, ray.direction.z);
 
     m_hoveredTable.clear();
 
@@ -52,15 +52,21 @@ void SelectionSystem::update(const Scene&)
             const Mesh& mesh,
             const Transform& transform)
     {
+        auto model = transform.modelMatrix();
+
+
+
+        // TODO: float raycast(Ray, OBB)
+
         float distance = 0.0f;
 
         if (gfx::raycastObb(
             ray,
             mesh.aabb, 
-            transform.modelMatrix(), 
+            model,
             distance))
         {
-            SHOE_LOG("Ray HIT");
+            //SHOE_LOG("Ray HIT");
 
             m_hoveredTable.assign(id, Hovered());
         }

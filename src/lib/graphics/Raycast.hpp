@@ -1,7 +1,8 @@
 #pragma once
 
 #include <core/Datatypes.hpp>
-#include <graphics/BoundingBox.hpp>
+#include <graphics/AABB.hpp>
+#include <graphics/OBB.hpp>
 #include <scene/Camera.hpp>
 
 namespace eng
@@ -31,8 +32,13 @@ namespace eng
         // Returns true if the ray intersects with the oriented bounding box, otherwise false.
         bool raycastObb(
             const Ray& ray,
-            const BoundingBox& aabb,
+            const AABB& aabb,
             const mat4& modelMatrix,
             float& intersectionDistance);
+
+
+        float raycast(const Ray& ray, const AABB& aabb);
+
+        float raycast(const Ray& ray, const OBB& obb);
     }
 }

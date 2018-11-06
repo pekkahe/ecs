@@ -173,7 +173,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\lib\component\SparseIndex.cpp" />
     <ClCompile Include="..\src\lib\component\System.cpp" />
-    <ClCompile Include="..\src\lib\graphics\BoundingBox.cpp" />
+    <ClCompile Include="..\src\lib\graphics\AABB.cpp" />
+    <ClCompile Include="..\src\lib\graphics\OBB.cpp" />
     <ClCompile Include="..\src\lib\graphics\Raycast.cpp" />
     <ClCompile Include="..\src\lib\scene\Camera.cpp" />
     <ClCompile Include="..\src\lib\scene\CameraSystem.cpp" />
@@ -214,8 +215,9 @@
     <ClInclude Include="..\src\lib\core\Math.hpp" />
     <ClInclude Include="..\src\lib\core\Traits.hpp" />
     <ClInclude Include="..\src\lib\core\Updated.hpp" />
-    <ClInclude Include="..\src\lib\graphics\BoundingBox.hpp" />
+    <ClInclude Include="..\src\lib\graphics\AABB.hpp" />
     <ClInclude Include="..\src\lib\graphics\Mesh.hpp" />
+    <ClInclude Include="..\src\lib\graphics\OBB.hpp" />
     <ClInclude Include="..\src\lib\graphics\Raycast.hpp" />
     <ClInclude Include="..\src\lib\graphics\RenderSystem.hpp" />
     <ClInclude Include="..\src\lib\scene\CameraControl.hpp" />
@@ -250,8 +252,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\fragment.frag" />
+    <None Include="..\shaders\fragment_single.frag" />
     <None Include="..\shaders\fragment_tex.frag" />
+    <None Include="..\shaders\fragment_col.frag" />
     <None Include="..\shaders\vertex.vert" />
+    <None Include="..\shaders\vertex_hilight.vert" />
+    <None Include="..\shaders\vertex_pos.vert" />
     <None Include="..\shaders\vertex_tex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

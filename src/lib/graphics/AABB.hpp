@@ -5,10 +5,10 @@
 namespace eng
 {
     // Axis-aligned bounding box.
-    class BoundingBox
+    class AABB
     {
     public:
-        BoundingBox();
+        AABB();
 
         void expand(const vec3& point);
         void clear();
@@ -17,7 +17,9 @@ namespace eng
 
         const vec3& min() const { return m_min; }
         const vec3& max() const { return m_max; }
+
         vec3 center() const;
+        vec3 halfExtents() const;
 
     private:
         vec3 m_min;

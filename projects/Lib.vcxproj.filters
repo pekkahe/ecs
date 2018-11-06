@@ -129,10 +129,13 @@
     <ClCompile Include="..\src\lib\ui\SelectionSystem.cpp">
       <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\graphics\BoundingBox.cpp">
+    <ClCompile Include="..\src\lib\graphics\Raycast.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\graphics\Raycast.cpp">
+    <ClCompile Include="..\src\lib\graphics\AABB.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\graphics\OBB.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,6 +150,18 @@
       <Filter>graphics\shaders</Filter>
     </None>
     <None Include="..\shaders\vertex.vert">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\fragment_single.frag">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\vertex_hilight.vert">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\vertex_pos.vert">
+      <Filter>graphics\shaders</Filter>
+    </None>
+    <None Include="..\shaders\fragment_col.frag">
       <Filter>graphics\shaders</Filter>
     </None>
   </ItemGroup>
@@ -234,10 +249,13 @@
     <ClInclude Include="..\src\lib\ui\SelectionSystem.hpp">
       <Filter>ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\graphics\BoundingBox.hpp">
+    <ClInclude Include="..\src\lib\graphics\Raycast.hpp">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\graphics\Raycast.hpp">
+    <ClInclude Include="..\src\lib\graphics\AABB.hpp">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\graphics\OBB.hpp">
       <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>

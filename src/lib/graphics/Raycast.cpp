@@ -45,7 +45,7 @@ eng::gfx::Ray eng::gfx::cursorPosToWorldRay(double2 normalizedCursorPos, const C
 // Additional reference: http://antongerdelan.net/opengl/raycasting.html
 bool eng::gfx::raycastObb(
     const Ray& ray,
-    const BoundingBox& aabb,
+    const AABB& aabb,
     const mat4& modelMatrix, 
     float& intersectionDistance)
 {
@@ -80,32 +80,32 @@ bool eng::gfx::raycastObb(
         if (std::abs(f) > epsilon)
         {
             // Intersection with the "left" plane
-            float t1 = (e + aabbMin) / f; 
+            float tMin = (e + aabbMin) / f; 
             // Intersection with the "right" plane
-            float t2 = (e + aabbMax) / f; 
+            float tMax = (e + aabbMax) / f; 
 
-            // t1 and t2 now contain distances between ray origin and ray-plane intersections, 
-            // but we don’t know in what order, so we make sure that t1 represents the "near"
-            // intersection and t2 the "far"
-            if (t1 > t2)
+            // tMin and tMax now contain distances between ray origin and ray-plane intersections, 
+            // but we don’t know in what order, so we make sure that tMin represents the near
+            // intersection and tMax the far
+            if (tMin > tMax)
             {
-                float tMax = t1; 
-                t1 = t2; 
-                t2 = tMax; 
+                float temp = tMin; 
+                tMin = tMax; 
+                tMax = temp;
             }
 
-            if (t2 < maxDistance)
+            if (tMax < maxDistance)
             {
-                maxDistance = t2;
+                maxDistance = tMax;
             }
 
-            if (t1 > minDistance)
+            if (tMin > minDistance)
             {
-                minDistance = t1;
+                minDistance = tMin;
             }
 
             // If "far" is closer than "near", then there is NO intersection
-            if (maxDistance < minDistance)
+            if (minDistance > maxDistance)
             {
                 return false;
             }
@@ -159,4 +159,14 @@ bool eng::gfx::raycastObb(
 
     intersectionDistance = minDistance;
     return true;
+}
+
+float eng::gfx::raycast(const Ray& ray, const AABB& aabb)
+{
+    return 0.0f;
+}
+
+float eng::gfx::raycast(const Ray& ray, const OBB& obb)
+{
+    return 0.0f;
 }

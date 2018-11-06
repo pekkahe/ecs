@@ -84,7 +84,7 @@ bool eng::imgui::gizmoManipulate(
         nullptr); // boundSizingSnap ? boundsSnap 
 
     model = glm::make_mat4(&modelMatrix[0]);
-
+    
     // Return whether gizmo was manipulated this frame or not
     return ImGuizmo::IsUsing();
 }

@@ -2,7 +2,8 @@
 
 #include <component/IComponent.hpp>
 #include <core/Defines.hpp>
-#include <graphics/BoundingBox.hpp>
+#include <graphics/AABB.hpp>
+#include <graphics/OBB.hpp>
 
 namespace eng
 {
@@ -13,7 +14,8 @@ namespace eng
         std::vector<vec3> colors;
         std::vector<unsigned> indices;
 
-        BoundingBox aabb;
+        AABB aabb;
+        OBB obb;
 
         unsigned int VAO = 0u;
         unsigned int VBOV = 0u; // vertices

@@ -345,7 +345,7 @@ void Renderer::drawTexture()
         glm::mat4 trans(1.0f);
         trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
         trans = glm::rotate(trans, (float) glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-        m_shaders[2].setMatrix("transform", trans);
+        m_shaders[2].setMat4("transform", trans);
     }
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     
@@ -354,7 +354,7 @@ void Renderer::drawTexture()
         trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
         trans = glm::scale(trans, glm::sin((float) glfwGetTime()) * glm::vec3(1.0f, 1.0f, 1.0f));
         
-        m_shaders[2].setMatrix("transform", trans);
+        m_shaders[2].setMat4("transform", trans);
     }
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -445,8 +445,8 @@ void Renderer::drawCube(const Camera& camera)
     m_shaders[3].setInt("texture1", 0);
     m_shaders[3].setInt("texture2", 1);
 
-    m_shaders[3].setMatrix("view", camera.viewMatrix);
-    m_shaders[3].setMatrix("projection", camera.projectionMatrix);
+    m_shaders[3].setMat4("view", camera.viewMatrix);
+    m_shaders[3].setMat4("projection", camera.projectionMatrix);
 
     //! Render loop
     // Activate the texture unit first before binding texture
@@ -469,7 +469,7 @@ void Renderer::drawCube(const Camera& camera)
         }
         model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
-        m_shaders[3].setMatrix("model", model);
+        m_shaders[3].setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
