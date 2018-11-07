@@ -1,8 +1,6 @@
 #include <Precompiled.hpp>
 #include <graphics/RenderSystem.hpp>
 
-#include <component/Query.hpp>
-
 #include <scene/Hovered.hpp>
 #include <scene/Scene.hpp>
 #include <scene/Selected.hpp>
@@ -11,13 +9,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/quaternion.hpp>
-
-#include <imgui.h>
-#include <imgui_impl_opengl3.h>
 
 using namespace eng;
 using namespace eng::gfx;
@@ -143,22 +134,30 @@ void RenderSystem::update(const Scene&)
             {
                 aabb.expand(v);
             }
+            
+            //mat4 rotate = glm::mat4_cast(transform.rotation);
 
-            mat4 scale = glm::scale(mat4(1.0f), transform.scale);
+            // OBB orientation in world space. Don't include scale,
+            // because scale should only affect size
+            //mat4 model = translate * rotate;
 
-            mesh.obb.halfExtents = scale * vec4(aabb.halfExtents(), 1.0f);
-
-            // Don't include scale in model matrix, because scale should only affect
-            // the OBB's half extents
+            // OBB world position
             mat4 translate = glm::translate(mat4(1.0f), transform.position);
-            mat4 rotate = glm::mat4_cast(transform.rotation);
-            mat4 model = translate * rotate;
+            //vec4 position = translate * vec4(aabb.center(), 1.0f); // translate * rotate * vec4(aabb.center(), 1.0f);
+            //position /= position.w;
 
-            vec4 pos = model * vec4(aabb.center(), 1.0f);
-            pos /= pos.w;
+            // OBB size
+            mat4 scale = glm::scale(mat4(1.0f), transform.scale);
+            vec4 halfExtents = scale * vec4(aabb.halfExtents(), 1.0f);
 
-            mesh.obb.position = vec3(pos);
-            mesh.obb.rotation = mat3(model);
+            //mesh.obb.position = vec3(position);
+            //mesh.obb.halfExtents = vec3(halfExtents);
+            //mesh.obb.rotation = mat3(rotate); // mat3(model);
+
+            // TODO: Matrix transformation or direct vector calculation?
+            mesh.obb.position = transform.position + aabb.center();
+            mesh.obb.halfExtents = transform.scale * aabb.halfExtents();
+            mesh.obb.rotation = glm::mat3_cast(transform.rotation);
         }
     });
 
@@ -222,7 +221,7 @@ void RenderSystem::render()
         glDisable(GL_STENCIL_TEST);
     });
 
-    // Draw meshes' mouse hover outline
+    // Draw hovered meshes outline
     query()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
@@ -240,6 +239,44 @@ void RenderSystem::render()
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
         glStencilMask(0x00);
         
+        m_shaders[1].use();
+        m_shaders[1].setMat4("view", camera->viewMatrix);
+        m_shaders[1].setMat4("projection", camera->projectionMatrix);
+        m_shaders[1].setMat4("model", transform.modelMatrix());
+        m_shaders[2].setVec3("color", vec3(1.0f, 0.9f, 0.3f));
+        
+        glBindVertexArray(mesh.VAO);
+        glLineWidth(4.0f);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glDrawElements(GL_LINE_STRIP, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glLineWidth(1.0f);
+        glBindVertexArray(0);
+
+        glStencilMask(0xFF);
+
+        glEnable(GL_DEPTH_TEST);
+        glDisable(GL_STENCIL_TEST);
+    });
+
+    // Draw selected meshes outline
+    query()
+        .hasComponent<Transform>()
+        .hasComponent<Mesh>()
+        .hasComponent<Selected>()
+        .execute([&](
+            EntityId id,
+            const Transform& transform,
+            const Mesh& mesh,
+            const Selected&)
+    {
+        glEnable(GL_STENCIL_TEST);
+        glDisable(GL_DEPTH_TEST);
+
+        // Disable writing to the stencil buffer
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+
         m_shaders[1].use();
         m_shaders[1].setMat4("view", camera->viewMatrix);
         m_shaders[1].setMat4("projection", camera->projectionMatrix);
@@ -431,12 +468,6 @@ void RenderSystem::render()
 
         mat4 translate = glm::translate(mat4(1.0f), pos);
         mat4 rotate = mat4(rot);
-        //mat4 rotate = mat4(
-        //    vec4(rot[0],  0),
-        //    vec4(rot[1],  0),
-        //    vec4(rot[2],  0),
-        //    vec4(0, 0, 0, 1));
-        //rotate = mat4(1);
         mat4 scale = glm::scale(mat4(1.0f), vec3(1.0f));
         mat4 model = translate * rotate * scale;
 
@@ -444,8 +475,8 @@ void RenderSystem::render()
         m_shaders[2].setMat4("view", camera->viewMatrix);
         m_shaders[2].setMat4("projection", camera->projectionMatrix);
         m_shaders[2].setMat4("model", model);
-        m_shaders[2].setVec3("color", vec3(1.0f, 0.9f, 0.3f));
-
+        m_shaders[2].setVec3("color", vec3(0.6f, 0.7f, 0.9f));
+        
         glBindVertexArray(VAO);
         glDrawArrays(GL_LINES, 0, vertices.size());
         glBindVertexArray(0);

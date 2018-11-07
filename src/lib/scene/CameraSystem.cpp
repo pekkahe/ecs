@@ -13,6 +13,10 @@ CameraSystem::CameraSystem(
     m_cameraController(std::make_shared<CameraController>(window->size()))
 {
     window->addEventListener(m_cameraController);
+    window->onWindowResize([&](int2 size)
+    {
+        setAspectRatio(static_cast<float>(size.x) / size.y);
+    });
 }
 
 CameraSystem::~CameraSystem()
@@ -21,17 +25,14 @@ CameraSystem::~CameraSystem()
 
 void CameraSystem::update(const Scene&)
 {
-    auto cameraControls = m_cameraControlTable.ids();
-    if (!cameraControls.empty())
+    m_cameraControlTable.forEach(
+        [&](EntityId id, CameraControl& control) 
     {
-        auto cameraControlId = cameraControls[0];
-        auto cameraControl = m_cameraControlTable[cameraControlId];
-
-        if (m_cameraController->update(*cameraControl))
+        if (m_cameraController->update(control))
         {
-            markUpdated(cameraControlId);
+            markUpdated(id);
         }
-    }
+    });
 
     query()
         .hasComponent<Updated>()
@@ -59,10 +60,7 @@ void CameraSystem::update(const Scene&)
     {
         mat4 model = transform.modelMatrix();
         
-        // To get the camera's view matrix, 
-        // we just inverse its model matrix
         camera.viewMatrix = glm::inverse(model);
-
         camera.projectionMatrix = glm::perspective(
             glm::radians(camera.fov),
             camera.aspectRatio,
@@ -70,6 +68,7 @@ void CameraSystem::update(const Scene&)
             camera.farPlane);
     });
 
+    // TODO: "WindowState" Component? Could use Updated, Added...
     //query()
     //    .hasComponent<Transform>()
     //    .hasComponent<Camera>(m_cameraTable)

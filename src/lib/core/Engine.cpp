@@ -1,18 +1,9 @@
 #include <Precompiled.hpp>
-
-#include <component/Query.hpp>
 #include <core/Engine.hpp>
-#include <graphics/OldRenderer.hpp>
+
 #include <scene/Scene.hpp>
-#include <scene/Camera.hpp>
 #include <ui/ImGui.hpp>
 
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 using namespace eng;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <scene/TransformGizmo.hpp>
-
 #include <ui/Window.hpp>
 
 namespace eng

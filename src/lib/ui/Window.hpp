@@ -14,12 +14,24 @@ namespace eng
 
         // Data structure for cached input state which is 
         // uncertain if it's done in GLFW itself.
-        struct InputState
+        class InputState
         {
-            int2 windowSize = { 0, 0 };
+        public:
+            // Mouse cursor position in pixel coordinates.
             double2 cursorPosition = { 0.0f, 0.0f };
+            // Mouse cursor position in normalized device coordinates within range [-1, 1].
+            double2 cursorPositionNormalized = { 0.0f, 0.0f };
+            // Whether mouse cursor moved this frame.
             bool cursorMoved = false;
+            // Whether mouse cursor is captured by the window.
             bool cursorCaptured = false;
+            // Whether mouse left button was clicked this frame.
+            bool leftButtonPress = false;
+            // Whether mouse right button was clicked this frame.
+            bool rightButtonPress = false;
+
+        public:
+            void clearFrameInput();
         };
 
     public:
@@ -43,13 +55,9 @@ namespace eng
 
         // Capture the mouse cursor in this window.
         void captureMouseCursor(bool capture);
-        bool isMouseCursorCaptured() const;
-        // Whether the mouse cursor moved this frame or not. 
-        bool isMouseCursorMoved() const;
-        // Mouse cursor position in pixel coordinates.
-        double2 mouseCursorPosition() const;
-        // Mouse cursor position in normalized device coordinates within range [-1, 1].
-        double2 mouseCursorNormalizedPosition() const;
+
+        // Cached input state of current frame.
+        const InputState& input() const { return m_inputState; }
 
     private:
         static void onKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -60,7 +68,8 @@ namespace eng
 
     private:
         GLFWwindow* m_window = nullptr;
-        // Cached input state updated each frame or on new events.
+
+        int2 m_windowSize = { 0, 0 };
         InputState m_inputState;
 
         //std::shared_ptr<IWindowEventListener> m_selfListener;

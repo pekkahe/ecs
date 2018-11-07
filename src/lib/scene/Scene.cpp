@@ -1,9 +1,6 @@
 #include <Precompiled.hpp>
 #include <scene/Scene.hpp>
 
-#include <component/Table.hpp>
-#include <component/Query.hpp>
-
 #include <graphics/Mesh.hpp>
 #include <scene/Transform.hpp>
 #include <scene/TransformGizmo.hpp>
@@ -11,20 +8,16 @@
 using namespace eng;
 
 Scene::Scene(std::shared_ptr<Window> window) :
-    m_transformSystem(m_database, window),
+    m_window(std::move(window)),
+    m_transformSystem(m_database, m_window),
     m_renderSystem(m_database),
-    m_cameraSystem(m_database, window),
-    m_selectionSystem(m_database, window)
+    m_cameraSystem(m_database, m_window),
+    m_selectionSystem(m_database, m_window)
 {
     registerSystem(m_transformSystem);
-    registerSystem(m_cameraSystem);
     registerSystem(m_renderSystem);
+    registerSystem(m_cameraSystem);
     registerSystem(m_selectionSystem);
-
-    window->onWindowResize([&](int2 size) 
-    {
-        m_cameraSystem.setAspectRatio(static_cast<float>(size.x) / size.y);
-    });
 }
 
 Scene::~Scene()
@@ -40,7 +33,7 @@ void Scene::registerSystem(ISystem& system)
 
 void Scene::update()
 {
-    // todo: unit test
+    // TODO: unit test Updated, Deleted
 
     for (auto system : m_systems)
     {
@@ -48,7 +41,7 @@ void Scene::update()
         system->commitDeleted(m_database);
     }
 
-    // TODO: multithreading; within system update or between updates?
+    // TODO: multithreading, within system update or between updates?
     // causality scheduling (const, non-const) for individual queries?
     for (auto system : m_systems)
     {

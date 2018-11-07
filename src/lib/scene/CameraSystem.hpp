@@ -16,7 +16,7 @@ namespace eng
 
     public:
         CameraSystem(Database& db, std::shared_ptr<Window> window);
-        ~CameraSystem();
+        ~CameraSystem() override;
 
         void update(const Scene& scene) override;
 

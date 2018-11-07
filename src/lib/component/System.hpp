@@ -62,8 +62,8 @@ namespace eng
         // all systems can react to tags regardless of their update order, and 
         // provides a thread-safety mechanism for concurrent system updated (TBD).
 
-        Table<Updated> m_updated;
-        Table<Deleted> m_deleted;
+        Table<Updated> m_updatedTable;
+        Table<Deleted> m_deletedTable;
     };
 
     template<typename Component>
@@ -75,57 +75,4 @@ namespace eng
 
         return db.createTable<Component>();
     }
-
-    //template<int N, typename... Ts> 
-    //using NthTypeOf = typename std::tuple_element<N, std::tuple<Ts...>>::type;
-
-    //template<typename... Ts>
-    //using ThirdType = NthTypeOf<2, Ts...>;
-    //
-    //template <int N, typename... T>
-    //struct tuple_element;
-
-    //template <typename T0, typename... T>
-    //struct tuple_element<0, T0, T...> 
-    //{
-    //    typedef T0 type;
-    //};
-
-    //template <int N, typename T0, typename... T>
-    //struct tuple_element<N, T0, T...>
-    //{
-    //    typedef typename tuple_element<N - 1, T...>::type type;
-    //};
-    ////
-
-    //template <typename... Tables>
-    //class TableCollection : public trait::non_copyable
-    //{
-    //public:
-    //    TableCollection(Tables... tables) : m_tables(tables...) {}
-    //    TableCollection(TableCollection&&) = default;
-    //    TableCollection& operator=(TableCollection&&) = default;
-
-    //    template <typename Table>
-    //    auto add(Table table)
-    //    {
-    //        auto c = col(table, std::index_sequence_for<Tables...>());
-
-    //        c.m_indices(sizeof(Tables...), m_indices);
-
-    //        NthTypeOf<sizeof(Tables...), Tables...>
-    //    }
-
-    //private:
-    //    template <typename T, size_t... Is>
-    //    auto col(T&& table, std::index_sequence<Is...>)
-    //    {
-    //        return TableCollection<Tables..., decltype(table)>(
-    //            std::get<Is>(m_tables)..., table);
-    //    }
-
-    //private:
-    //    std::tuple<Tables...> m_tables;
-    //    std::tuple<int...>    m_indices;
-    //};
 }

@@ -1,7 +1,6 @@
 #include <Precompiled.hpp>
 #include <graphics/Texture.hpp>
 
-#include <glad/glad.h>
 #include <stb_image.h>
 
 using namespace eng;

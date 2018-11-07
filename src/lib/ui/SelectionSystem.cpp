@@ -5,9 +5,6 @@
 #include <graphics/Raycast.hpp>
 #include <scene/Camera.hpp>
 #include <scene/Transform.hpp>
-#include <ui/ImGui.hpp>
-
-#include <GLFW/glfw3.h>
 
 using namespace eng;
 
@@ -22,69 +19,47 @@ SelectionSystem::SelectionSystem(
 
 void SelectionSystem::update(const Scene&)
 {
-    if (!m_window->isMouseCursorMoved() || m_window->isMouseCursorCaptured())
+    const auto& input = m_window->input();
+
+    if (input.cursorCaptured)
     {
         return;
     }
 
-    double2 cursorPos = m_window->mouseCursorNormalizedPosition();
-
-    auto camera = query().find<Camera>();
-    assert(camera != nullptr && "No camera in scene");
-
-    gfx::Ray ray = gfx::cursorPosToWorldRay(cursorPos, *camera);
-
-    //SHOE_LOG("\n "
-    //    "Cursor (%f %f) \n "
-    //    "Ray ori (%f %f %f) \n "
-    //    "Ray dir (%f %f %f) \n ",
-    //    cursorPos.x, cursorPos.y, 
-    //    ray.origin.x, ray.origin.y, ray.origin.z,
-    //    ray.direction.x, ray.direction.y, ray.direction.z);
-
-    m_hoveredTable.clear();
-
-    query()
-        .hasComponent<Mesh>()
-        .hasComponent<Transform>()
-        .execute([&](
-            EntityId id,
-            const Mesh& mesh,
-            const Transform& transform)
+    if (input.cursorMoved)
     {
-        if (gfx::raycast(ray, mesh.obb) > 0.f)
+        m_hoveredTable.clear();
+
+        query()
+            .hasComponent<Camera>()
+            .execute([&](
+                EntityId id,
+                const Camera& camera)
         {
-            m_hoveredTable.assign(id, Hovered());
-        }
+            Ray ray = camera.screenPointToRay(
+                input.cursorPositionNormalized);
 
-        //auto model = transform.modelMatrix();
-        //float distance = 0.0f;
-        //if (gfx::raycastObb(
-        //    ray,
-        //    mesh.aabb, 
-        //    model,
-        //    distance))
-        //{
-        //    m_hoveredTable.assign(id, Hovered());
-        //}
-    });
-}
-
-void SelectionSystem::onKeyInput(Window& window, const InputEvent& input)
-{
-}
-
-void SelectionSystem::onMouseButton(Window& window, const InputEvent& input)
-{
-    if (input.key == GLFW_MOUSE_BUTTON_RIGHT && input.action == GLFW_PRESS)
-    {
+            query()
+                .hasComponent<Mesh>()
+                .execute([&](
+                    EntityId id,
+                    const Mesh& mesh)
+            {
+                if (gfx::raycast(ray, mesh.obb) > 0)
+                {
+                    m_hoveredTable.assign(id, Hovered());
+                }
+            });
+        });
     }
-}
 
-void SelectionSystem::onMouseCursor(Window& window, double2 position)
-{
-}
-
-void SelectionSystem::onWindowResize(Window & window, int2 size)
-{
+    if (input.leftButtonPress)
+    {
+        m_selectedTable.clear();
+        
+        m_hoveredTable.forEach([&](EntityId id, Hovered&) 
+        {
+            m_selectedTable.assign(id, Selected());
+        });
+    }
 }

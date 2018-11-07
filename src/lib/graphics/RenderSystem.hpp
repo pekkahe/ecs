@@ -8,7 +8,6 @@
 
 namespace eng
 {
-    class Scene;
     class RenderSystem : public System
     {
     public:
@@ -23,11 +22,6 @@ namespace eng
         void beginFrame();
         void render();
         void endFrame();
-
-        // - owns components and operates on them
-        // - doesn't care about entities, but components (?)
-        // - e.g. do this for all Mesh components
-        // - sync points for adding/removing components?
 
     private:
         TableRef<Mesh> m_meshTable;

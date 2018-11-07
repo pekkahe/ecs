@@ -1,7 +1,6 @@
 #pragma once
 
 #include <core/Datatypes.hpp>
-#include <graphics/AABB.hpp>
 
 namespace eng
 {

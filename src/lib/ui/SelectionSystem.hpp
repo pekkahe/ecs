@@ -8,17 +8,16 @@
 
 namespace eng
 {
-    class SelectionSystem : public System, public IWindowEventListener
+    class SelectionSystem : public System
     {
+    public:
+        ADD_COMPONENT_FUNCTION(Hovered, m_hoveredTable);
+        ADD_COMPONENT_FUNCTION(Selected, m_selectedTable);
+
     public:
         SelectionSystem(Database& db, std::shared_ptr<Window> window);
 
         void update(const Scene& scene) override;
-
-        void onKeyInput(Window& window, const InputEvent& input) override;
-        void onMouseButton(Window& window, const InputEvent& input) override;
-        void onMouseCursor(Window& window, double2 position) override;
-        void onWindowResize(Window& window, int2 size) override;
 
     private:
         TableRef<Hovered> m_hoveredTable;

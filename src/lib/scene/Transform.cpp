@@ -1,9 +1,6 @@
 #include <Precompiled.hpp>
 #include <scene/Transform.hpp>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 using namespace eng;
 
 mat4 Transform::modelMatrix() const

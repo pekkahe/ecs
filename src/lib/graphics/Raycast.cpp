@@ -1,45 +1,5 @@
 #include <Precompiled.hpp>
 #include <graphics/Raycast.hpp>
-#include <core/Defines.hpp>
-
-// https://github.com/opengl-tutorials/ogl/blob/master/misc05_picking/misc05_picking_custom.cpp
-eng::gfx::Ray eng::gfx::cursorPosToWorldRay(double2 normalizedCursorPos, const Camera& camera)
-{
-    mat4 inverseProjectionMatrix = glm::inverse(camera.projectionMatrix);
-    mat4 inverseViewMatrix = glm::inverse(camera.viewMatrix);
-
-    // The near plane maps to Z = -1 in Normalized Device Coordinates
-    vec4 rayStartNdc(
-        normalizedCursorPos.x,
-        normalizedCursorPos.y,
-        -1.0,
-        1.0f);
-
-    vec4 rayEndNdc(
-        normalizedCursorPos.x,
-        normalizedCursorPos.y,
-        0.0,
-        1.0f);
-
-    vec4 rayStartCamera = inverseProjectionMatrix * rayStartNdc;   
-    rayStartCamera /= rayStartCamera.w;
-
-    vec4 rayStartWorld = inverseViewMatrix * rayStartCamera;
-    rayStartWorld /= rayStartWorld.w;
-
-    vec4 rayEndCamera = inverseProjectionMatrix * rayEndNdc;  
-    rayEndCamera /= rayEndCamera.w;
-
-    vec4 rayEndWorld = inverseViewMatrix * rayEndCamera;
-    rayEndWorld /= rayEndWorld.w;
-
-    vec4 rayDirection = glm::normalize(rayEndWorld - rayStartWorld);
-
-    Ray ray;
-    ray.origin = vec3(rayStartWorld);
-    ray.direction = vec3(rayDirection);
-    return ray;
-}
 
 // http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 // Additional reference: http://antongerdelan.net/opengl/raycasting.html
@@ -163,9 +123,9 @@ bool eng::gfx::raycastObb(
 
 float eng::gfx::raycast(const Ray& ray, const AABB& aabb)
 {
+    // TODO
     return 0.0f;
 }
-
 
 float eng::gfx::raycast(const Ray& ray, const OBB& obb)
 {
@@ -219,8 +179,8 @@ float eng::gfx::raycast(const Ray& ray, const OBB& obb)
     }
 
     // If the above loop finished executing, the ray hit all three slabs.
-    // To finish the raycast, we find the largest minimum (t_min) and smallest 
-    // maximum (t_max). We take care of any edge casesm and return the point
+    // To finish the raycast, we find the largest minimum (tmin) and smallest 
+    // maximum (tmax). We take care of any edge cases and return the point
     // closes to the origin of the ray.
     float tmin = std::fmaxf(
         std::fmaxf(

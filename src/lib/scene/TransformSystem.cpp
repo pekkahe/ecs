@@ -1,15 +1,11 @@
 #include <Precompiled.hpp>
 #include <scene/TransformSystem.hpp>
 
-#include <component/Query.hpp>
-#include <scene/Scene.hpp>
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
-
+#include <scene/Scene.hpp>
+#include <scene/Selected.hpp>
 #include <ui/ImGui.hpp>
-
-#include <imgui.h>
-#include <ImGuizmo.h>
 
 using namespace eng;
 
@@ -85,12 +81,14 @@ void TransformSystem::update(const Scene&)
     auto camera = query().find<Camera>();
     assert(camera != nullptr && "No camera in scene");
 
-    // Move gizmo manipulated transforms
+    // Move gizmo manipulated transforms which are selected
     query()
+        .hasComponent<Selected>()
         .hasComponent<Transform>(m_transformTable)
         .hasComponent<TransformGizmo>(m_transformGizmoTable)
         .execute([&](
             EntityId id, 
+            const Selected&,
             Transform& transform,
             TransformGizmo& transformGizmo)
     {

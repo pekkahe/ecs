@@ -8,7 +8,7 @@ namespace eng
         Engine();
         ~Engine();
 
-        // Begin game loop. Must be called from main thread.
+        // Begin game loop.
         void execute();
         // Signal termination.
         void terminate();

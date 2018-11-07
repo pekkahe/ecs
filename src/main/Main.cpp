@@ -11,4 +11,3 @@ int main()
     std::cout << "Terminating engine." << std::endl;
     return 0;
 }
-
