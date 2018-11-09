@@ -19,8 +19,9 @@ namespace eng
 
         bool gizmoManipulate(
             mat4& model,
-            const mat4& view, const
-            mat4& projection,
-            ImGuizmo::OPERATION operation);
+            const mat4& view,
+            const mat4& projection,
+            ImGuizmo::OPERATION operation,
+            ImGuizmo::MODE mode);
     }
 }

@@ -45,8 +45,9 @@ void Engine::execute()
     auto window = std::make_shared<Window>(640, 480, "Shoe");
     auto scene = std::make_shared<Scene>(window);
 
-    scene->createCamera();
-    scene->createCube();
+    scene->createCube(vec3(-1.5f, 0.0f, -3.0f));
+    scene->createCube(vec3(0.0f,  0.0f, -3.0f));
+    scene->createCube(vec3(1.5f,  0.0f, -3.0f));
 
     while (window->pollEvents() && !m_terminate)
     {

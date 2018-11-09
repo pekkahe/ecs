@@ -7,6 +7,8 @@
 #include <scene/Selected.hpp>
 #include <ui/ImGui.hpp>
 
+#include <ImGuizmo.h>
+
 using namespace eng;
 
 TransformSystem::TransformSystem(
@@ -25,11 +27,10 @@ TransformSystem::~TransformSystem()
 
 void TransformSystem::update(const Scene&)
 {
-    // Move camera controlled transforms
-    // todo: we could extend CameraControl into a "TransformControl" 
-    // component which allows input and program control to any entity
-    // with a transform, with this it might be best to expect that the
-    // front vector is precomputed
+    // Move and rotate camera
+    // TODO: Consider extending CameraControl into a "TransformControl" component 
+    // which allows input and program control to any entity with a transform.
+    // With this it might be wise to expect that the front vector is precomputed.
     query()
         .hasComponent<Updated>()
         .hasComponent<CameraControl>()
@@ -51,7 +52,6 @@ void TransformSystem::update(const Scene&)
         
         float cameraSpeed = control.speed * Time::deltaTime();
 
-        // Move camera
         if (control.isMoving(CameraMovement::Forward))
         {
             transform.position += cameraFront * cameraSpeed;
@@ -74,45 +74,91 @@ void TransformSystem::update(const Scene&)
                 glm::cross(cameraFront, cameraUp)) * cameraSpeed;
         }
 
-        // Rotate camera
         transform.rotation = glm::quatLookAt(cameraFront, Camera::WorldUp);
     });
 
     auto camera = query().find<Camera>();
     assert(camera != nullptr && "No camera in scene");
 
-    // Move gizmo manipulated transforms which are selected
+    // Compute bounds for selected objects
+    AABB selectedBounds;
+    query()
+        .hasComponent<Selected>()
+        .hasComponent<Mesh>()
+        .hasComponent<Transform>()
+        .execute([&](
+            EntityId,
+            const Selected&,
+            const Mesh&,
+            const Transform& transform)
+    {
+        selectedBounds.expand(transform.position);
+    });
+
+    // Apply transform gizmo for selected objects
     query()
         .hasComponent<Selected>()
         .hasComponent<Transform>(m_transformTable)
         .hasComponent<TransformGizmo>(m_transformGizmoTable)
         .execute([&](
-            EntityId id, 
+            EntityId,
             const Selected&,
             Transform& transform,
             TransformGizmo& transformGizmo)
     {
+        // Update gizmo configuration
         m_transformGizmoController->update(transformGizmo);
 
-        mat4 modelMatrix = transform.modelMatrix();
+        // Move gizmo to selection center
+        transform.position = selectedBounds.center();
 
-        if (imgui::gizmoManipulate(
+        Transform previousTransform(transform);
+        mat4 modelMatrix(transform.modelMatrix());
+        
+        // Manipulate the gizmo's model matrix with ImGuizmo
+        bool gizmoUsed = imgui::gizmoManipulate(
             modelMatrix,
             camera->viewMatrix,
             camera->projectionMatrix,
-            transformGizmo.operation))
+            transformGizmo.operation,
+            transformGizmo.mode);
+        if (!gizmoUsed)
         {
-            // Decompose manipulated values back into component
-            glm::decompose(
-                modelMatrix,
-                transform.scale,
-                transform.rotation,
-                transform.position,
-                vec3(),
-                vec4());
-
-            markUpdated(id);
+            return;
         }
+
+        // Decompose manipulated values back into component
+        glm::decompose(
+            modelMatrix,
+            transform.scale,
+            transform.rotation,
+            transform.position,
+            vec3(),
+            vec4());
+
+        // Compute delta transform
+        Transform delta;
+        delta.position = transform.position - previousTransform.position;
+        delta.rotation = transform.rotation * glm::inverse(previousTransform.rotation);
+        delta.scale = transform.scale - previousTransform.scale;
+
+        // Apply delta transform to selected objects
+        query()
+            .hasComponent<Selected>()
+            .hasComponent<Mesh>()
+            .hasComponent<Transform>(m_transformTable)
+            .execute([&](
+                EntityId meshId,
+                const Selected&,
+                const Mesh&,
+                Transform& meshTransform)
+        {
+            // Note the order of addition for rotation
+            meshTransform.position += delta.position;
+            meshTransform.rotation = delta.rotation * meshTransform.rotation; 
+            meshTransform.scale += delta.scale;
+
+            markUpdated(meshId);
+        });
     });
 }
-

@@ -60,10 +60,11 @@ void eng::imgui::endFrame()
 }
 
 bool eng::imgui::gizmoManipulate(
-    mat4& model,
+    mat4& model, 
     const mat4& view,
     const mat4& projection,
-    ImGuizmo::OPERATION operation)
+    ImGuizmo::OPERATION operation,
+    ImGuizmo::MODE mode)
 {
     auto modelMatrix = unwrapMatrix(model);
     auto viewMatrix = unwrapMatrix(view);
@@ -72,12 +73,16 @@ bool eng::imgui::gizmoManipulate(
     auto& io = ImGui::GetIO();
     ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
     
+    // ImGuizmo calculates the model delta wrong for scale,
+    // it gets the actual value and not the transition: 
+    // https://github.com/CedricGuillemet/ImGuizmo/issues/29
+
     // Setup gizmo to be drawed
     ImGuizmo::Manipulate(
         &viewMatrix[0],
         &projectionMatrix[0],
         operation,
-        ImGuizmo::LOCAL,
+        mode,
         &modelMatrix[0],
         nullptr,
         nullptr,  // useSnap ? &snap[0]

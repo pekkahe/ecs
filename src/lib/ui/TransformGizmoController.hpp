@@ -16,5 +16,6 @@ namespace eng
         bool m_updated = false;
 
         ImGuizmo::OPERATION m_operation = ImGuizmo::OPERATION::TRANSLATE;
+        ImGuizmo::MODE m_mode = ImGuizmo::MODE::LOCAL;
     };
 }

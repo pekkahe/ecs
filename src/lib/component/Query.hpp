@@ -47,6 +47,16 @@ namespace eng
             }
         }
 
+        // Execute a function for all entities which match the query filter.
+        template <typename F>
+        void executeIds(F&& process)
+        {
+            for (auto&& id : ids())
+            {
+                process(id);
+            }
+        }
+
         // Return component data of first entity which matches the query filter,
         // or nullptr if no matches were found.
         template <typename Component>

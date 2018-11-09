@@ -22,7 +22,7 @@ void AABB::expand(const vec3& point)
 void AABB::clear()
 {
     m_min = vec3(std::numeric_limits<float>::max());
-    m_max = vec3(std::numeric_limits<float>::min());
+    m_max = vec3(std::numeric_limits<float>::lowest());
 }
 
 bool AABB::valid() const

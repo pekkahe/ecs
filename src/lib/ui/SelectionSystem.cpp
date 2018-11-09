@@ -5,6 +5,9 @@
 #include <graphics/Raycast.hpp>
 #include <scene/Camera.hpp>
 #include <scene/Transform.hpp>
+#include <scene/TransformGizmo.hpp>
+
+#include <ImGuizmo.h>
 
 using namespace eng;
 
@@ -45,6 +48,8 @@ void SelectionSystem::update(const Scene&)
                     EntityId id,
                     const Mesh& mesh)
             {
+                // TODO: Hover closest hit only
+
                 if (gfx::raycast(ray, mesh.obb) > 0)
                 {
                     m_hoveredTable.assign(id, Hovered());
@@ -53,7 +58,7 @@ void SelectionSystem::update(const Scene&)
         });
     }
 
-    if (input.leftButtonPress)
+    if (input.leftButtonPress && !ImGuizmo::IsOver())
     {
         m_selectedTable.clear();
         
@@ -61,5 +66,17 @@ void SelectionSystem::update(const Scene&)
         {
             m_selectedTable.assign(id, Selected());
         });
+
+        // If we have selected meshes, select the transform gizmo
+        // as well to activate it
+        if (!m_selectedTable.empty())
+        { 
+            query()
+                .hasComponent<TransformGizmo>()
+                .executeIds([&](EntityId id)
+            {
+                m_selectedTable.assign(id, Selected());
+            });
+        }
     }
 }

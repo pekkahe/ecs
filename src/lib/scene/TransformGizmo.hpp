@@ -9,5 +9,6 @@ namespace eng
     {
     public:
         ImGuizmo::OPERATION operation = ImGuizmo::OPERATION::TRANSLATE;
+        ImGuizmo::MODE mode = ImGuizmo::MODE::LOCAL;
     };
 }

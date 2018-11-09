@@ -18,6 +18,9 @@ Scene::Scene(std::shared_ptr<Window> window) :
     registerSystem(m_renderSystem);
     registerSystem(m_cameraSystem);
     registerSystem(m_selectionSystem);
+
+    createCamera();
+    createGizmo();
 }
 
 Scene::~Scene()
@@ -75,7 +78,7 @@ EntityId Scene::createCamera()
     return id;
 }
 
-EntityId Scene::createCube()
+EntityId Scene::createCube(vec3 position)
 {
     Mesh mesh;
     mesh.vertices = std::vector<vec3>
@@ -126,14 +129,23 @@ EntityId Scene::createCube()
     auto id = createEntity();
 
     Transform transform;
-    transform.position = vec3(0.f, 0.f, -3.f);
+    transform.position = position;
 
     m_renderSystem.addMesh(id, std::move(mesh));
     m_transformSystem.addTransform(id, std::move(transform));
-    m_transformSystem.addTransformGizmo(id, TransformGizmo());
 
     m_database.table<Added>().assign(id, Added());
     m_database.table<Updated>().assign(id, Updated());
+
+    return id;
+}
+
+EntityId Scene::createGizmo()
+{
+    auto id = createEntity();
+
+    m_transformSystem.addTransform(id, Transform());
+    m_transformSystem.addTransformGizmo(id, TransformGizmo());
 
     return id;
 }

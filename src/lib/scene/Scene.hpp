@@ -22,7 +22,8 @@ namespace eng
         // TODO: entity creation, move into factory class?
         EntityId createEntity();
         EntityId createCamera();
-        EntityId createCube();
+        EntityId createCube(vec3 position);
+        EntityId createGizmo();
 
         RenderSystem& renderer() { return m_renderSystem; }
 
