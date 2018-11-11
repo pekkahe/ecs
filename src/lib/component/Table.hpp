@@ -28,6 +28,7 @@ namespace eng
         void remove(EntityId id) override;
         void clear() override;
         bool empty() const override;
+        bool check(EntityId id) const;
         size_t size() const;
 
         std::vector<EntityId> ids() const;
@@ -123,6 +124,12 @@ namespace eng
     inline bool Table<Component>::empty() const
     {
         return size() == 0u;
+    }
+
+    template<typename Component>
+    inline bool Table<Component>::check(EntityId id) const
+    {
+        return m_idToComponentIndex.count(id) > 0;
     }
 
     template <typename Component>

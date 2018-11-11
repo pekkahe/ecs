@@ -138,6 +138,9 @@
     <ClCompile Include="..\src\lib\graphics\OBB.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\lib\ui\FrameInput.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\vertex_tex.vert">
@@ -257,6 +260,9 @@
     </ClInclude>
     <ClInclude Include="..\src\lib\graphics\OBB.hpp">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\ui\FrameInput.hpp">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

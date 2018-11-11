@@ -179,6 +179,8 @@
     <ClCompile Include="..\src\lib\scene\Camera.cpp" />
     <ClCompile Include="..\src\lib\scene\CameraSystem.cpp" />
     <ClCompile Include="..\src\lib\ui\CameraController.cpp" />
+    <ClCompile Include="..\src\lib\ui\FrameInput.cpp" />
+    <ClInclude Include="..\src\lib\ui\FrameInput.hpp" />
     <ClCompile Include="..\src\lib\ui\ImGui.cpp" />
     <ClCompile Include="..\src\lib\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

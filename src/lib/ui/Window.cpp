@@ -59,7 +59,7 @@ bool Window::pollEvents()
         return false;
     }
 
-    m_inputState.clearFrameInput();
+    m_inputState.beginFrame();
 
     glfwPollEvents();
 
@@ -100,6 +100,7 @@ void Window::onKeyInput(GLFWwindow* window, int key, int scancode, int action, i
     }
 
     auto w = getUserWindow(window);
+    w->m_inputState.setKey(key, action);
 
     for (auto& l : w->m_eventListeners)
     {
@@ -110,18 +111,7 @@ void Window::onKeyInput(GLFWwindow* window, int key, int scancode, int action, i
 void Window::onMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
     auto w = getUserWindow(window);
-
-    if (action == GLFW_PRESS)
-    {
-        if (button == GLFW_MOUSE_BUTTON_LEFT)
-        {
-            w->m_inputState.leftButtonPress = true;
-        }
-        if (button == GLFW_MOUSE_BUTTON_RIGHT)
-        {
-            w->m_inputState.rightButtonPress = true;
-        }
-    }
+    w->m_inputState.setButton(button, action); // Pass mods?
 
     for (auto& l : w->m_eventListeners)
     {
@@ -177,11 +167,4 @@ void Window::onFramebufferSizeCallback(GLFWwindow* window, int width, int height
 int2 Window::size() const
 {
     return m_windowSize;
-}
-
-void Window::InputState::clearFrameInput()
-{
-    cursorMoved = false;
-    leftButtonPress = false;
-    rightButtonPress = false;
 }

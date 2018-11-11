@@ -84,12 +84,10 @@ void TransformSystem::update(const Scene&)
     AABB selectedBounds;
     query()
         .hasComponent<Selected>()
-        .hasComponent<Mesh>()
         .hasComponent<Transform>()
         .execute([&](
             EntityId,
             const Selected&,
-            const Mesh&,
             const Transform& transform)
     {
         selectedBounds.expand(transform.position);
@@ -97,15 +95,20 @@ void TransformSystem::update(const Scene&)
 
     // Apply transform gizmo for selected objects
     query()
-        .hasComponent<Selected>()
         .hasComponent<Transform>(m_transformTable)
         .hasComponent<TransformGizmo>(m_transformGizmoTable)
         .execute([&](
             EntityId,
-            const Selected&,
             Transform& transform,
             TransformGizmo& transformGizmo)
     {
+
+        // Early out if we have no selection
+        if (!selectedBounds.valid())
+        {
+            return;
+        }
+
         // Update gizmo configuration
         m_transformGizmoController->update(transformGizmo);
 
@@ -145,20 +148,18 @@ void TransformSystem::update(const Scene&)
         // Apply delta transform to selected objects
         query()
             .hasComponent<Selected>()
-            .hasComponent<Mesh>()
             .hasComponent<Transform>(m_transformTable)
             .execute([&](
-                EntityId meshId,
+                EntityId selectedId,
                 const Selected&,
-                const Mesh&,
-                Transform& meshTransform)
+                Transform& selectedTransform)
         {
             // Note the order of addition for rotation
-            meshTransform.position += delta.position;
-            meshTransform.rotation = delta.rotation * meshTransform.rotation; 
-            meshTransform.scale += delta.scale;
+            selectedTransform.position += delta.position;
+            selectedTransform.rotation = delta.rotation * selectedTransform.rotation;
+            selectedTransform.scale += delta.scale;
 
-            markUpdated(meshId);
+            markUpdated(selectedId);
         });
     });
 }

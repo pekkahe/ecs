@@ -1,6 +1,7 @@
 #pragma once
 
 #include <core/Defines.hpp>
+#include <ui/FrameInput.hpp>
 
 struct GLFWwindow;
 
@@ -11,28 +12,6 @@ namespace eng
     {
     public:
         using WindowResizeCallback = std::function<void(int2)>;
-
-        // Data structure for cached input state which is 
-        // uncertain if it's done in GLFW itself.
-        class InputState
-        {
-        public:
-            // Mouse cursor position in pixel coordinates.
-            double2 cursorPosition = { 0.0f, 0.0f };
-            // Mouse cursor position in normalized device coordinates within range [-1, 1].
-            double2 cursorPositionNormalized = { 0.0f, 0.0f };
-            // Whether mouse cursor moved this frame.
-            bool cursorMoved = false;
-            // Whether mouse cursor is captured by the window.
-            bool cursorCaptured = false;
-            // Whether mouse left button was clicked this frame.
-            bool leftButtonPress = false;
-            // Whether mouse right button was clicked this frame.
-            bool rightButtonPress = false;
-
-        public:
-            void clearFrameInput();
-        };
 
     public:
         Window(int width, int height, const std::string& title);
@@ -57,7 +36,7 @@ namespace eng
         void captureMouseCursor(bool capture);
 
         // Cached input state of current frame.
-        const InputState& input() const { return m_inputState; }
+        const FrameInput& frameInput() const { return m_inputState; }
 
     private:
         static void onKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -70,7 +49,7 @@ namespace eng
         GLFWwindow* m_window = nullptr;
 
         int2 m_windowSize = { 0, 0 };
-        InputState m_inputState;
+        FrameInput m_inputState;
 
         //std::shared_ptr<IWindowEventListener> m_selfListener;
         std::vector<WindowResizeCallback> m_windowResizeCallbacks;
