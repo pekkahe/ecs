@@ -1,9 +1,11 @@
 # anon-engine
-A simple, yet unnamed, potentially service oriented, game or more likely just a 3D object transformation, engine, and very much WIP.
+A simple, yet unnamed, game or more likely just 3D object transformation engine, and very much WIP.
+
+The goal of this project is to fiddle with ECS (Entity Component System) architecture and implement web-based tools on top of a C++ rendering engine.
 
 Developed with C++ using Visual Studio 2017 version 15.8.
 
-Dependencies:
+## Dependencies
 - [glad](https://github.com/Dav1dde/glad)
 - [GLFW](https://github.com/glfw/glfw)
 - [GLM](https://github.com/g-truc/glm)
@@ -12,4 +14,5 @@ Dependencies:
 - [stb](https://github.com/nothings/stb)
 - [Google Test + Google Mock](https://github.com/google/googletest)
 
+#
 ![viewport-image](./data/viewport.png)
