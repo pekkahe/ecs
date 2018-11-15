@@ -20,6 +20,11 @@ namespace eng
 
     void FrameInput::setKey(int key, int action)
     {
+        if (key == GLFW_KEY_UNKNOWN)
+        {
+            return;
+        }
+
         if (action == GLFW_RELEASE)
         {
             m_keys.released.set(key);
