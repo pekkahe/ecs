@@ -12,13 +12,9 @@
 using namespace eng;
 
 TransformSystem::TransformSystem(
-    Database& db,
-    std::shared_ptr<Window> window) :
-    m_transformTable(db.createTable<Transform>()),
-    m_transformGizmoTable(db.createTable<TransformGizmo>()),
-    m_transformGizmoController(std::make_shared<TransformGizmoController>())
+    Database& db) :
+    m_transformTable(db.createTable<Transform>())
 {
-    window->addEventListener(m_transformGizmoController);
 }
 
 TransformSystem::~TransformSystem()
@@ -95,22 +91,18 @@ void TransformSystem::update(const Scene&)
 
     // Apply transform gizmo for selected objects
     query()
+        .hasComponent<TransformGizmo>()
         .hasComponent<Transform>(m_transformTable)
-        .hasComponent<TransformGizmo>(m_transformGizmoTable)
         .execute([&](
             EntityId,
-            Transform& transform,
-            TransformGizmo& transformGizmo)
+            const TransformGizmo& transformGizmo,
+            Transform& transform)
     {
-
         // Early out if we have no selection
         if (!selectedBounds.valid())
         {
             return;
         }
-
-        // Update gizmo configuration
-        m_transformGizmoController->update(transformGizmo);
 
         // Move gizmo to selection center
         transform.position = selectedBounds.center();

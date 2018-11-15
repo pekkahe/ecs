@@ -78,16 +78,10 @@
     <ClCompile Include="..\src\lib\scene\TransformSystem.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\scene\Transform.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
     <ClInclude Include="..\src\lib\scene\Scene.hpp">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lib\scene\TransformSystem.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\lib\scene\Transform.hpp">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lib\scene\Camera.hpp">
@@ -111,12 +105,6 @@
     <ClCompile Include="..\src\lib\ui\InputBindings.cpp">
       <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\ui\CameraController.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\lib\ui\TransformGizmoController.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\lib\scene\Camera.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -124,9 +112,6 @@
       <Filter>component</Filter>
     </ClCompile>
     <ClCompile Include="..\src\lib\ui\InputSystem.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\lib\ui\SelectionSystem.cpp">
       <Filter>ui</Filter>
     </ClCompile>
     <ClCompile Include="..\src\lib\graphics\Raycast.cpp">
@@ -140,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="..\src\lib\ui\FrameInput.cpp">
       <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\EditorSystem.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\SelectionSystem.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\lib\scene\CameraController.cpp">
+      <Filter>scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +169,6 @@
     <Filter Include="scene">
       <UniqueIdentifier>{a34f6d64-2ce4-4234-837f-069c62f28970}</UniqueIdentifier>
     </Filter>
-    <Filter Include="component">
-      <UniqueIdentifier>{7974a17d-86d7-4eaf-8bc7-1a3858138f33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="graphics">
       <UniqueIdentifier>{76cdbd70-c246-47df-b714-079b614fc86c}</UniqueIdentifier>
     </Filter>
@@ -186,6 +177,9 @@
     </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{3bf46815-95b2-4330-a98e-85d0d84759b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="component">
+      <UniqueIdentifier>{7974a17d-86d7-4eaf-8bc7-1a3858138f33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,12 +219,6 @@
     <ClInclude Include="..\src\lib\scene\TransformGizmo.hpp">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\ui\CameraController.hpp">
-      <Filter>ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\lib\ui\TransformGizmoController.hpp">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\lib\component\SparseIndex.hpp">
       <Filter>component</Filter>
     </ClInclude>
@@ -249,9 +237,6 @@
     <ClInclude Include="..\src\lib\ui\InputSystem.hpp">
       <Filter>ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\ui\SelectionSystem.hpp">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\lib\graphics\Raycast.hpp">
       <Filter>graphics</Filter>
     </ClInclude>
@@ -263,6 +248,18 @@
     </ClInclude>
     <ClInclude Include="..\src\lib\ui\FrameInput.hpp">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\EditorSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\SelectionSystem.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\CameraController.hpp">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\lib\scene\Transform.hpp">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -51,7 +51,6 @@ namespace eng
         int2 m_windowSize = { 0, 0 };
         FrameInput m_inputState;
 
-        //std::shared_ptr<IWindowEventListener> m_selfListener;
         std::vector<WindowResizeCallback> m_windowResizeCallbacks;
         std::vector<std::shared_ptr<IWindowEventListener>> m_eventListeners;
     };

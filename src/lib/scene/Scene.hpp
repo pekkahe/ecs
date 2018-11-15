@@ -3,8 +3,9 @@
 #include <component/Database.hpp>
 #include <graphics/RenderSystem.hpp>
 #include <scene/CameraSystem.hpp>
+#include <scene/EditorSystem.hpp>
+#include <scene/SelectionSystem.hpp>
 #include <scene/TransformSystem.hpp>
-#include <ui/SelectionSystem.hpp>
 
 namespace eng
 {
@@ -30,6 +31,7 @@ namespace eng
         // Read-only access to scene database. Only systems are
         // allowed to modify database content for their own tables.
         const Database& database() const { return m_database; }
+        const Window& window() const { return *m_window; }
 
     private:
         Database m_database;
@@ -40,6 +42,7 @@ namespace eng
         TransformSystem m_transformSystem;
         RenderSystem m_renderSystem;
         CameraSystem m_cameraSystem;
+        EditorSystem m_editorSystem;
         SelectionSystem m_selectionSystem;
     };
 }

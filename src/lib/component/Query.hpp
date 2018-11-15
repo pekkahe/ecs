@@ -191,6 +191,6 @@ namespace eng
         std::tuple<Tables...> m_tables;
     };
 
-    // Build a query with pre-built read-only database access.
+    // Build a query with read-only access to database.
     Query<> query(const Database& database);
 }

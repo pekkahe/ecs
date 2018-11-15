@@ -7,16 +7,17 @@ namespace eng
     ENUM_FLAGS(InputAction)
     {
         None = 0,
-        CameraMoveForward = 1 << 0,
-        CameraMoveBackward = 1 << 1,
-        CameraMoveLeft = 1 << 2,
-        CameraMoveRight = 1 << 3,
-        CameraZoom = 1 << 4,
-        CameraToggleControl = 1 << 5,
-        ChangeGizmoMode = 1 << 6,
-        CreateCube = 1 << 7,
-        DeleteEntity = 1 << 8,
-        QuitApplication = 1 << 9,
+        Camera_MoveForward = 1 << 0,
+        Camera_MoveBackward = 1 << 1,
+        Camera_MoveLeft = 1 << 2,
+        Camera_MoveRight = 1 << 3,
+        Camera_Zoom = 1 << 4,
+        Camera_ToggleControl = 1 << 5,
+        Gizmo_ChangeOperation = 1 << 6,
+        Gizmo_ChangeMode = 1 << 7,
+        Entity_CreateCube = 1 << 8,
+        Entity_Delete = 1 << 9,
+        Quit = 1 << 10,
     };
 
     class InputBindings

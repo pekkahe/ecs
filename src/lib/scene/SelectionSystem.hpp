@@ -15,14 +15,12 @@ namespace eng
         ADD_COMPONENT_FUNCTION(Selected, m_selectedTable);
 
     public:
-        SelectionSystem(Database& db, std::shared_ptr<Window> window);
+        SelectionSystem(Database& db);
 
         void update(const Scene& scene) override;
 
     private:
         TableRef<Hovered> m_hoveredTable;
         TableRef<Selected> m_selectedTable;
-
-        std::shared_ptr<Window> m_window;
     };
 }

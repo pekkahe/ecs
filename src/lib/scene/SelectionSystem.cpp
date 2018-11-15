@@ -1,28 +1,25 @@
 #include <Precompiled.hpp>
-#include <ui/SelectionSystem.hpp>
+#include <scene/SelectionSystem.hpp>
 
 #include <graphics/Mesh.hpp>
 #include <graphics/Raycast.hpp>
 #include <scene/Camera.hpp>
-#include <scene/Transform.hpp>
-#include <scene/TransformGizmo.hpp>
+#include <scene/Scene.hpp>
 
 #include <ImGuizmo.h>
 
 using namespace eng;
 
 SelectionSystem::SelectionSystem(
-    Database& db,
-    std::shared_ptr<Window> window) :
+    Database& db) :
     m_hoveredTable(db.createTable<Hovered>()),
-    m_selectedTable(db.createTable<Selected>()),
-    m_window(std::move(window))
+    m_selectedTable(db.createTable<Selected>())
 {
 }
 
-void SelectionSystem::update(const Scene&)
+void SelectionSystem::update(const Scene& scene)
 {
-    const auto& input = m_window->frameInput();
+    const auto& input = scene.window().frameInput();
 
     // Prevent selection changes when the cursor is
     // either captured or over the transform gizmo 
@@ -40,7 +37,7 @@ void SelectionSystem::update(const Scene&)
         auto camera = query().find<Camera>();
         assert(camera != nullptr && "No camera in scene");
 
-        // Cast ray from cursor screen position to all mesh OBBs
+        // Cast ray from cursor screen position to all meshes
         Ray ray = camera->screenPointToRay(
             input.cursorPositionNormalized);
 

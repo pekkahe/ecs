@@ -18,6 +18,13 @@ namespace eng
         Transform(vec3 pos, qua rot) : position(pos), rotation(rot) {}
         Transform(vec3 pos, qua rot, vec3 scale) : position(pos), rotation(rot), scale(scale) {}
 
-        mat4 modelMatrix() const;
+        mat4 modelMatrix() const
+        {
+            mat4 translate = glm::translate(mat4(1.0f), position);
+            mat4 rotate = glm::mat4_cast(rotation);
+            mat4 scale_ = glm::scale(mat4(1.0f), scale);
+
+            return translate * rotate * scale_;
+        }
     };
 }

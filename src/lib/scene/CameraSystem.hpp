@@ -3,7 +3,7 @@
 #include <component/System.hpp>
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
-#include <ui/CameraController.hpp>
+#include <scene/CameraController.hpp>
 #include <ui/Window.hpp>
 
 namespace eng

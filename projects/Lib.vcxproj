@@ -178,8 +178,11 @@
     <ClCompile Include="..\src\lib\graphics\Raycast.cpp" />
     <ClCompile Include="..\src\lib\scene\Camera.cpp" />
     <ClCompile Include="..\src\lib\scene\CameraSystem.cpp" />
-    <ClCompile Include="..\src\lib\ui\CameraController.cpp" />
+    <ClCompile Include="..\src\lib\scene\EditorSystem.cpp" />
+    <ClCompile Include="..\src\lib\scene\CameraController.cpp" />
     <ClCompile Include="..\src\lib\ui\FrameInput.cpp" />
+    <ClInclude Include="..\src\lib\scene\EditorSystem.hpp" />
+    <ClInclude Include="..\src\lib\scene\Transform.hpp" />
     <ClInclude Include="..\src\lib\ui\FrameInput.hpp" />
     <ClCompile Include="..\src\lib\ui\ImGui.cpp" />
     <ClCompile Include="..\src\lib\Precompiled.cpp">
@@ -200,11 +203,9 @@
     <ClCompile Include="..\src\lib\graphics\Shader.cpp" />
     <ClCompile Include="..\src\lib\graphics\Texture.cpp" />
     <ClCompile Include="..\src\lib\core\Time.cpp" />
-    <ClCompile Include="..\src\lib\scene\Transform.cpp" />
     <ClCompile Include="..\src\lib\ui\InputBindings.cpp" />
     <ClCompile Include="..\src\lib\ui\InputSystem.cpp" />
-    <ClCompile Include="..\src\lib\ui\SelectionSystem.cpp" />
-    <ClCompile Include="..\src\lib\ui\TransformGizmoController.cpp" />
+    <ClCompile Include="..\src\lib\scene\SelectionSystem.cpp" />
     <ClCompile Include="..\src\lib\ui\Window.cpp" />
     <ClInclude Include="..\src\lib\component\IComponent.hpp" />
     <ClInclude Include="..\src\lib\component\Query.hpp" />
@@ -227,7 +228,7 @@
     <ClInclude Include="..\src\lib\scene\Hovered.hpp" />
     <ClInclude Include="..\src\lib\scene\Selected.hpp" />
     <ClInclude Include="..\src\lib\scene\TransformGizmo.hpp" />
-    <ClInclude Include="..\src\lib\ui\CameraController.hpp" />
+    <ClInclude Include="..\src\lib\scene\CameraController.hpp" />
     <ClInclude Include="..\src\lib\ui\ImGui.hpp" />
     <ClInclude Include="..\src\lib\scene\TransformSystem.hpp" />
     <ClInclude Include="..\src\lib\scene\Camera.hpp" />
@@ -244,12 +245,10 @@
     <ClInclude Include="..\src\lib\component\Table.hpp" />
     <ClInclude Include="..\src\lib\graphics\Texture.hpp" />
     <ClInclude Include="..\src\lib\core\Time.hpp" />
-    <ClInclude Include="..\src\lib\scene\Transform.hpp" />
     <ClInclude Include="..\src\lib\ui\InputBindings.hpp" />
     <ClInclude Include="..\src\lib\ui\InputListener.hpp" />
     <ClInclude Include="..\src\lib\ui\InputSystem.hpp" />
-    <ClInclude Include="..\src\lib\ui\SelectionSystem.hpp" />
-    <ClInclude Include="..\src\lib\ui\TransformGizmoController.hpp" />
+    <ClInclude Include="..\src\lib\scene\SelectionSystem.hpp" />
     <ClInclude Include="..\src\lib\ui\Window.hpp" />
   </ItemGroup>
   <ItemGroup>

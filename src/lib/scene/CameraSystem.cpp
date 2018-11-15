@@ -67,22 +67,11 @@ void CameraSystem::update(const Scene&)
             camera.nearPlane,
             camera.farPlane);
     });
-
-    // TODO: "WindowState" Component? Could use Updated, Added...
-    //query()
-    //    .hasComponent<Transform>()
-    //    .hasComponent<Camera>(m_cameraTable)
-    //    .execute([&](
-    //        EntityId id,
-    //        const Transform& transform,
-    //        Camera& camera)
-    //{
-    //    camera.aspectRatio = aspectRatio;
-    //});
 }
 
 void CameraSystem::setAspectRatio(float aspectRatio)
 {
+    // TODO: Create Window/WindowState component? Could use Updated, Added...
     query()
         .hasComponent<Camera>(m_cameraTable)
         .execute([&](
