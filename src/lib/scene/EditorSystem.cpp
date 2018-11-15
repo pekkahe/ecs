@@ -77,6 +77,14 @@ void EditorSystem::update(const Scene& scene)
         });
     }
 
+    //
+    // Clear selected
+    //
+    if (input.isKeyPressed(GLFW_KEY_ESCAPE))
+    {
+        m_selectedTable.clear();
+    }
+
     // Objects can only be selected if the cursor is 
     // neither captured nor over the transform gizmo 
     bool canSelectObjects = !input.cursorCaptured && !ImGuizmo::IsOver();
