@@ -205,7 +205,6 @@
     <ClCompile Include="..\src\lib\core\Time.cpp" />
     <ClCompile Include="..\src\lib\ui\InputBindings.cpp" />
     <ClCompile Include="..\src\lib\ui\InputSystem.cpp" />
-    <ClCompile Include="..\src\lib\scene\SelectionSystem.cpp" />
     <ClCompile Include="..\src\lib\ui\Window.cpp" />
     <ClInclude Include="..\src\lib\component\IComponent.hpp" />
     <ClInclude Include="..\src\lib\component\Query.hpp" />
@@ -248,7 +247,6 @@
     <ClInclude Include="..\src\lib\ui\InputBindings.hpp" />
     <ClInclude Include="..\src\lib\ui\InputListener.hpp" />
     <ClInclude Include="..\src\lib\ui\InputSystem.hpp" />
-    <ClInclude Include="..\src\lib\scene\SelectionSystem.hpp" />
     <ClInclude Include="..\src\lib\ui\Window.hpp" />
   </ItemGroup>
   <ItemGroup>

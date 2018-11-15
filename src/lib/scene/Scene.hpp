@@ -4,7 +4,6 @@
 #include <graphics/RenderSystem.hpp>
 #include <scene/CameraSystem.hpp>
 #include <scene/EditorSystem.hpp>
-#include <scene/SelectionSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
 namespace eng
@@ -43,6 +42,5 @@ namespace eng
         RenderSystem m_renderSystem;
         CameraSystem m_cameraSystem;
         EditorSystem m_editorSystem;
-        SelectionSystem m_selectionSystem;
     };
 }

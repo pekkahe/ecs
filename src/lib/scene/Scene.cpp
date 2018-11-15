@@ -12,14 +12,12 @@ Scene::Scene(std::shared_ptr<Window> window) :
     m_transformSystem(m_database),
     m_renderSystem(m_database),
     m_cameraSystem(m_database, m_window),
-    m_editorSystem(m_database),
-    m_selectionSystem(m_database)
+    m_editorSystem(m_database)
 {
     registerSystem(m_transformSystem);
     registerSystem(m_renderSystem);
     registerSystem(m_cameraSystem);
     registerSystem(m_editorSystem);
-    registerSystem(m_selectionSystem);
 
     createCamera();
     createGizmo();

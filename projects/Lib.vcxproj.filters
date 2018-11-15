@@ -129,9 +129,6 @@
     <ClCompile Include="..\src\lib\scene\EditorSystem.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\scene\SelectionSystem.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\lib\scene\CameraController.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -250,9 +247,6 @@
       <Filter>ui</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lib\scene\EditorSystem.hpp">
-      <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\lib\scene\SelectionSystem.hpp">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="..\src\lib\scene\CameraController.hpp">
