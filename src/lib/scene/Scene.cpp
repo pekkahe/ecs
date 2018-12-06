@@ -36,36 +36,48 @@ void Scene::registerSystem(ISystem& system)
 
 void Scene::update()
 {
-    // TODO: Move entity creation and deletion elsewhere
-    // - Deletion is thread-safe since it's simply a tag which is lazily evaluated
-    // - Creation is not, as it requires mutable access to various systems
+    // TODO: Thread-safe and lock-free entity creation and deletion within multithreaded
+    //       system updates
+    // - Deletion is already thread-safe in a way, because each system marks deleted 
+    //   entities locally and the changes are committed to the scene database on each
+    //   logic thread update cycle
+    // - Creation is inherently not thread-safe at the moment, since creating an entity
+    //   might require mutable access to various systems
     //
-    //   How would a e.g. WeaponSystem instantiate a Bullet entity?
-    //   1) WeaponSystem initiates the entity creation, by either
-    //      a) directly creating the id if the database id counter is atomic
-    //      b) letting the scene sync point create the id, and transfer the components
-    //         to the scene database from the system's local database
-    //   2) assigns the Bullet components (along with any other required components
-    //      owned by the system) to it and marks it Added
-    //   3) other systems react to the new component by adding their own components
-    //      e.g. TransformSystem notices the entity with the Added and Bullet components
-    //      and assigns a Transform component to it
-    //   * this spreads out entity creation to multiple systems and makes it harder to
-    //     understand how they are composed, but it should be easy to parallelize?
-    //   * the entity would be in this "building process" phase for at least the initial and
-    //     second frame, can this introduce errors in the form of too early incorrect queries?
-    //   * if entity creation takes multiple frames, we might not want to render or activate
-    //     it until the process is done
-    //   * nevertheless, this adds a 1-2 frame delay to entity spawning and activation, how
-    //     would this perform with input or visually sensitive contexts, e.g. firing a weapon?
+    // How would a e.g. WeaponSystem instantiate a Bullet entity?
     //
-    //   Entity creation needs to be lock-free within systems (other options):
-    //   a) add a synchronous "create" step for systems where they have mutable access
-    //      to each other (and the database), and which is executed before the parallel
-    //      update step
-    //   b) change database entity id counter to atomic and allow ids to be created
-    //      within concurrent system updates, but dispatch the component assignment
-    //      (and mutable system access) to the start of next frame
+    // A) Divide entity creation into multiple frames, and into multiple systems
+    //   1) WeaponSystem initiates entity creation, by either:
+    //      a) directly creating a new id, if the database id counter is atomic
+    //      b) delegate id and component creation to a sync point, by allowing each system
+    //         to keep local copies of the necessary tables in the database
+    //   2) assigns the Bullet component to the new entity (along with any other relevant
+    //      components owned by the system) and also the (local) Added component
+    //   3) other systems react to the new entity and add their own components in the
+    //      following frame(s) e.g. TransformSystem notices the entity with the Added
+    //      and Bullet components and assigns a Transform component to it
+    //   
+    //   * Should be easy to parallize because the systems are controlling access to their
+    //     own data
+    //   * Would spread out entity creation to multiple systems and make composition harder
+    //     to understand
+    //   * An entity would be in this "building process" phase for at least 1-2 frames;
+    //     there's the possibility that the entity is picked by a query whilst still being
+    //     built, one which might filter it out in its final form e.g. moving an object
+    //     which should have a collider into a wall
+    //   * If entity creation takes multiple frames, we might not want to render or activate
+    //     it until the process has completed; this would prevent the "premature query" issue;
+    //     how would these "dormant" entities be tagged and activated? 
+    //   * Anyway, this adds a 1-2 frame delay to entity spawning and activation; how would
+    //     this affect input and/or visually sensitive contexts e.g. firing a weapon, an
+    //     explosion, etc?
+    //
+    // B) add a synchronous "create" step for systems where they have mutable access to each
+    //    other (and the database), and which is executed before the parallel update step
+    //
+    // C) change database entity id counter to atomic and allow ids to be created within
+    //    concurrent system updates, but dispatch the component assignment (and mutable 
+    //    system access) to the start of next frame
 
     // TODO: unit test Updated, Deleted
     for (auto system : m_systems)
