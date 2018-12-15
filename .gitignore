@@ -30,13 +30,8 @@
 *.exe
 *.out
 *.app
-/.vs/Engine/v15
 /bin
 /build
-/external/glad-noext
 /external
 /documents/project_shoe.md
-/projects/imgui.ini
 /.vs
-/packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.0
-/packages/googletestmock.v.141.1.0.3
