@@ -1,3 +1,7 @@
 assert_is_set(EXT_DIR)
 
+add_library(GLM INTERFACE IMPORTED)
+
 set (GLM_INCLUDE "${EXT_DIR}/glm")
+
+set_target_properties(GLM PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${GLM_INCLUDE}")

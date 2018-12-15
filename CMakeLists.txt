@@ -12,30 +12,18 @@ endif ()
 
 project(anon-engine)
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
-endif ()
-
-set(CMAKE_CXX_STANDARD 14)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-#set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-# Use emcc compiler for Emscripten configuration
-if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-    set(CMAKE_C_COMPILER "emcc")
-endif ()
-
 # Add project path to custom cmake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(Defines)
 include(Macros)
 
 #
 # External dependencies class library project
 #
-set(EXT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external")
+add_library(External STATIC)
+
+target_include_directories(External PUBLIC)
 
 find_package(OpenGL REQUIRED)
 find_package(GLAD REQUIRED)
@@ -45,33 +33,18 @@ find_package(ImGui REQUIRED)
 find_package(ImGuizmo REQUIRED)
 find_package(Stb REQUIRED)
 
-add_library(External STATIC 
-    ${GLAD_SRC}
-    ${IMGUI_SRC}
-    ${IMGUIZMO_SRC}
-    ${STB_SRC})
-
-target_include_directories(External
-    PUBLIC ${GLAD_INCLUDE}
-    PUBLIC ${GLFW_INCLUDE}
-    PUBLIC ${GLM_INCLUDE}
-    PUBLIC ${IMGUI_INCLUDE}
-    PUBLIC ${IMGUIZMO_INCLUDE}
-    PUBLIC ${STB_INCLUDE})
-
-target_link_libraries(External 
-    PUBLIC ${OPENGL_gl_LIBRARY}
-    PUBLIC ${GLFW_LIB})
-
-assign_source_group(${EXT_DIR} ${GLAD_SRC})
-assign_source_group(${EXT_DIR} ${IMGUI_SRC})
-assign_source_group(${EXT_DIR} ${IMGUIZMO_SRC})
-assign_source_group(${EXT_DIR} ${STB_SRC})
+target_link_libraries(External PUBLIC
+    ${OPENGL_gl_LIBRARY}
+    GLAD
+    GLM
+    GLFW
+    IMGUI
+    IMGUIZMO
+    STB)
 
 #
 # Engine class library project
 #
-set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(ENGINE_SRC 
     "${SRC_DIR}/Precompiled.cpp"
     "${SRC_DIR}/Precompiled.hpp"
@@ -143,8 +116,6 @@ set(ENGINE_SRC
     "${SRC_DIR}/ui/InputSystem.hpp"
     "${SRC_DIR}/ui/Window.cpp"
     "${SRC_DIR}/ui/Window.hpp")
-
-set(SHADER_DIR "${CMAKE_CURRENT_SOURCE_DIR}/shaders")
 set(SHADER_SRC
     "${SHADER_DIR}/fragment.frag"
     "${SHADER_DIR}/fragment_col.frag"
@@ -156,7 +127,9 @@ set(SHADER_SRC
     "${SHADER_DIR}/vertex_tex.vert")
 
 add_library(Engine STATIC ${ENGINE_SRC} ${SHADER_SRC})
+
 target_include_directories(Engine PUBLIC ${SRC_DIR})
+
 target_link_libraries(Engine PUBLIC External)    
 
 assign_source_group(${SRC_DIR} ${ENGINE_SRC})
@@ -168,6 +141,7 @@ assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
 set(MAIN_SRC "${SRC_DIR}/Main.cpp")
 
 add_executable(Main ${MAIN_SRC})
+
 target_link_libraries(Main Engine)
 
 assign_source_group(${SRC_DIR} ${MAIN_SRC})
@@ -175,7 +149,6 @@ assign_source_group(${SRC_DIR} ${MAIN_SRC})
 #
 # Test application project
 #
-set(TESTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 set(TESTS_SRC 
     "${TESTS_DIR}/Main.cpp"
     "${TESTS_DIR}/Precompiled.cpp"
@@ -187,16 +160,13 @@ set(TESTS_SRC
 
 add_executable(Tests ${TESTS_SRC})
 
-find_package(GoogleTest REQUIRED)
+target_include_directories(Tests PRIVATE ${TESTS_DIR})
 
-target_include_directories(Tests 
-    PRIVATE ${TESTS_DIR}
-    PRIVATE ${GTEST_INCLUDE}
-    PRIVATE ${GMOCK_INCLUDE})
+find_package(GoogleTest REQUIRED)
 
 target_link_libraries(Tests
     External 
     Engine
-    ${GTEST_LIB})
+    GoogleTest)
 
 assign_source_group(${TESTS_DIR} ${TESTS_SRC})
