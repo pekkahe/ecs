@@ -12,18 +12,17 @@ endif ()
 
 project(anon-engine)
 
-# Add project path to custom cmake modules
+# Tell CMake of our custom module directory
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+# Import custom scripts
 include(Defines)
 include(Macros)
 
 #
-# External dependencies class library project
+# External dependencies library
 #
 add_library(External STATIC)
-
-target_include_directories(External PUBLIC)
 
 find_package(OpenGL REQUIRED)
 find_package(GLAD REQUIRED)
@@ -43,7 +42,7 @@ target_link_libraries(External PUBLIC
     STB)
 
 #
-# Engine class library project
+# Engine library
 #
 set(ENGINE_SRC 
     "${SRC_DIR}/Precompiled.cpp"
@@ -116,6 +115,7 @@ set(ENGINE_SRC
     "${SRC_DIR}/ui/InputSystem.hpp"
     "${SRC_DIR}/ui/Window.cpp"
     "${SRC_DIR}/ui/Window.hpp")
+    
 set(SHADER_SRC
     "${SHADER_DIR}/fragment.frag"
     "${SHADER_DIR}/fragment_col.frag"
@@ -136,7 +136,7 @@ assign_source_group(${SRC_DIR} ${ENGINE_SRC})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
 
 #
-# Console application project
+# Console application
 #
 set(MAIN_SRC "${SRC_DIR}/Main.cpp")
 
@@ -147,7 +147,7 @@ target_link_libraries(Main Engine)
 assign_source_group(${SRC_DIR} ${MAIN_SRC})
 
 #
-# Test application project
+# Unit test application
 #
 set(TESTS_SRC 
     "${TESTS_DIR}/Main.cpp"
@@ -165,8 +165,8 @@ target_include_directories(Tests PRIVATE ${TESTS_DIR})
 find_package(GoogleTest REQUIRED)
 
 target_link_libraries(Tests
+    GoogleTest
     External 
-    Engine
-    GoogleTest)
+    Engine)
 
 assign_source_group(${TESTS_DIR} ${TESTS_SRC})
