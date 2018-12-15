@@ -1,0 +1,16 @@
+function (assign_source_group ROOT_PATH)
+    foreach (_source IN ITEMS ${ARGN})
+        file(RELATIVE_PATH _source_rel "${ROOT_PATH}" "${_source}")
+        get_filename_component(_source_path "${_source_rel}" PATH)
+        string(REPLACE "/" "\\" _source_path_msvc "${_source_path}")
+        source_group("${_source_path_msvc}" FILES "${_source}")
+
+        #message("Grouping '${_source_path_msvc}': ${_source}")
+    endforeach ()
+endfunction ()
+
+function (assert_is_set VAR)
+    if (NOT DEFINED ${VAR})
+        message(FATAL_ERROR "Variable ${VAR} is undefined")
+    endif ()
+endfunction ()
