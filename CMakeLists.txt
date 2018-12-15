@@ -96,83 +96,83 @@ assign_source_group(${EXT_DIR} ${STB_SRC})
 #
 # Engine class library project
 #
-set(ENGINE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(ENGINE_SRC 
-    "${ENGINE_DIR}/Precompiled.cpp"
-    "${ENGINE_DIR}/Precompiled.hpp"
-    "${ENGINE_DIR}/component/Database.cpp"
-    "${ENGINE_DIR}/component/Database.hpp"
-    "${ENGINE_DIR}/component/EntityId.hpp"
-    "${ENGINE_DIR}/component/IComponent.hpp"
-    "${ENGINE_DIR}/component/Query.cpp"
-    "${ENGINE_DIR}/component/Query.hpp"
-    "${ENGINE_DIR}/component/SparseIndex.cpp"
-    "${ENGINE_DIR}/component/SparseIndex.hpp"
-    "${ENGINE_DIR}/component/SparseSet.hpp"
-    "${ENGINE_DIR}/component/System.cpp"
-    "${ENGINE_DIR}/component/System.hpp"
-    "${ENGINE_DIR}/component/Table.hpp"
-    "${ENGINE_DIR}/core/Added.hpp"
-    "${ENGINE_DIR}/core/Datatypes.hpp"
-    "${ENGINE_DIR}/core/Defines.hpp"
-    "${ENGINE_DIR}/core/Deleted.hpp"
-    "${ENGINE_DIR}/core/Engine.cpp"
-    "${ENGINE_DIR}/core/Engine.hpp"
-    "${ENGINE_DIR}/core/Logger.hpp"
-    "${ENGINE_DIR}/core/Math.hpp"
-    "${ENGINE_DIR}/core/Time.cpp"
-    "${ENGINE_DIR}/core/Time.hpp"
-    "${ENGINE_DIR}/core/Traits.hpp"
-    "${ENGINE_DIR}/core/Updated.hpp"
-    "${ENGINE_DIR}/graphics/AABB.cpp"
-    "${ENGINE_DIR}/graphics/AABB.hpp"
-    "${ENGINE_DIR}/graphics/Id.hpp"
-    "${ENGINE_DIR}/graphics/Mesh.hpp"
-    "${ENGINE_DIR}/graphics/OBB.cpp"
-    "${ENGINE_DIR}/graphics/OBB.hpp"
-    "${ENGINE_DIR}/graphics/OldRenderer.cpp"
-    "${ENGINE_DIR}/graphics/OldRenderer.hpp"
-    "${ENGINE_DIR}/graphics/Raycast.cpp"
-    "${ENGINE_DIR}/graphics/Raycast.hpp"
-    "${ENGINE_DIR}/graphics/RenderSystem.cpp"
-    "${ENGINE_DIR}/graphics/RenderSystem.hpp"
-    "${ENGINE_DIR}/graphics/Shader.cpp"
-    "${ENGINE_DIR}/graphics/Shader.hpp"
-    "${ENGINE_DIR}/graphics/Texture.cpp"
-    "${ENGINE_DIR}/graphics/Texture.hpp"
-    "${ENGINE_DIR}/scene/Camera.cpp"
-    "${ENGINE_DIR}/scene/Camera.hpp"
-    "${ENGINE_DIR}/scene/CameraControl.hpp"
-    "${ENGINE_DIR}/scene/CameraController.cpp"
-    "${ENGINE_DIR}/scene/CameraController.hpp"
-    "${ENGINE_DIR}/scene/CameraSystem.cpp"
-    "${ENGINE_DIR}/scene/CameraSystem.hpp"
-    "${ENGINE_DIR}/scene/EditorSystem.cpp"
-    "${ENGINE_DIR}/scene/EditorSystem.hpp"
-    "${ENGINE_DIR}/scene/Hovered.hpp"
-    "${ENGINE_DIR}/scene/Scene.cpp"
-    "${ENGINE_DIR}/scene/Scene.hpp"
-    "${ENGINE_DIR}/scene/Selected.hpp"
-    "${ENGINE_DIR}/scene/Transform.hpp"
-    "${ENGINE_DIR}/scene/TransformGizmo.hpp"
-    "${ENGINE_DIR}/scene/TransformSystem.cpp"
-    "${ENGINE_DIR}/scene/TransformSystem.hpp"
-    "${ENGINE_DIR}/ui/FrameInput.cpp"
-    "${ENGINE_DIR}/ui/FrameInput.hpp"
-    "${ENGINE_DIR}/ui/ImGui.cpp"
-    "${ENGINE_DIR}/ui/ImGui.hpp"
-    "${ENGINE_DIR}/ui/InputBindings.cpp"
-    "${ENGINE_DIR}/ui/InputBindings.hpp"
-    "${ENGINE_DIR}/ui/InputListener.hpp"
-    "${ENGINE_DIR}/ui/InputSystem.cpp"
-    "${ENGINE_DIR}/ui/InputSystem.hpp"
-    "${ENGINE_DIR}/ui/Window.cpp"
-    "${ENGINE_DIR}/ui/Window.hpp")
+    "${SRC_DIR}/Precompiled.cpp"
+    "${SRC_DIR}/Precompiled.hpp"
+    "${SRC_DIR}/component/Database.cpp"
+    "${SRC_DIR}/component/Database.hpp"
+    "${SRC_DIR}/component/EntityId.hpp"
+    "${SRC_DIR}/component/IComponent.hpp"
+    "${SRC_DIR}/component/Query.cpp"
+    "${SRC_DIR}/component/Query.hpp"
+    "${SRC_DIR}/component/SparseIndex.cpp"
+    "${SRC_DIR}/component/SparseIndex.hpp"
+    "${SRC_DIR}/component/SparseSet.hpp"
+    "${SRC_DIR}/component/System.cpp"
+    "${SRC_DIR}/component/System.hpp"
+    "${SRC_DIR}/component/Table.hpp"
+    "${SRC_DIR}/core/Added.hpp"
+    "${SRC_DIR}/core/Datatypes.hpp"
+    "${SRC_DIR}/core/Defines.hpp"
+    "${SRC_DIR}/core/Deleted.hpp"
+    "${SRC_DIR}/core/Engine.cpp"
+    "${SRC_DIR}/core/Engine.hpp"
+    "${SRC_DIR}/core/Logger.hpp"
+    "${SRC_DIR}/core/Math.hpp"
+    "${SRC_DIR}/core/Time.cpp"
+    "${SRC_DIR}/core/Time.hpp"
+    "${SRC_DIR}/core/Traits.hpp"
+    "${SRC_DIR}/core/Updated.hpp"
+    "${SRC_DIR}/graphics/AABB.cpp"
+    "${SRC_DIR}/graphics/AABB.hpp"
+    "${SRC_DIR}/graphics/Id.hpp"
+    "${SRC_DIR}/graphics/Mesh.hpp"
+    "${SRC_DIR}/graphics/OBB.cpp"
+    "${SRC_DIR}/graphics/OBB.hpp"
+    "${SRC_DIR}/graphics/OldRenderer.cpp"
+    "${SRC_DIR}/graphics/OldRenderer.hpp"
+    "${SRC_DIR}/graphics/Raycast.cpp"
+    "${SRC_DIR}/graphics/Raycast.hpp"
+    "${SRC_DIR}/graphics/RenderSystem.cpp"
+    "${SRC_DIR}/graphics/RenderSystem.hpp"
+    "${SRC_DIR}/graphics/Shader.cpp"
+    "${SRC_DIR}/graphics/Shader.hpp"
+    "${SRC_DIR}/graphics/Texture.cpp"
+    "${SRC_DIR}/graphics/Texture.hpp"
+    "${SRC_DIR}/scene/Camera.cpp"
+    "${SRC_DIR}/scene/Camera.hpp"
+    "${SRC_DIR}/scene/CameraControl.hpp"
+    "${SRC_DIR}/scene/CameraController.cpp"
+    "${SRC_DIR}/scene/CameraController.hpp"
+    "${SRC_DIR}/scene/CameraSystem.cpp"
+    "${SRC_DIR}/scene/CameraSystem.hpp"
+    "${SRC_DIR}/scene/EditorSystem.cpp"
+    "${SRC_DIR}/scene/EditorSystem.hpp"
+    "${SRC_DIR}/scene/Hovered.hpp"
+    "${SRC_DIR}/scene/Scene.cpp"
+    "${SRC_DIR}/scene/Scene.hpp"
+    "${SRC_DIR}/scene/Selected.hpp"
+    "${SRC_DIR}/scene/Transform.hpp"
+    "${SRC_DIR}/scene/TransformGizmo.hpp"
+    "${SRC_DIR}/scene/TransformSystem.cpp"
+    "${SRC_DIR}/scene/TransformSystem.hpp"
+    "${SRC_DIR}/ui/FrameInput.cpp"
+    "${SRC_DIR}/ui/FrameInput.hpp"
+    "${SRC_DIR}/ui/ImGui.cpp"
+    "${SRC_DIR}/ui/ImGui.hpp"
+    "${SRC_DIR}/ui/InputBindings.cpp"
+    "${SRC_DIR}/ui/InputBindings.hpp"
+    "${SRC_DIR}/ui/InputListener.hpp"
+    "${SRC_DIR}/ui/InputSystem.cpp"
+    "${SRC_DIR}/ui/InputSystem.hpp"
+    "${SRC_DIR}/ui/Window.cpp"
+    "${SRC_DIR}/ui/Window.hpp")
 
 # GLOB alternative
 # file(GLOB_RECURSE ENGINE_SOURCE 
-#     "${ENGINE_DIR}/*.cpp" 
-#     "${ENGINE_DIR}/*.hpp")
+#     "${SRC_DIR}/*.cpp" 
+#     "${SRC_DIR}/*.hpp")
 
 set(SHADER_DIR "${CMAKE_CURRENT_SOURCE_DIR}/shaders")
 set(SHADER_SRC
@@ -186,22 +186,21 @@ set(SHADER_SRC
     "${SHADER_DIR}/vertex_tex.vert")
 
 add_library(Engine STATIC ${ENGINE_SRC} ${SHADER_SRC})
-target_include_directories(Engine PUBLIC ${ENGINE_DIR})
+target_include_directories(Engine PUBLIC ${SRC_DIR})
 target_link_libraries(Engine PUBLIC External)    
 
-assign_source_group(${ENGINE_DIR} ${ENGINE_SRC})
+assign_source_group(${SRC_DIR} ${ENGINE_SRC})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
 
 #
 # Console application project
 #
-set(APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src_app")
-set(APP_SRC "${APP_DIR}/main.cpp")
+set(MAIN_SRC "${SRC_DIR}/Main.cpp")
 
-add_executable(App ${APP_SRC})
-target_link_libraries(App Engine)
+add_executable(Main ${MAIN_SRC})
+target_link_libraries(Main Engine)
 
-assign_source_group(${APP_DIR} ${APP_SRC})
+assign_source_group(${SRC_DIR} ${MAIN_SRC})
 
 #
 # Test application project
