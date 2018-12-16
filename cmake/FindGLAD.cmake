@@ -1,11 +1,15 @@
 assert_is_set(EXT_DIR)
 
-add_library(GLAD INTERFACE IMPORTED)
+add_library(Glad)
 
-set(GLAD_SRC "${EXT_DIR}/glad/src/glad.c")
-set(GLAD_INCLUDE "${EXT_DIR}/glad/include")
+set(GLAD_DIR "${EXT_DIR}/glad")
+set(GLAD_SRC "${GLAD_DIR}/src/glad.c")
+set(GLAD_INCLUDE "${GLAD_DIR}/include")
 
-set_target_properties(GLAD PROPERTIES INTERFACE_SOURCES "${GLAD_SRC}")
-set_target_properties(GLAD PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${GLAD_INCLUDE}")
+target_sources(Glad PRIVATE ${GLAD_SRC})
 
-assign_source_group(${EXT_DIR} ${GLAD_SRC})
+target_include_directories(Glad PUBLIC ${GLAD_INCLUDE})
+
+set_target_properties(Glad PROPERTIES FOLDER "External")
+
+assign_source_group("${GLAD_DIR}/src" ${GLAD_SRC})

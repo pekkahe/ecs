@@ -20,28 +20,6 @@ include(Defines)
 include(Macros)
 
 #
-# External dependencies library
-#
-add_library(External STATIC)
-
-find_package(OpenGL REQUIRED)
-find_package(GLAD REQUIRED)
-find_package(GLFW REQUIRED)
-find_package(GLM REQUIRED)
-find_package(ImGui REQUIRED)
-find_package(ImGuizmo REQUIRED)
-find_package(Stb REQUIRED)
-
-target_link_libraries(External PUBLIC
-    ${OPENGL_gl_LIBRARY}
-    GLAD
-    GLM
-    GLFW
-    IMGUI
-    IMGUIZMO
-    STB)
-
-#
 # Engine library
 #
 set(ENGINE_SRC 
@@ -130,7 +108,28 @@ add_library(Engine STATIC ${ENGINE_SRC} ${SHADER_SRC})
 
 target_include_directories(Engine PUBLIC ${SRC_DIR})
 
-target_link_libraries(Engine PUBLIC External)    
+find_package(OpenGL REQUIRED)
+find_package(Glad REQUIRED)
+find_package(GLFW REQUIRED)
+find_package(GLM REQUIRED)
+find_package(ImGui REQUIRED)
+find_package(ImGuizmo REQUIRED)
+find_package(Stb REQUIRED)
+
+target_link_libraries(Engine 
+    PUBLIC ${OPENGL_gl_LIBRARY}
+    PUBLIC Glad
+    PUBLIC GLM
+    PUBLIC GLFW
+    PUBLIC ImGui
+    PUBLIC ImGuizmo
+    PUBLIC Stb)    
+    
+if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set_target_properties(Engine PROPERTIES 
+        LINK_FLAGS "
+            -o engine.js")
+endif ()
 
 assign_source_group(${SRC_DIR} ${ENGINE_SRC})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
@@ -143,6 +142,12 @@ set(MAIN_SRC "${SRC_DIR}/Main.cpp")
 add_executable(Main ${MAIN_SRC})
 
 target_link_libraries(Main Engine)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+    set_target_properties(Main PROPERTIES 
+        LINK_FLAGS "
+            -o main.js")
+endif ()
 
 assign_source_group(${SRC_DIR} ${MAIN_SRC})
 
@@ -166,7 +171,6 @@ find_package(GoogleTest REQUIRED)
 
 target_link_libraries(Tests
     GoogleTest
-    External 
     Engine)
 
 assign_source_group(${TESTS_DIR} ${TESTS_SRC})

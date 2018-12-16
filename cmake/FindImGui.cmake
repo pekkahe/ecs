@@ -1,22 +1,29 @@
 assert_is_set(EXT_DIR)
 
-add_library(IMGUI INTERFACE IMPORTED)
+add_library(ImGui)
 
+set(IMGUI_DIR "${EXT_DIR}/imgui")
 set(IMGUI_SRC 
-    "${EXT_DIR}/imgui/imgui.cpp"
-    "${EXT_DIR}/imgui/imgui_demo.cpp"
-    "${EXT_DIR}/imgui/imgui_draw.cpp"
-    "${EXT_DIR}/imgui/imgui_impl_glfw.cpp"
-    "${EXT_DIR}/imgui/imgui_impl_opengl3.cpp"
-    "${EXT_DIR}/imgui/imgui_widgets.cpp"
-    "${EXT_DIR}/imgui/imconfig.h"
-    "${EXT_DIR}/imgui/imgui.h"
-    "${EXT_DIR}/imgui/imgui_impl_glfw.h"
-    "${EXT_DIR}/imgui/imgui_impl_opengl3.h")
+    "${IMGUI_DIR}/imgui.cpp"
+    "${IMGUI_DIR}/imgui_demo.cpp"
+    "${IMGUI_DIR}/imgui_draw.cpp"
+    "${IMGUI_DIR}/imgui_impl_glfw.cpp"
+    "${IMGUI_DIR}/imgui_impl_opengl3.cpp"
+    "${IMGUI_DIR}/imgui_widgets.cpp"
+    "${IMGUI_DIR}/imconfig.h"
+    "${IMGUI_DIR}/imgui.h"
+    "${IMGUI_DIR}/imgui_impl_glfw.h"
+    "${IMGUI_DIR}/imgui_impl_opengl3.h")
+set(IMGUI_INCLUDE "${IMGUI_DIR}")
 
-set(IMGUI_INCLUDE "${EXT_DIR}/imgui")
+target_sources(ImGui PRIVATE ${IMGUI_SRC})
 
-set_target_properties(IMGUI PROPERTIES INTERFACE_SOURCES "${IMGUI_SRC}")
-set_target_properties(IMGUI PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${IMGUI_INCLUDE}")
+target_include_directories(ImGui PUBLIC ${IMGUI_INCLUDE})
 
-assign_source_group(${EXT_DIR} ${IMGUI_SRC})
+target_link_libraries(ImGui 
+    PRIVATE Glad
+    PRIVATE GLFW)
+
+set_target_properties(ImGui PROPERTIES FOLDER "External")
+
+assign_source_group("${IMGUI_DIR}" ${IMGUI_SRC})
