@@ -123,13 +123,15 @@ void TransformSystem::update(const Scene&)
         }
 
         // Decompose manipulated values back into component
+        vec3 skew;
+        vec4 perspective;
         glm::decompose(
             modelMatrix,
             transform.scale,
             transform.rotation,
             transform.position,
-            vec3(),
-            vec4());
+            skew,
+            perspective);
 
         // Compute delta transform
         Transform delta;

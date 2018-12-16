@@ -18,7 +18,10 @@ set(IMGUI_INCLUDE "${IMGUI_DIR}")
 
 target_sources(ImGui PRIVATE ${IMGUI_SRC})
 
-target_include_directories(ImGui PUBLIC ${IMGUI_INCLUDE})
+target_include_directories(ImGui 
+    PUBLIC ${IMGUI_INCLUDE})
+    #PRIVATE ${Glad_INCLUDE}
+    #PRIVATE ${GLFW_INCLUDE}
 
 target_link_libraries(ImGui 
     PRIVATE Glad

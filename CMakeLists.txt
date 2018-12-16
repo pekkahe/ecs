@@ -124,18 +124,12 @@ target_link_libraries(Engine
     PUBLIC ImGui
     PUBLIC ImGuizmo
     PUBLIC Stb)    
-    
-if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-    set_target_properties(Engine PROPERTIES 
-        LINK_FLAGS "
-            -o engine.js")
-endif ()
 
 assign_source_group(${SRC_DIR} ${ENGINE_SRC})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
 
 #
-# Console application
+# Main application
 #
 set(MAIN_SRC "${SRC_DIR}/Main.cpp")
 
@@ -143,34 +137,46 @@ add_executable(Main ${MAIN_SRC})
 
 target_link_libraries(Main Engine)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
-    set_target_properties(Main PROPERTIES 
-        LINK_FLAGS "
-            -o main.js")
+if (EMSCRIPTEN)
+    # LINK_FLAGS must be specified as one big string, using CMake's 
+    # multiline string syntax creates a list which doesn't work.
+    set(_LF "")
+    set(_LF "${_LF} -v")
+    set(_LF "${_LF} --emrun")
+    set(_LF "${_LF} -s DEMANGLE_SUPPORT=1")
+    set(_LF "${_LF} -s USE_GLFW=3")
+    set(_LF "${_LF} -s USE_WEBGL2=1")
+    set(_LF "${_LF} -s FULL_ES3=1")
+    set(_LF "${_LF} -o Main.html")
+
+    set_target_properties(Main PROPERTIES
+        LINK_FLAGS "${_LF}")
 endif ()
 
 assign_source_group(${SRC_DIR} ${MAIN_SRC})
 
 #
-# Unit test application
+# Unit test application (build issue currently with Emscripten)
 #
-set(TESTS_SRC 
-    "${TESTS_DIR}/Main.cpp"
-    "${TESTS_DIR}/Precompiled.cpp"
-    "${TESTS_DIR}/Precompiled.hpp"
-    "${TESTS_DIR}/component/Test_Query.cpp"
-    "${TESTS_DIR}/component/Test_SparseIndex.cpp"
-    "${TESTS_DIR}/component/Test_Table.cpp"
-    "${TESTS_DIR}/component/TestComponents.hpp")
+if (NOT EMSCRIPTEN)
+    set(TESTS_SRC 
+        "${TESTS_DIR}/Main.cpp"
+        "${TESTS_DIR}/Precompiled.cpp"
+        "${TESTS_DIR}/Precompiled.hpp"
+        "${TESTS_DIR}/component/Test_Query.cpp"
+        "${TESTS_DIR}/component/Test_SparseIndex.cpp"
+        "${TESTS_DIR}/component/Test_Table.cpp"
+        "${TESTS_DIR}/component/TestComponents.hpp")
 
-add_executable(Tests ${TESTS_SRC})
+    add_executable(Tests ${TESTS_SRC})
 
-target_include_directories(Tests PRIVATE ${TESTS_DIR})
+    target_include_directories(Tests PRIVATE ${TESTS_DIR})
 
-find_package(GoogleTest REQUIRED)
+    find_package(GoogleTest REQUIRED)
 
-target_link_libraries(Tests
-    GoogleTest
-    Engine)
+    target_link_libraries(Tests
+        GoogleTest
+        Engine)
 
-assign_source_group(${TESTS_DIR} ${TESTS_SRC})
+    assign_source_group(${TESTS_DIR} ${TESTS_SRC})
+endif ()

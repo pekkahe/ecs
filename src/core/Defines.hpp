@@ -39,11 +39,11 @@
         T& operator=(const T&) = delete; \
         T& operator=(T&&) = delete; 
 
-#define ENUM_FLAG_OPERATOR(T, X) \
-        inline T operator X(T lhs, T rhs) { \
-        return (T) (static_cast<std::underlying_type_t<T>>(lhs) X static_cast<std::underlying_type_t<T>>(rhs)); } \
-        inline T& operator X=(T& lhs, T rhs) { \
-        lhs = (T)(static_cast<std::underlying_type_t<T>>(lhs) X static_cast<std::underlying_type_t<T>>(rhs)); \
+#define ENUM_FLAG_OPERATOR(T, OPERATOR) \
+        inline T operator OPERATOR(T lhs, T rhs) { \
+        return (T) (static_cast<std::underlying_type_t<T>>(lhs) OPERATOR static_cast<std::underlying_type_t<T>>(rhs)); } \
+        inline T& operator OPERATOR ## =(T& lhs, T rhs) { \
+        lhs = (T)(static_cast<std::underlying_type_t<T>>(lhs) OPERATOR static_cast<std::underlying_type_t<T>>(rhs)); \
         return lhs; }
 
 #define ENUM_FLAGS(T) \

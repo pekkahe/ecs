@@ -6,9 +6,9 @@
 
 // Generate function definition for a component assignment function.
 #define ADD_COMPONENT_FUNCTION(ComponentName, TableField) \
-        void add##ComponentName##(EntityId id, ##ComponentName##&& component) \
+        void add ## ComponentName (EntityId id, ComponentName&& component) \
         { \
-            ##TableField##.assign(id, std::forward<##ComponentName##>(component)); \
+            TableField.assign(id, std::forward<ComponentName>(component)); \
         }
 
 namespace eng
