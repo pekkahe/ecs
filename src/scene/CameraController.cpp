@@ -1,8 +1,6 @@
 #include <Precompiled.hpp>
 #include <scene/CameraController.hpp>
 
-#include <GLFW/glfw3.h>
-
 using namespace eng;
 
 CameraController::CameraController(int2 windowSize)

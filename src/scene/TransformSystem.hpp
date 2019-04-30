@@ -1,6 +1,6 @@
 #pragma once
 
-#include <component/System.hpp>
+#include <system/System.hpp>
 #include <scene/Transform.hpp>
 
 namespace eng

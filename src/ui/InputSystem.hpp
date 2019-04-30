@@ -1,6 +1,6 @@
 #pragma once
 
-#include <component/System.hpp>
+#include <system/System.hpp>
 #include <core/Defines.hpp>
 #include <ui/InputListener.hpp>
 #include <ui/Window.hpp>

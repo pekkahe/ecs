@@ -3,8 +3,6 @@
 #include <core/Defines.hpp>
 
 #include <bitset>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace eng
 { 

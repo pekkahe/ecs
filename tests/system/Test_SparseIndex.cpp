@@ -1,6 +1,6 @@
 #include <Precompiled.hpp>
 
-#include <component/SparseIndex.hpp>
+#include <system/SparseIndex.hpp>
 #include <core/Time.hpp>
 #include <array>
 

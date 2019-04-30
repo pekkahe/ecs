@@ -1,6 +1,6 @@
 #pragma once
 
-#include <component/System.hpp>
+#include <system/System.hpp>
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
 #include <scene/CameraController.hpp>

@@ -4,8 +4,6 @@
 #include <scene/Scene.hpp>
 #include <ui/ImGui.hpp>
 
-#include <GLFW/glfw3.h>
-
 using namespace eng;
 using namespace eng::gfx;
 

@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <component/Query.hpp>
+#include <system/Query.hpp>
 
 using namespace eng;
 

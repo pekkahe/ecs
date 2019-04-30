@@ -7,9 +7,6 @@
 #include <imgui_impl_opengl3.h>
 #include <ImGuizmo.h>
 
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-
 namespace
 {
     std::array<float, 16> unwrapMatrix(const eng::mat4& matrix)

@@ -25,18 +25,7 @@ include(Macros)
 set(ENGINE_SRC 
     "${SRC_DIR}/Precompiled.cpp"
     "${SRC_DIR}/Precompiled.hpp"
-    "${SRC_DIR}/component/Database.cpp"
-    "${SRC_DIR}/component/Database.hpp"
-    "${SRC_DIR}/component/EntityId.hpp"
-    "${SRC_DIR}/component/IComponent.hpp"
-    "${SRC_DIR}/component/Query.cpp"
-    "${SRC_DIR}/component/Query.hpp"
-    "${SRC_DIR}/component/SparseIndex.cpp"
-    "${SRC_DIR}/component/SparseIndex.hpp"
-    "${SRC_DIR}/component/SparseSet.hpp"
-    "${SRC_DIR}/component/System.cpp"
-    "${SRC_DIR}/component/System.hpp"
-    "${SRC_DIR}/component/Table.hpp"
+
     "${SRC_DIR}/core/Added.hpp"
     "${SRC_DIR}/core/Datatypes.hpp"
     "${SRC_DIR}/core/Defines.hpp"
@@ -49,6 +38,13 @@ set(ENGINE_SRC
     "${SRC_DIR}/core/Time.hpp"
     "${SRC_DIR}/core/Traits.hpp"
     "${SRC_DIR}/core/Updated.hpp"
+
+    "${SRC_DIR}/editor/EditorSystem.cpp"
+    "${SRC_DIR}/editor/EditorSystem.hpp"
+    "${SRC_DIR}/editor/Hovered.hpp"
+    "${SRC_DIR}/editor/Selected.hpp"
+    "${SRC_DIR}/editor/TransformGizmo.hpp"
+
     "${SRC_DIR}/graphics/AABB.cpp"
     "${SRC_DIR}/graphics/AABB.hpp"
     "${SRC_DIR}/graphics/Id.hpp"
@@ -65,6 +61,7 @@ set(ENGINE_SRC
     "${SRC_DIR}/graphics/Shader.hpp"
     "${SRC_DIR}/graphics/Texture.cpp"
     "${SRC_DIR}/graphics/Texture.hpp"
+
     "${SRC_DIR}/scene/Camera.cpp"
     "${SRC_DIR}/scene/Camera.hpp"
     "${SRC_DIR}/scene/CameraControl.hpp"
@@ -72,16 +69,25 @@ set(ENGINE_SRC
     "${SRC_DIR}/scene/CameraController.hpp"
     "${SRC_DIR}/scene/CameraSystem.cpp"
     "${SRC_DIR}/scene/CameraSystem.hpp"
-    "${SRC_DIR}/scene/EditorSystem.cpp"
-    "${SRC_DIR}/scene/EditorSystem.hpp"
-    "${SRC_DIR}/scene/Hovered.hpp"
     "${SRC_DIR}/scene/Scene.cpp"
     "${SRC_DIR}/scene/Scene.hpp"
-    "${SRC_DIR}/scene/Selected.hpp"
     "${SRC_DIR}/scene/Transform.hpp"
-    "${SRC_DIR}/scene/TransformGizmo.hpp"
     "${SRC_DIR}/scene/TransformSystem.cpp"
     "${SRC_DIR}/scene/TransformSystem.hpp"
+
+    "${SRC_DIR}/system/Database.cpp"
+    "${SRC_DIR}/system/Database.hpp"
+    "${SRC_DIR}/system/EntityId.hpp"
+    "${SRC_DIR}/system/IComponent.hpp"
+    "${SRC_DIR}/system/Query.cpp"
+    "${SRC_DIR}/system/Query.hpp"
+    "${SRC_DIR}/system/SparseIndex.cpp"
+    "${SRC_DIR}/system/SparseIndex.hpp"
+    "${SRC_DIR}/system/SparseSet.hpp"
+    "${SRC_DIR}/system/System.cpp"
+    "${SRC_DIR}/system/System.hpp"
+    "${SRC_DIR}/system/Table.hpp"
+
     "${SRC_DIR}/ui/FrameInput.cpp"
     "${SRC_DIR}/ui/FrameInput.hpp"
     "${SRC_DIR}/ui/ImGui.cpp"
@@ -163,10 +169,10 @@ if (NOT EMSCRIPTEN)
         "${TESTS_DIR}/Main.cpp"
         "${TESTS_DIR}/Precompiled.cpp"
         "${TESTS_DIR}/Precompiled.hpp"
-        "${TESTS_DIR}/component/Test_Query.cpp"
-        "${TESTS_DIR}/component/Test_SparseIndex.cpp"
-        "${TESTS_DIR}/component/Test_Table.cpp"
-        "${TESTS_DIR}/component/TestComponents.hpp")
+        "${TESTS_DIR}/system/Test_Query.cpp"
+        "${TESTS_DIR}/system/Test_SparseIndex.cpp"
+        "${TESTS_DIR}/system/Test_Table.cpp"
+        "${TESTS_DIR}/system/TestComponents.hpp")
 
     add_executable(Tests ${TESTS_SRC})
 

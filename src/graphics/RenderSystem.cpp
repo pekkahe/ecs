@@ -1,14 +1,11 @@
 #include <Precompiled.hpp>
 #include <graphics/RenderSystem.hpp>
 
-#include <scene/Hovered.hpp>
+#include <editor/Hovered.hpp>
 #include <scene/Scene.hpp>
-#include <scene/Selected.hpp>
+#include <editor/Selected.hpp>
 #include <scene/Transform.hpp>
 #include <ui/Window.hpp>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 using namespace eng;
 using namespace eng::gfx;

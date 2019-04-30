@@ -1,6 +1,6 @@
 #pragma once
 
-#include <component/SparseIndex.hpp>
+#include <system/SparseIndex.hpp>
 #include <core/Defines.hpp>
 
 namespace eng

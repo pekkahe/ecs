@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <component/System.hpp>
+#include <system/System.hpp>
 
 #include <scene/Scene.hpp>
 

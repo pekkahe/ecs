@@ -1,9 +1,9 @@
 #pragma once
 
-#include <component/System.hpp>
-#include <scene/Hovered.hpp>
-#include <scene/Selected.hpp>
-#include <scene/TransformGizmo.hpp>
+#include <system/System.hpp>
+#include <editor/Hovered.hpp>
+#include <editor/Selected.hpp>
+#include <editor/TransformGizmo.hpp>
 
 namespace eng
 {

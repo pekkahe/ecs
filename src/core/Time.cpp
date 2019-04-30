@@ -1,8 +1,6 @@
 #include <Precompiled.hpp>
 #include <core/Time.hpp>
 
-#include <GLFW/glfw3.h>
-
 using namespace eng;
 
 constexpr std::chrono::milliseconds fixedFrameTime = std::chrono::milliseconds(16);

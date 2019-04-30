@@ -1,13 +1,11 @@
 #include <Precompiled.hpp>
-#include <scene/EditorSystem.hpp>
+#include <editor/EditorSystem.hpp>
 
 #include <graphics/Mesh.hpp>
 #include <graphics/Raycast.hpp>
 #include <scene/Camera.hpp>
 #include <scene/Scene.hpp>
 #include <ui/Window.hpp>
-
-#include <GLFW/glfw3.h>
 
 using namespace eng;
 

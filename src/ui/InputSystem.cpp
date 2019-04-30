@@ -1,9 +1,7 @@
 #include <Precompiled.hpp>
 #include <ui/InputSystem.hpp>
 
-#include <scene/Selected.hpp>
-
-#include <GLFW/glfw3.h>
+#include <editor/Selected.hpp>
 
 using namespace eng;
 

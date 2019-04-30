@@ -1,7 +1,7 @@
 #pragma once
 
-#include <component/Database.hpp>
-#include <component/Table.hpp>
+#include <system/Database.hpp>
+#include <system/Table.hpp>
 
 namespace eng
 {

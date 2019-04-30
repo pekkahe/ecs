@@ -23,7 +23,11 @@
 #include <future>
 
 #include <type_traits>
-#include <typeinfo> 
+#include <typeinfo>
+
+#include <glad/glad.h>
+//#define GLFW_INCLUDE_ES3
+#include <GLFW/glfw3.h>
 
 #define NOMINMAX
 

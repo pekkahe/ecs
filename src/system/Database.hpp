@@ -1,8 +1,8 @@
 #pragma once
 
-#include <component/EntityId.hpp>
-#include <component/IComponent.hpp>
-#include <component/Table.hpp>
+#include <system/EntityId.hpp>
+#include <system/IComponent.hpp>
+#include <system/Table.hpp>
 
 #include <core/Defines.hpp>
 

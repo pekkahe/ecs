@@ -3,13 +3,7 @@
 #include <scene/Camera.hpp>
 #include <ui/Window.hpp>
 
-#include <component/Query.hpp>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <system/Query.hpp>
 
 using namespace eng;
 using namespace eng::gfx;

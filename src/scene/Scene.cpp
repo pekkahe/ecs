@@ -3,7 +3,7 @@
 
 #include <graphics/Mesh.hpp>
 #include <scene/Transform.hpp>
-#include <scene/TransformGizmo.hpp>
+#include <editor/TransformGizmo.hpp>
 
 using namespace eng;
 

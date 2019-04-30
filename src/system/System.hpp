@@ -1,7 +1,7 @@
 #pragma once
 
-#include <component/Database.hpp>
-#include <component/Query.hpp>
+#include <system/Database.hpp>
+#include <system/Query.hpp>
 #include <core/Defines.hpp>
 
 // Generate function definition for a component assignment function.

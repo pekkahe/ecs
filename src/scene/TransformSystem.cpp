@@ -4,7 +4,7 @@
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
 #include <scene/Scene.hpp>
-#include <scene/Selected.hpp>
+#include <editor/Selected.hpp>
 #include <ui/ImGui.hpp>
 
 #include <ImGuizmo.h>

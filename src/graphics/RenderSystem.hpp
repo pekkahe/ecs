@@ -1,6 +1,6 @@
 #pragma once
 
-#include <component/System.hpp>
+#include <system/System.hpp>
 
 #include <graphics/Mesh.hpp>
 #include <graphics/Shader.hpp>
