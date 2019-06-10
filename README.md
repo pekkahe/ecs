@@ -1,5 +1,5 @@
 # anon-engine
-A simple 3D rendering engine for basic object manipulation.
+A simple 3D rendering engine for object manipulation.
 
 The goal of this project is to fiddle with ECS (Entity Component System) architecture and implement web-based tools on top of a C++ rendering engine.
 
