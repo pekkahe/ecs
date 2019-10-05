@@ -1,8 +1,8 @@
 #include <Precompiled.hpp>
 
-#include <system/Database.hpp>
-#include <system/Query.hpp>
-#include <system/TestComponents.hpp>
+#include <core/ecs/Database.hpp>
+#include <core/ecs/Query.hpp>
+#include <core/ecs/TestComponents.hpp>
 
 using namespace eng;
 

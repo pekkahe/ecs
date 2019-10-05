@@ -1,9 +1,9 @@
 #include <Precompiled.hpp>
 #include <graphics/OldRenderer.hpp>
+
+#include <core/ecs/Query.hpp>
 #include <scene/Camera.hpp>
 #include <ui/Window.hpp>
-
-#include <system/Query.hpp>
 
 using namespace eng;
 using namespace eng::gfx;

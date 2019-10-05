@@ -10,7 +10,7 @@ InputSystem::InputSystem(Database& db, std::shared_ptr<Window> window) :
 {
 }
 
-void InputSystem::update(const Scene & scene)
+void InputSystem::update(const Scene&)
 {
     query()
         .hasComponent<Selected>()

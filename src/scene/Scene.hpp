@@ -1,9 +1,9 @@
 #pragma once
 
-#include <system/Database.hpp>
+#include <core/ecs/Database.hpp>
+#include <editor/EditorSystem.hpp>
 #include <graphics/RenderSystem.hpp>
 #include <scene/CameraSystem.hpp>
-#include <editor/EditorSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
 namespace eng

@@ -5,8 +5,7 @@ int main()
 {
     std::cout << "Starting engine." << std::endl;
     
-    eng::Engine engine;
-    engine.execute();
+    eng::Engine().execute();
     
     std::cout << "Terminating engine." << std::endl;
     return 0;

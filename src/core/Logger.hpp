@@ -2,7 +2,6 @@
 
 #include <array>
 #include <string>
-
 #ifdef _MSC_VER
 #include <windows.h>
 #endif

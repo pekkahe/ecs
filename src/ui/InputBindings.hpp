@@ -1,23 +1,29 @@
 #pragma once
 
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
 
 namespace eng
 {
     ENUM_FLAGS(InputAction)
     {
         None = 0,
+
         Camera_MoveForward = 1 << 0,
         Camera_MoveBackward = 1 << 1,
         Camera_MoveLeft = 1 << 2,
         Camera_MoveRight = 1 << 3,
         Camera_Zoom = 1 << 4,
         Camera_ToggleControl = 1 << 5,
-        Gizmo_ChangeOperation = 1 << 6,
-        Gizmo_ChangeMode = 1 << 7,
-        Entity_CreateCube = 1 << 8,
-        Entity_Delete = 1 << 9,
-        Quit = 1 << 10,
+
+        Gizmo_ChangeOperation = 1 << 10,
+        Gizmo_ChangeMode = 1 << 11,
+
+        Object_Select = 1 << 20,
+        Object_ClearSelected = 1 << 21,
+        Object_DeleteSelected = 1 << 22,
+        Object_Spawn = 1 << 23,
+
+        Quit = 1 << 100,
     };
 
     class InputBindings

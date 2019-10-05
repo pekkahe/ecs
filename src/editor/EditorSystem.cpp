@@ -21,10 +21,12 @@ EditorSystem::~EditorSystem()
 {
 }
 
-void EditorSystem::update(const Scene& scene)
+void EditorSystem::update(const Scene&)
 {
-    const auto& input = scene.window().frameInput();
+}
 
+void EditorSystem::processInput(const FrameInput& input)
+{
     //
     // Cycle transform gizmo operation
     //
@@ -60,6 +62,16 @@ void EditorSystem::update(const Scene& scene)
                 ImGuizmo::MODE::WORLD :
                 ImGuizmo::MODE::LOCAL;
         });
+
+        // With query:
+        //query()
+        //    .hasComponent(m_transformGizmoTable)
+        //    .executeIds([&](EntityId, TransformGizmo& gizmo)
+        //{
+        //    gizmo.mode = gizmo.mode == ImGuizmo::MODE::LOCAL ?
+        //        ImGuizmo::MODE::WORLD :
+        //        ImGuizmo::MODE::LOCAL;
+        //});
     }
 
     //
@@ -99,8 +111,7 @@ void EditorSystem::update(const Scene& scene)
         assert(camera != nullptr && "No camera in scene");
 
         // Cast ray from cursor screen position to all meshes
-        Ray ray = camera->screenPointToRay(
-            input.cursorPositionNormalized);
+        Ray ray = camera->screenPointToRay(input.cursorPositionNormalized);
 
         auto closestId = InvalidId;
         auto closestDistance = std::numeric_limits<float>::max();
@@ -124,6 +135,14 @@ void EditorSystem::update(const Scene& scene)
         {
             m_hoveredTable.assign(closestId, Hovered());
         }
+
+        //query()
+        //    .hasComponent(m_hoveredTable)
+        //    .executeIds([&](EntityId, Hovered& hovered)
+        //{
+        //    m_hoveredTable.clear();
+        //    ...
+        //});
     }
 
     //

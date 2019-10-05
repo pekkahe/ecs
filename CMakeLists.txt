@@ -27,6 +27,7 @@ set(ENGINE_SRC
     "${SRC_DIR}/Precompiled.hpp"
 
     "${SRC_DIR}/core/Added.hpp"
+    "${SRC_DIR}/core/Core.hpp"
     "${SRC_DIR}/core/Datatypes.hpp"
     "${SRC_DIR}/core/Defines.hpp"
     "${SRC_DIR}/core/Deleted.hpp"
@@ -38,6 +39,21 @@ set(ENGINE_SRC
     "${SRC_DIR}/core/Time.hpp"
     "${SRC_DIR}/core/Traits.hpp"
     "${SRC_DIR}/core/Updated.hpp"
+
+    "${SRC_DIR}/core/ecs/Database.cpp"
+    "${SRC_DIR}/core/ecs/Database.hpp"
+    "${SRC_DIR}/core/ecs/EntityId.hpp"
+    "${SRC_DIR}/core/ecs/IComponent.hpp"
+    "${SRC_DIR}/core/ecs/Query.cpp"
+    "${SRC_DIR}/core/ecs/Query.hpp"
+    "${SRC_DIR}/core/ecs/Scheduler.cpp"
+    "${SRC_DIR}/core/ecs/Scheduler.hpp"
+    "${SRC_DIR}/core/ecs/SparseIndex.cpp"
+    "${SRC_DIR}/core/ecs/SparseIndex.hpp"
+    "${SRC_DIR}/core/ecs/SparseSet.hpp"
+    "${SRC_DIR}/core/ecs/System.cpp"
+    "${SRC_DIR}/core/ecs/System.hpp"
+    "${SRC_DIR}/core/ecs/Table.hpp"
 
     "${SRC_DIR}/editor/EditorSystem.cpp"
     "${SRC_DIR}/editor/EditorSystem.hpp"
@@ -74,19 +90,6 @@ set(ENGINE_SRC
     "${SRC_DIR}/scene/Transform.hpp"
     "${SRC_DIR}/scene/TransformSystem.cpp"
     "${SRC_DIR}/scene/TransformSystem.hpp"
-
-    "${SRC_DIR}/system/Database.cpp"
-    "${SRC_DIR}/system/Database.hpp"
-    "${SRC_DIR}/system/EntityId.hpp"
-    "${SRC_DIR}/system/IComponent.hpp"
-    "${SRC_DIR}/system/Query.cpp"
-    "${SRC_DIR}/system/Query.hpp"
-    "${SRC_DIR}/system/SparseIndex.cpp"
-    "${SRC_DIR}/system/SparseIndex.hpp"
-    "${SRC_DIR}/system/SparseSet.hpp"
-    "${SRC_DIR}/system/System.cpp"
-    "${SRC_DIR}/system/System.hpp"
-    "${SRC_DIR}/system/Table.hpp"
 
     "${SRC_DIR}/ui/FrameInput.cpp"
     "${SRC_DIR}/ui/FrameInput.hpp"
@@ -169,10 +172,10 @@ if (NOT EMSCRIPTEN)
         "${TESTS_DIR}/Main.cpp"
         "${TESTS_DIR}/Precompiled.cpp"
         "${TESTS_DIR}/Precompiled.hpp"
-        "${TESTS_DIR}/system/Test_Query.cpp"
-        "${TESTS_DIR}/system/Test_SparseIndex.cpp"
-        "${TESTS_DIR}/system/Test_Table.cpp"
-        "${TESTS_DIR}/system/TestComponents.hpp")
+        "${TESTS_DIR}/core/ecs/Test_Query.cpp"
+        "${TESTS_DIR}/core/ecs/Test_SparseIndex.cpp"
+        "${TESTS_DIR}/core/ecs/Test_Table.cpp"
+        "${TESTS_DIR}/core/ecs/TestComponents.hpp")
 
     add_executable(Tests ${TESTS_SRC})
 

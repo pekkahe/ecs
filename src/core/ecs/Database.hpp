@@ -1,10 +1,9 @@
 #pragma once
 
-#include <system/EntityId.hpp>
-#include <system/IComponent.hpp>
-#include <system/Table.hpp>
-
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
+#include <core/ecs/EntityId.hpp>
+#include <core/ecs/IComponent.hpp>
+#include <core/ecs/Table.hpp>
 
 namespace eng
 {

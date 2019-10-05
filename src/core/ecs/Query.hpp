@@ -1,7 +1,7 @@
 #pragma once
 
-#include <system/Database.hpp>
-#include <system/Table.hpp>
+#include <core/ecs/Database.hpp>
+#include <core/ecs/Table.hpp>
 
 namespace eng
 {
@@ -109,8 +109,8 @@ namespace eng
             return ids;
         }
 
-        // Old implementation for id fetch which is roughly 27 
-        // times slower than SparseIndex based implementation.
+        // TODO: Remove, old implementation for id fetch which is 
+        // ~30 times slower than SparseIndex based implementation.
         std::vector<EntityId> idsSlow()
         {
             std::unordered_map<EntityId, unsigned> idCounts;

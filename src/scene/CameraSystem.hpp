@@ -1,6 +1,6 @@
 #pragma once
 
-#include <system/System.hpp>
+#include <core/ecs/System.hpp>
 #include <scene/Camera.hpp>
 #include <scene/CameraControl.hpp>
 #include <scene/CameraController.hpp>
@@ -20,6 +20,18 @@ namespace eng
 
         void update(const Scene& scene) override;
 
+        // QUERY:  'updateCameraController'
+        // READS:  CameraControl
+        // WRITES: (Updated)
+                       
+        // QUERY:  'updateCameraFov'
+        // READS:  (Updated), Camera, CameraControl
+        // WRITES: Camera
+
+        // QUERY:  'updateCameraMatrices'
+        // READS:  (Updated), Transform
+        // WRITES: Camera
+        
         void setAspectRatio(float aspectRatio);
 
     private:

@@ -1,7 +1,8 @@
 #include <Precompiled.hpp>
 
-#include <system/SparseIndex.hpp>
 #include <core/Time.hpp>
+#include <core/ecs/SparseIndex.hpp>
+
 #include <array>
 
 using namespace eng;

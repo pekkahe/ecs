@@ -1,9 +1,9 @@
 #include <Precompiled.hpp>
 #include <scene/Scene.hpp>
 
+#include <editor/TransformGizmo.hpp>
 #include <graphics/Mesh.hpp>
 #include <scene/Transform.hpp>
-#include <editor/TransformGizmo.hpp>
 
 using namespace eng;
 
@@ -85,13 +85,19 @@ void Scene::update()
         system->commitUpdated(m_database);
         system->commitDeleted(m_database);
     }
+    
+    m_editorSystem.processInput(window().frameInput());
+
+    m_transformSystem.update(*this);
+    m_renderSystem.update(*this);
+    m_cameraSystem.update(*this);
 
     // TODO: multithreading, within system update or between updates?
     // causality scheduling (const, non-const) for individual queries?
-    for (auto system : m_systems)
-    {
-        system->update(*this);
-    }
+    //for (auto system : m_systems)
+    //{
+    //    system->update(*this);
+    //}
 
     m_database.purgeDeleted();
     m_database.clearTags();

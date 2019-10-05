@@ -1,6 +1,7 @@
 #pragma once
 
-#include <system/IComponent.hpp>
+#include <core/ecs/IComponent.hpp>
+
 #include <ImGuizmo.h>
 
 namespace eng

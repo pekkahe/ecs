@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <system/Database.hpp>
+#include <core/ecs/Database.hpp>
 
 using namespace eng;
 

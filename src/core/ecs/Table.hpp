@@ -1,7 +1,7 @@
 #pragma once
 
-#include <system/SparseIndex.hpp>
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
+#include <core/ecs/SparseIndex.hpp>
 
 namespace eng
 {
@@ -223,7 +223,7 @@ namespace eng
     }
 
     // TODO: Enforce that only one reference to a table can be held at any given time?
-    // Invert Table ownership between Database and Systems? Use RAII reference counting?
+    // Invert Table ownership between Database and Systems? Use RAII & reference counting?
 
     template <typename Component>
     using TableRef = Table<Component>&;

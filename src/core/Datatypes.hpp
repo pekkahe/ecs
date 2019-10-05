@@ -1,9 +1,8 @@
 #pragma once
 
-#include <system/EntityId.hpp>
+#include <core/ecs/EntityId.hpp>
 
 #include <utility>
-
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>

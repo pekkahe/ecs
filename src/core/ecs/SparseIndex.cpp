@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <system/SparseIndex.hpp>
+#include <core/ecs/SparseIndex.hpp>
 
 using namespace eng;
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <system/IComponent.hpp>
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
+#include <core/ecs/IComponent.hpp>
 #include <graphics/AABB.hpp>
 #include <graphics/OBB.hpp>
 

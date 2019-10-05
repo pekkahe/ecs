@@ -1,6 +1,6 @@
 #pragma once
 
-#include <system/IComponent.hpp>
+#include <core/ecs/IComponent.hpp>
 
 #include <string>
 #include <vector>

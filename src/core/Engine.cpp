@@ -40,7 +40,7 @@ Engine::~Engine()
 
 void Engine::execute()
 {
-    auto window = std::make_shared<Window>(640, 480, "Shoe");
+    auto window = std::make_shared<Window>(640, 480, "Slick");
     auto scene = std::make_shared<Scene>(window);
 
     scene->createCube(vec3(-1.5f, 0.0f, -3.0f));
@@ -54,6 +54,8 @@ void Engine::execute()
         // TODO: logic thread
         scene->update();
 
+        // ...
+        
         // TODO: render thread
         scene->renderer().beginFrame();
         scene->renderer().render();

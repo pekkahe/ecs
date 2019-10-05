@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
 #include <ui/FrameInput.hpp>
 
 struct GLFWwindow;
@@ -8,6 +8,7 @@ struct GLFWwindow;
 namespace eng
 {
     class IWindowEventListener;
+
     class Window : public trait::non_copyable_nor_movable
     {
     public:

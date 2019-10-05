@@ -1,6 +1,6 @@
 #pragma once
 
-#include <system/EntityId.hpp>
+#include <core/ecs/EntityId.hpp>
 
 #include <vector>
 #include <bitset>

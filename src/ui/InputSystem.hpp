@@ -1,7 +1,7 @@
 #pragma once
 
-#include <system/System.hpp>
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
+#include <core/ecs/System.hpp>
 #include <ui/InputListener.hpp>
 #include <ui/Window.hpp>
 

@@ -1,12 +1,14 @@
 #pragma once
 
-#include <system/System.hpp>
+#include <core/ecs/System.hpp>
 #include <editor/Hovered.hpp>
 #include <editor/Selected.hpp>
 #include <editor/TransformGizmo.hpp>
 
 namespace eng
 {
+    class FrameInput;
+
     class EditorSystem : public System
     {
     public:
@@ -19,6 +21,32 @@ namespace eng
         ~EditorSystem();
 
         void update(const Scene& scene) override;
+        
+        void processInput(const FrameInput& input);
+
+        // QUERY:  'toggleGizmo'
+        // READS:  <input>
+        // WRITES: TransformGizmo
+
+        // QUERY:  'toggleGizmoMode'
+        // READS:  <input>
+        // WRITES: TransformGizmo
+
+        // QUERY:  'deleteSelected'
+        // READS:  Selected
+        // WRITES: (Deleted)
+
+        // QUERY:  'clearSelected'
+        // READS:  <input>
+        // WRITES: Selected
+
+        // QUERY:  'hoverOn(double2 pos)'
+        // READS:  Camera, Mesh
+        // WRITES: Hovered
+        
+        // QUERY:  'selectHovered'
+        // READS:  Hovered
+        // WRITES: Selected
 
     private:
         TableRef<Hovered> m_hoveredTable;

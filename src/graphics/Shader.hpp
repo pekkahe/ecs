@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/Defines.hpp>
+#include <core/Core.hpp>
 #include <graphics/Id.hpp>
 
 namespace eng

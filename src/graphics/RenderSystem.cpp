@@ -2,8 +2,8 @@
 #include <graphics/RenderSystem.hpp>
 
 #include <editor/Hovered.hpp>
-#include <scene/Scene.hpp>
 #include <editor/Selected.hpp>
+#include <scene/Scene.hpp>
 #include <scene/Transform.hpp>
 #include <ui/Window.hpp>
 
@@ -14,19 +14,19 @@ RenderSystem::RenderSystem(Database& db) :
     m_meshTable(db.createTable<Mesh>())
 {
     m_shaders.emplace_back(Shader(
-        "../shaders/vertex.vert",
-        "../shaders/fragment.frag"));
+        "../../shaders/vertex.vert",
+        "../../shaders/fragment.frag"));
     m_shaders.emplace_back(Shader(
-        "../shaders/vertex.vert",
-        "../shaders/fragment_single.frag"));
+        "../../shaders/vertex.vert",
+        "../../shaders/fragment_single.frag"));
     m_shaders.emplace_back(Shader(
-        "../shaders/vertex.vert",
-        "../shaders/fragment_single.frag"));
+        "../../shaders/vertex.vert",
+        "../../shaders/fragment_single.frag"));
 
     m_textures.emplace_back(Texture(
-        "../data/container.jpg", GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
+        "../../data/container.jpg", GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
     m_textures.emplace_back(Texture(
-        "../data/awesomeface.png", GL_REPEAT, GL_NEAREST, GL_RGBA));
+        "../../data/awesomeface.png", GL_REPEAT, GL_NEAREST, GL_RGBA));
 }
 
 RenderSystem::~RenderSystem()

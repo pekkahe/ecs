@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 
-#include <system/Table.hpp>
-#include <system/TestComponents.hpp>
+#include <core/ecs/Table.hpp>
+#include <core/ecs/TestComponents.hpp>
 
 using namespace eng;
 
