@@ -23,7 +23,7 @@ namespace eng
         Object_DeleteSelected = 1 << 22,
         Object_Spawn = 1 << 23,
 
-        Quit = 1 << 100,
+        Quit = 1 << 30,
     };
 
     class InputBindings

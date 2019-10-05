@@ -1,6 +1,6 @@
 #pragma once
 
-#define NOMINMAX
+// #define NOMINMAX
 
 #define MOVABLE_ONLY(T) \
         T(const T&) = delete; \

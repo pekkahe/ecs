@@ -42,8 +42,9 @@ namespace eng
             }
 
         private:
-            std::unordered_map<std::type_info, bool> m_readResources;
-            std::unordered_map<std::type_info, bool> m_readWriteResources;
+            // key: std::type_info::hash_code()
+            std::unordered_map<size_t, bool> m_readResources;
+            std::unordered_map<size_t, bool> m_readWriteResources;
         };
 
     public:
@@ -74,7 +75,7 @@ namespace eng
         assert(!m_readWriteResources.count(typeid(Resource)) &&
             "Resource already declared as 'readWrite'");
 
-        m_readResources[typeid(Resource)] = true;
+        m_readResources[typeid(Resource).hash_code()] = true;
 
         return *this;
     }
@@ -82,7 +83,7 @@ namespace eng
     template <typename Resource>
     inline Scheduler::Job& Scheduler::Job::readWrite(TableRef<Resource> resource)
     {
-        assert(!m_readResources.count(typeid(Resource)) &&
+        assert(!m_readResources.count(typeid(Resource).hash_code()) &&
             "Resource already declared as 'read'");
 
         m_readWriteResources[typeid(Resource)] = true;

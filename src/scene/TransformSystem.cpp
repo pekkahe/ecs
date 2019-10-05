@@ -20,33 +20,34 @@ TransformSystem::~TransformSystem()
 
 void TransformSystem::schedule(Scheduler& scheduler)
 {
-    query()
-        .hasComponent<Updated>()
-        .hasComponent<CameraControl>()
-        .hasComponent<Transform>()
-        .executeIds([&](EntityId)
-    {
-        scheduler
-            .job()
-            .read<CameraControl>()
-            .readWrite<Transform>(m_transformTable)
-            .onExecute(transformCamera);
-    });
+    // TODO: Scheduler
+    //query()
+    //    .hasComponent<Updated>()
+    //    .hasComponent<CameraControl>()
+    //    .hasComponent<Transform>()
+    //    .executeIds([&](EntityId)
+    //{
+    //    scheduler
+    //        .job()
+    //        .read<CameraControl>()
+    //        .readWrite<Transform>(m_transformTable)
+    //        .onExecute(transformCamera);
+    //});
 
-    auto& translateCamera = scheduler
-        .job()
-        .read<Updated>()
-        .read<CameraControl>()
-        .readWrite<Transform>(m_transformTable);
+    //auto& translateCamera = scheduler
+    //    .job()
+    //    .read<Updated>()
+    //    .read<CameraControl>()
+    //    .readWrite<Transform>(m_transformTable);
 
-    AABB selectedBounds;
+    //AABB selectedBounds;
 
-    auto& computeBounds = scheduler
-        .job()
-        .require(translateCamera)
-        .read<Selected>()
-        .read<Transform>()
-        .readWrite<AABB>(selectedBounds);
+    //auto& computeBounds = scheduler
+    //    .job()
+    //    .require(translateCamera)
+    //    .read<Selected>()
+    //    .read<Transform>()
+    //    .readWrite<AABB>(selectedBounds);
 }
 
 void TransformSystem::update(const Scene&)
