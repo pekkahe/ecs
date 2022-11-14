@@ -1,5 +1,6 @@
 #include <Precompiled.hpp>
-#include <scene/Camera.hpp>
+
+#include <scene/components/Camera.hpp>
 
 using namespace eng;
 

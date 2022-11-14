@@ -1,5 +1,6 @@
 #include <Precompiled.hpp>
 #include <graphics/Raycast.hpp>
+#include <core/Core.hpp>
 
 // http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 // Additional reference: http://antongerdelan.net/opengl/raycasting.html

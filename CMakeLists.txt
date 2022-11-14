@@ -1,6 +1,3 @@
-#
-# anon-engine
-#
 cmake_minimum_required(VERSION 3.7)
 
 # Disable in-source builds to prevent source tree corruption
@@ -10,7 +7,7 @@ if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
         Please create a build directory outside of the source code and call cmake from there.")
 endif ()
 
-project(anon-engine)
+project(Uuttu)
 
 # Tell CMake of our custom module directory
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -19,18 +16,23 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(Defines)
 include(Macros)
 
+# Not recommended: CMakeLists doesn't change when new source files are added
+# file(GLOB ENGINE_SRC *.cpp)
+# file(GLOB SHADER_SRC *.frag)
+
 #
-# Engine library
+# Source files
 #
+set(MAIN_SRC 
+    "${SRC_DIR}/Main.cpp")
+
 set(ENGINE_SRC 
     "${SRC_DIR}/Precompiled.cpp"
     "${SRC_DIR}/Precompiled.hpp"
-
-    "${SRC_DIR}/core/Added.hpp"
+	"${SRC_DIR}/core/Components.hpp"
     "${SRC_DIR}/core/Core.hpp"
     "${SRC_DIR}/core/Datatypes.hpp"
     "${SRC_DIR}/core/Defines.hpp"
-    "${SRC_DIR}/core/Deleted.hpp"
     "${SRC_DIR}/core/Engine.cpp"
     "${SRC_DIR}/core/Engine.hpp"
     "${SRC_DIR}/core/Logger.hpp"
@@ -38,8 +40,9 @@ set(ENGINE_SRC
     "${SRC_DIR}/core/Time.cpp"
     "${SRC_DIR}/core/Time.hpp"
     "${SRC_DIR}/core/Traits.hpp"
-    "${SRC_DIR}/core/Updated.hpp"
-
+    "${SRC_DIR}/core/components/Added.hpp"
+    "${SRC_DIR}/core/components/Deleted.hpp"
+    "${SRC_DIR}/core/components/Updated.hpp"
     "${SRC_DIR}/core/ecs/Database.cpp"
     "${SRC_DIR}/core/ecs/Database.hpp"
     "${SRC_DIR}/core/ecs/EntityId.hpp"
@@ -54,19 +57,21 @@ set(ENGINE_SRC
     "${SRC_DIR}/core/ecs/System.cpp"
     "${SRC_DIR}/core/ecs/System.hpp"
     "${SRC_DIR}/core/ecs/Table.hpp"
+	"${SRC_DIR}/core/scheduler/Job.hpp"
+	"${SRC_DIR}/core/scheduler/Scheduler.cpp"
+    "${SRC_DIR}/core/scheduler/Scheduler.hpp"
+	"${SRC_DIR}/core/scheduler/Worker.cpp"
+    "${SRC_DIR}/core/scheduler/Worker.hpp"
 
+	"${SRC_DIR}/editor/Components.hpp"
     "${SRC_DIR}/editor/EditorSystem.cpp"
     "${SRC_DIR}/editor/EditorSystem.hpp"
-    "${SRC_DIR}/editor/Hovered.hpp"
-    "${SRC_DIR}/editor/Selected.hpp"
-    "${SRC_DIR}/editor/TransformGizmo.hpp"
+    "${SRC_DIR}/editor/components/Hovered.hpp"
+    "${SRC_DIR}/editor/components/Selected.hpp"
+    "${SRC_DIR}/editor/components/TransformGizmo.hpp"
 
-    "${SRC_DIR}/graphics/AABB.cpp"
-    "${SRC_DIR}/graphics/AABB.hpp"
+    "${SRC_DIR}/graphics/Components.hpp"
     "${SRC_DIR}/graphics/Id.hpp"
-    "${SRC_DIR}/graphics/Mesh.hpp"
-    "${SRC_DIR}/graphics/OBB.cpp"
-    "${SRC_DIR}/graphics/OBB.hpp"
     "${SRC_DIR}/graphics/OldRenderer.cpp"
     "${SRC_DIR}/graphics/OldRenderer.hpp"
     "${SRC_DIR}/graphics/Raycast.cpp"
@@ -77,20 +82,26 @@ set(ENGINE_SRC
     "${SRC_DIR}/graphics/Shader.hpp"
     "${SRC_DIR}/graphics/Texture.cpp"
     "${SRC_DIR}/graphics/Texture.hpp"
+    "${SRC_DIR}/graphics/components/AABB.cpp"
+    "${SRC_DIR}/graphics/components/AABB.hpp"
+    "${SRC_DIR}/graphics/components/Mesh.hpp"
+    "${SRC_DIR}/graphics/components/OBB.cpp"
+    "${SRC_DIR}/graphics/components/OBB.hpp"
 
-    "${SRC_DIR}/scene/Camera.cpp"
-    "${SRC_DIR}/scene/Camera.hpp"
-    "${SRC_DIR}/scene/CameraControl.hpp"
     "${SRC_DIR}/scene/CameraController.cpp"
     "${SRC_DIR}/scene/CameraController.hpp"
     "${SRC_DIR}/scene/CameraSystem.cpp"
     "${SRC_DIR}/scene/CameraSystem.hpp"
+    "${SRC_DIR}/scene/Components.hpp"
     "${SRC_DIR}/scene/Scene.cpp"
     "${SRC_DIR}/scene/Scene.hpp"
-    "${SRC_DIR}/scene/Transform.hpp"
     "${SRC_DIR}/scene/TransformSystem.cpp"
     "${SRC_DIR}/scene/TransformSystem.hpp"
-
+    "${SRC_DIR}/scene/components/Camera.cpp"
+    "${SRC_DIR}/scene/components/Camera.hpp"
+    "${SRC_DIR}/scene/components/CameraControl.hpp"
+    "${SRC_DIR}/scene/components/Transform.hpp"
+    
     "${SRC_DIR}/ui/FrameInput.cpp"
     "${SRC_DIR}/ui/FrameInput.hpp"
     "${SRC_DIR}/ui/ImGui.cpp"
@@ -113,6 +124,19 @@ set(SHADER_SRC
     "${SHADER_DIR}/vertex_pos.vert"
     "${SHADER_DIR}/vertex_tex.vert")
 
+set(TESTS_SRC 
+    "${TESTS_DIR}/Main.cpp"
+    "${TESTS_DIR}/Precompiled.cpp"
+    "${TESTS_DIR}/Precompiled.hpp"
+    "${TESTS_DIR}/core/ecs/Test_Query.cpp"
+    "${TESTS_DIR}/core/ecs/Test_SparseIndex.cpp"
+    "${TESTS_DIR}/core/ecs/Test_Table.cpp"
+    "${TESTS_DIR}/core/ecs/TestComponents.hpp"
+	"${TESTS_DIR}/core/scheduler/Test_Scheduler.cpp")
+
+#
+# Engine core
+#
 add_library(Engine STATIC ${ENGINE_SRC} ${SHADER_SRC})
 
 target_include_directories(Engine PUBLIC ${SRC_DIR})
@@ -140,8 +164,6 @@ assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SHADER_SRC})
 #
 # Main application
 #
-set(MAIN_SRC "${SRC_DIR}/Main.cpp")
-
 add_executable(Main ${MAIN_SRC})
 
 target_link_libraries(Main Engine)
@@ -168,15 +190,6 @@ assign_source_group(${SRC_DIR} ${MAIN_SRC})
 # Unit test application (build issue currently with Emscripten)
 #
 if (NOT EMSCRIPTEN)
-    set(TESTS_SRC 
-        "${TESTS_DIR}/Main.cpp"
-        "${TESTS_DIR}/Precompiled.cpp"
-        "${TESTS_DIR}/Precompiled.hpp"
-        "${TESTS_DIR}/core/ecs/Test_Query.cpp"
-        "${TESTS_DIR}/core/ecs/Test_SparseIndex.cpp"
-        "${TESTS_DIR}/core/ecs/Test_Table.cpp"
-        "${TESTS_DIR}/core/ecs/TestComponents.hpp")
-
     add_executable(Tests ${TESTS_SRC})
 
     target_include_directories(Tests PRIVATE ${TESTS_DIR})

@@ -15,11 +15,11 @@
 namespace eng
 {
     class Scene;
-    class ISystem : public trait::non_copyable
+    class ISystem : public trait::no_copy
     {
     public:
-        // Notification on the system's registration to a scene.
-        virtual void onRegistered(const Scene& scene) = 0;
+        // Register the database that this system executes read-only component queries for.
+        virtual void registerDatabase(const Database& database) = 0;
 
         // System logic update executed once per frame.
         virtual void update(const Scene& scene) = 0;
@@ -33,7 +33,7 @@ namespace eng
     class System : public ISystem
     {
     public:
-        void onRegistered(const Scene& scene) override;
+        void registerDatabase(const Database& database) override;
 
         void commitUpdated(Database& database) override;
         void commitDeleted(Database& database) override;
@@ -44,7 +44,7 @@ namespace eng
         template <typename Component>
         TableRef<Component> createTable(Database& db);
         
-        // Build a query with pre-built read-only access to the scene database.
+        // Build a query that has read-only access to the whole database.
         Query<> query() const { return Query<>(*m_database); }
 
         // Mark an entity with the Updated tag, for one whole frame,
@@ -56,6 +56,8 @@ namespace eng
         void markDeleted(EntityId id);
 
     private:
+        // This is only needed for providing convenience access to read-only queries.
+        // TODO: Should this be moved out, to concrete system classes, or somewhere else?
         const Database* m_database;
 
         // Each system has their own tag component tables, which are synchronized

@@ -1,14 +1,10 @@
-# Simple Service Oriented Game Engine - _"Shoe"_
-> "Henceforth thou shall be known as Shoe."
-
-ear::
-ges::
-soge::
+# _Uuttu_, _uu_
+> "Uuttu" or "uu" - goldeneye birdhouse (telkänpönttö)
 
 ## Focus areas
 * Multithreaded entity component system.
 * Good, service oriented API for external tools.
-* Highly modular architecture with configurable "plugin" dependencies.
+* Highly modular architecture with configurable plugin dependencies.
 * Web based editor using modern web technologies (NodeJs+React/Vue?)
 * UWP based editor as well?
 * ZeroMQ communication (cross-thread/inter-process?)

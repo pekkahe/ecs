@@ -2,8 +2,9 @@
 
 #include <core/Core.hpp>
 #include <core/ecs/IComponent.hpp>
-#include <graphics/AABB.hpp>
-#include <graphics/OBB.hpp>
+
+#include <graphics/components/AABB.hpp>
+#include <graphics/components/OBB.hpp>
 
 namespace eng
 {

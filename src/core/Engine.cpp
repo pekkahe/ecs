@@ -38,25 +38,20 @@ Engine::~Engine()
     glfwTerminate();
 }
 
-void Engine::execute()
+void Engine::execute(std::shared_ptr<Window> window, std::shared_ptr<Scene> scene)
 {
-    auto window = std::make_shared<Window>(640, 480, "Slick");
-    auto scene = std::make_shared<Scene>(window);
-
-    scene->createCube(vec3(-1.5f, 0.0f, -3.0f));
-    scene->createCube(vec3(0.0f,  0.0f, -3.0f));
-    scene->createCube(vec3(1.5f,  0.0f, -3.0f));
-
-    while (window->pollEvents() && !m_terminate)
+    while (window->pollEvents())
     {
         imgui::beginFrame();
 
         // TODO: logic thread
+
         scene->update();
 
         // ...
-        
+
         // TODO: render thread
+
         scene->renderer().beginFrame();
         scene->renderer().render();
         scene->renderer().endFrame();
@@ -66,9 +61,4 @@ void Engine::execute()
 
         Time::endFrame();
     }
-}
-
-void Engine::terminate()
-{
-    m_terminate = true;
 }

@@ -1,9 +1,7 @@
 #pragma once
 
 #include <core/ecs/System.hpp>
-#include <editor/Hovered.hpp>
-#include <editor/Selected.hpp>
-#include <editor/TransformGizmo.hpp>
+#include <editor/Components.hpp>
 
 namespace eng
 {

@@ -2,18 +2,15 @@
 
 namespace eng
 {
+    class Window;
+    class Scene;
+
     class Engine
     {
     public:
         Engine();
         ~Engine();
 
-        // Begin game loop.
-        void execute();
-        // Signal termination.
-        void terminate();
-
-    private:
-        bool m_terminate = false;
+        void execute(std::shared_ptr<Window> window, std::shared_ptr<Scene> scene);
     };
 }

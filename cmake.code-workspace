@@ -1,0 +1,14 @@
+{
+	"folders": [
+        {
+            "path": "./"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/.*": true,
+            "**/*.md": true,
+            "**/[a-bd-z0-9.]*": true,
+        }
+    }
+}

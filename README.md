@@ -1,4 +1,4 @@
-# anon-engine
+# Uuttu (_uu_)
 A simple 3D rendering engine for object manipulation.
 
 The goal of this project is to fiddle with ECS (Entity Component System) architecture and implement web-based tools on top of a C++ rendering engine.

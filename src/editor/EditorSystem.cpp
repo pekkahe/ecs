@@ -1,10 +1,12 @@
 #include <Precompiled.hpp>
 #include <editor/EditorSystem.hpp>
 
-#include <graphics/Mesh.hpp>
 #include <graphics/Raycast.hpp>
-#include <scene/Camera.hpp>
+#include <graphics/components/Mesh.hpp>
+
 #include <scene/Scene.hpp>
+#include <scene/components/Camera.hpp>
+
 #include <ui/Window.hpp>
 
 using namespace eng;

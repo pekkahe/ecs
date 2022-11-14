@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <ui/InputSystem.hpp>
 
-#include <editor/Selected.hpp>
+#include <editor/components/Selected.hpp>
 
 using namespace eng;
 

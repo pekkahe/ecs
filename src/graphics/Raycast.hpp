@@ -1,9 +1,9 @@
 #pragma once
 
 #include <core/Datatypes.hpp>
-#include <graphics/AABB.hpp>
-#include <graphics/OBB.hpp>
-#include <scene/Camera.hpp>
+#include <graphics/components/AABB.hpp>
+#include <graphics/components/OBB.hpp>
+#include <scene/components/Camera.hpp>
 
 namespace eng
 {

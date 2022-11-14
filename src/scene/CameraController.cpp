@@ -3,10 +3,10 @@
 
 using namespace eng;
 
-CameraController::CameraController(int2 windowSize)
+CameraController::CameraController(int2 initialViewportSize)
 {
-    m_lastX = static_cast<double>(windowSize.x) / 2;
-    m_lastY = static_cast<double>(windowSize.y) / 2;
+    m_lastX = static_cast<double>(initialViewportSize.x) / 2;
+    m_lastY = static_cast<double>(initialViewportSize.y) / 2;
 }
 
 bool CameraController::update(CameraControl& control)

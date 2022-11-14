@@ -26,5 +26,25 @@ namespace eng
 
             return translate * rotate * scale_;
         }
+
+        static Transform identity() 
+        {
+            return Transform(
+                vec3(0.0f, 0.0f, 0.0f),
+                qua(1.0f, 0.0f, 0.0f, 0.0f), 
+                vec3(0.0f, 0.0f, 0.0f));
+        }
     };
+
+    inline bool operator==(const Transform& lhs, const Transform& rhs)
+    {
+        return lhs.position == rhs.position &&
+               lhs.rotation == rhs.rotation &&
+               lhs.scale == rhs.scale;
+    }
+
+    inline bool operator!=(const Transform& lhs, const Transform& rhs)
+    {
+        return !(lhs == rhs);
+    }
 }

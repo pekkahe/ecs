@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/ecs/System.hpp>
-#include <graphics/Mesh.hpp>
+#include <graphics/Components.hpp>
 #include <graphics/Shader.hpp>
 #include <graphics/Texture.hpp>
 

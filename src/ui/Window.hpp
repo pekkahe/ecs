@@ -9,7 +9,7 @@ namespace eng
 {
     class IWindowEventListener;
 
-    class Window : public trait::non_copyable_nor_movable
+    class Window : public trait::no_copy_or_move
     {
     public:
         using WindowResizeCallback = std::function<void(int2)>;

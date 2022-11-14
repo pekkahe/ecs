@@ -1,5 +1,6 @@
 #include <Precompiled.hpp>
-#include <graphics/AABB.hpp>
+
+#include <graphics/components/AABB.hpp>
 
 using namespace eng;
 
