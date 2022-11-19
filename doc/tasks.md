@@ -1,9 +1,4 @@
-# Simple Service Oriented Game Engine - _"Shoe"_
-> "Henceforth thou shall be known as Shoe."
-
-ear::
-ges::
-soge::
+# Simple Service Oriented Game Engine _"Shoe"_
 
 ## Focus areas
 * Multithreaded entity component system.

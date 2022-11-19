@@ -17,6 +17,14 @@ function(assign_source_group ROOT)
     endforeach()
 endfunction()
 
+function(set_high_warning_level TARGET)
+    if(MSVC)
+        target_compile_options(${TARGET} PRIVATE /W4 /WX)
+    else()
+        target_compile_options(${TARGET} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    endif()
+endfunction()
+
 include(FetchContent)
     
 function(fetch_gtest)

@@ -1,6 +1,5 @@
 #pragma once
 
-// Common C++ headers
 #include <cstdio>
 #include <fstream>
 #include <sstream>
@@ -26,20 +25,19 @@
 #include <typeinfo>
 
 #include <glad/glad.h>
+#undef APIENTRY // Fix warning C4005
 //#define GLFW_INCLUDE_ES3
 #include <GLFW/glfw3.h>
+#undef APIENTRY // Fix warning C4005
 
-// DEFINEs
 #include <core/Defines.hpp>
 
-// Core system headers
 #include <core/Datatypes.hpp>
 #include <core/Logger.hpp>
 #include <core/Math.hpp>
 #include <core/Time.hpp>
 #include <core/Traits.hpp>
 
-// Core tag components
 #include <core/Added.hpp>
 #include <core/Deleted.hpp>
 #include <core/Updated.hpp>

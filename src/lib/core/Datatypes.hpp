@@ -3,6 +3,11 @@
 #include <core/ecs/EntityId.hpp>
 
 #include <utility>
+#ifdef _MSC_VER
+    #pragma warning( push )
+    #pragma warning( disable : 4201)
+    //#pragma warning( disable : 2220)
+#endif
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,6 +17,9 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/vec_swizzle.hpp>
+#ifdef _MSC_VER
+    #pragma warning( pop )
+#endif
 
 namespace eng
 {

@@ -2,6 +2,7 @@
 
 #include <core/ecs/IComponent.hpp>
 
+#include <imgui.h>
 #include <ImGuizmo.h>
 
 namespace eng

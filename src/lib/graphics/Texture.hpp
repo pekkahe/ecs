@@ -4,6 +4,7 @@
 #include <graphics/Id.hpp>
 
 #include <glad/glad.h>
+//#undef APIENTRY
 
 namespace eng
 {
@@ -12,7 +13,7 @@ namespace eng
         class Texture
         {
         public:
-            Texture(const std::string& path, GLint wrap, GLint filter, GLenum format);
+            Texture(const std::string& path, int wrap, int filter, unsigned format);
             ~Texture();
             // Move only.
             Texture(const Texture&) = delete;
