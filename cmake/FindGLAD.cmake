@@ -1,15 +1,13 @@
-assert_is_set(EXT_DIR)
+add_library(glad)
 
-add_library(Glad)
+set(GLAD_DIR "${CMAKE_SOURCE_DIR}/external/glad")
+set(GLAD_SRC 
+    "${GLAD_DIR}/src/glad.c"
+    "${GLAD_DIR}/include/glad/glad.h")
 
-set(GLAD_DIR "${EXT_DIR}/glad")
-set(GLAD_SRC "${GLAD_DIR}/src/glad.c")
-set(GLAD_INCLUDE "${GLAD_DIR}/include")
+target_sources(glad PRIVATE ${GLAD_SRC})
+target_include_directories(glad PUBLIC "${GLAD_DIR}/include")
 
-target_sources(Glad PRIVATE ${GLAD_SRC})
+set_target_properties(glad PROPERTIES FOLDER external)
 
-target_include_directories(Glad PUBLIC ${GLAD_INCLUDE})
-
-set_target_properties(Glad PROPERTIES FOLDER "External")
-
-assign_source_group("${GLAD_DIR}/src" ${GLAD_SRC})
+assign_source_group(${GLAD_DIR} ${GLAD_SRC})
