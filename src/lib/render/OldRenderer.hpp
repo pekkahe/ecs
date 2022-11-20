@@ -1,8 +1,8 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <graphics/Shader.hpp>
-#include <graphics/Texture.hpp>
+#include <render/Shader.hpp>
+#include <render/Texture.hpp>
 #include <scene/Scene.hpp>
 #include <ui/Window.hpp>
 

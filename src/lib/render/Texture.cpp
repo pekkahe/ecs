@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <graphics/Texture.hpp>
+#include <render/Texture.hpp>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>

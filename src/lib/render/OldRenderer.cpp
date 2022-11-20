@@ -1,8 +1,8 @@
 #include <Precompiled.hpp>
-#include <graphics/OldRenderer.hpp>
+#include <render/OldRenderer.hpp>
 
 #include <core/ecs/Query.hpp>
-#include <scene/Camera.hpp>
+#include <scene/components/Camera.hpp>
 #include <ui/Window.hpp>
 
 using namespace eng;

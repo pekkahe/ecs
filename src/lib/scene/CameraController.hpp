@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <scene/CameraControl.hpp>
+#include <scene/components/CameraControl.hpp>
 #include <ui/Window.hpp>
 
 namespace eng
@@ -9,7 +9,7 @@ namespace eng
     class CameraController : public IWindowEventListener
     {
     public:
-        CameraController(int2 windowSize);
+        CameraController(int2 initialViewportSize);
 
         bool update(CameraControl& control);
 

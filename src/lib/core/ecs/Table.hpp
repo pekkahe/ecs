@@ -16,7 +16,7 @@ namespace eng
     };
 
     template <typename Component>
-    class Table : public ITable, public trait::non_copyable
+    class Table : public ITable, public trait::no_copy
     {
     public:
         Table() = default;

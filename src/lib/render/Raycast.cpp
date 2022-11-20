@@ -1,5 +1,6 @@
 #include <Precompiled.hpp>
-#include <graphics/Raycast.hpp>
+#include <render/Raycast.hpp>
+#include <core/Core.hpp>
 
 // http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 // Additional reference: http://antongerdelan.net/opengl/raycasting.html
@@ -45,7 +46,7 @@ bool eng::gfx::raycastObb(
             float tMax = (e + aabbMax) / f; 
 
             // tMin and tMax now contain distances between ray origin and ray-plane intersections, 
-            // but we don’t know in what order, so we make sure that tMin represents the near
+            // but we donï¿½t know in what order, so we make sure that tMin represents the near
             // intersection and tMax the far
             if (tMin > tMax)
             {

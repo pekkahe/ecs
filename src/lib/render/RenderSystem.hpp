@@ -1,9 +1,9 @@
 #pragma once
 
 #include <core/ecs/System.hpp>
-#include <graphics/Mesh.hpp>
-#include <graphics/Shader.hpp>
-#include <graphics/Texture.hpp>
+#include <render/Components.hpp>
+#include <render/Shader.hpp>
+#include <render/Texture.hpp>
 
 namespace eng
 {

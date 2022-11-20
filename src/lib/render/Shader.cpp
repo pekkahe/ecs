@@ -1,5 +1,5 @@
 #include <Precompiled.hpp>
-#include <graphics/Shader.hpp>
+#include <render/Shader.hpp>
 
 #include <glad/glad.h>
 

@@ -2,13 +2,13 @@
 
 #include <core/ecs/Database.hpp>
 #include <editor/EditorSystem.hpp>
-#include <graphics/RenderSystem.hpp>
+#include <render/RenderSystem.hpp>
 #include <scene/CameraSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
 namespace eng
 {
-    class Scene : public trait::non_copyable
+    class Scene : public trait::no_copy
     {
     public:
         Scene(std::shared_ptr<Window> window);

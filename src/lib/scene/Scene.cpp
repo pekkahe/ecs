@@ -1,9 +1,9 @@
 #include <Precompiled.hpp>
 #include <scene/Scene.hpp>
 
-#include <editor/TransformGizmo.hpp>
-#include <graphics/Mesh.hpp>
-#include <scene/Transform.hpp>
+#include <editor/components/TransformGizmo.hpp>
+#include <render/components/Mesh.hpp>
+#include <scene/components/Transform.hpp>
 
 using namespace eng;
 
@@ -31,7 +31,7 @@ void Scene::registerSystem(ISystem& system)
 {
     m_systems.emplace_back(&system);
 
-    system.onRegistered(*this);
+    system.registerDatabase(m_database);
 }
 
 void Scene::update()

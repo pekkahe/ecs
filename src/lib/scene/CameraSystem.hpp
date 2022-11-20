@@ -1,9 +1,11 @@
 #pragma once
 
 #include <core/ecs/System.hpp>
-#include <scene/Camera.hpp>
-#include <scene/CameraControl.hpp>
+
 #include <scene/CameraController.hpp>
+#include <scene/components/Camera.hpp>
+#include <scene/components/CameraControl.hpp>
+
 #include <ui/Window.hpp>
 
 namespace eng

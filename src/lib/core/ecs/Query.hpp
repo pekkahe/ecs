@@ -6,7 +6,7 @@
 namespace eng
 {
     template <typename... Tables>
-    class Query : public trait::non_copyable
+    class Query : public trait::no_copy
     {
     public:
         Query(

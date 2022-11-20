@@ -1,5 +1,6 @@
 #include <Precompiled.hpp>
-#include <graphics/OBB.hpp>
+
+#include <render/components/OBB.hpp>
 
 using namespace eng;
 

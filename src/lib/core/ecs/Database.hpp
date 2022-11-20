@@ -1,15 +1,19 @@
 #pragma once
 
 #include <core/Core.hpp>
+#include <core/components/Added.hpp>
+#include <core/components/Updated.hpp>
+#include <core/components/Deleted.hpp>
 #include <core/ecs/EntityId.hpp>
 #include <core/ecs/IComponent.hpp>
 #include <core/ecs/Table.hpp>
+
 
 namespace eng
 {
     // Central storage of the Entity Component System.
     // Stores entities and their components.
-    class Database : public trait::non_copyable
+    class Database : public trait::no_copy
     {
     public:
         Database();

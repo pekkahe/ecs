@@ -1,13 +1,12 @@
 #include <Precompiled.hpp>
-#include <core/ecs/System.hpp>
 
-#include <scene/Scene.hpp>
+#include <core/ecs/System.hpp>
 
 using namespace eng;
 
-void System::onRegistered(const Scene& scene)
+void System::registerDatabase(const Database& db)
 {
-    m_database = &scene.database();
+    m_database = &db;
 }
 
 void System::commitUpdated(Database& db)

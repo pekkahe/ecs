@@ -1,10 +1,10 @@
 #include <Precompiled.hpp>
-#include <graphics/RenderSystem.hpp>
+#include <render/RenderSystem.hpp>
 
-#include <editor/Hovered.hpp>
-#include <editor/Selected.hpp>
+#include <editor/components/Hovered.hpp>
+#include <editor/components/Selected.hpp>
+#include <scene/components/Transform.hpp>
 #include <scene/Scene.hpp>
-#include <scene/Transform.hpp>
 #include <ui/Window.hpp>
 
 using namespace eng;
@@ -212,7 +212,7 @@ void RenderSystem::render()
         m_shaders[0].setMat4("model", transform.modelMatrix());
 
         glBindVertexArray(mesh.VAO);
-        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
         glDisable(GL_STENCIL_TEST);
@@ -245,7 +245,7 @@ void RenderSystem::render()
         glBindVertexArray(mesh.VAO);
         glLineWidth(4.0f);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(GL_LINE_STRIP, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_LINE_STRIP, static_cast<GLsizei>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1.0f);
         glBindVertexArray(0);
@@ -283,7 +283,7 @@ void RenderSystem::render()
         glBindVertexArray(mesh.VAO);
         glLineWidth(4.0f);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawElements(GL_LINE_STRIP, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_LINE_STRIP, static_cast<GLsizei>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glLineWidth(1.0f);
         glBindVertexArray(0);
@@ -381,7 +381,7 @@ void RenderSystem::render()
         m_shaders[2].setVec3("color", vec3(0.6f, 0.7f, 0.9f));
 
         glBindVertexArray(VAO);
-        glDrawArrays(GL_LINES, 0, vertices.size());
+        glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(vertices.size()));
         glBindVertexArray(0);
     });
 
@@ -475,7 +475,7 @@ void RenderSystem::render()
         m_shaders[2].setVec3("color", vec3(0.6f, 0.7f, 0.9f));
         
         glBindVertexArray(VAO);
-        glDrawArrays(GL_LINES, 0, vertices.size());
+        glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(vertices.size()));
         glBindVertexArray(0);
     });
 }

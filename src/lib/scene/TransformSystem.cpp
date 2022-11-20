@@ -94,7 +94,7 @@ void TransformSystem::update(const Scene&)
 
     Transform transformGizmoDelta;
     
-    // Move gizmo
+    // Move, rotate, and scale transform gizmo
     query()
         .hasComponent<TransformGizmo>()
         .hasComponent<Transform>(m_transformTable)
@@ -103,6 +103,9 @@ void TransformSystem::update(const Scene&)
             const TransformGizmo& gizmo,
             Transform& transform)
     {
+        // Move gizmo to selection center
+        transform.position = selectedBounds.center();
+
         transformGizmoDelta = transformGizmo(
             *camera, 
             selectedBounds,
@@ -110,7 +113,10 @@ void TransformSystem::update(const Scene&)
             transform);
     });
 
-    // TODO: Check if delta valid
+    if (transformGizmoDelta == Transform::identity())
+    {
+        return;
+    }
 
     // Apply delta transform to selected objects
     query()
@@ -176,9 +182,6 @@ Transform TransformSystem::transformGizmo(
     const TransformGizmo& transformGizmo,
     Transform& transform)
 {
-    // Move gizmo to selection center
-    transform.position = selectedBounds.center();
-
     Transform previousTransform(transform);
     mat4 modelMatrix(transform.modelMatrix());
 
@@ -192,8 +195,7 @@ Transform TransformSystem::transformGizmo(
 
     if (!gizmoUsed)
     {
-        // TODO: Problem?
-        return { {}, {}, {} };
+        Transform::identity();
     }
 
     // Decompose manipulated values back into component

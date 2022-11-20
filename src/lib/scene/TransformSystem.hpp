@@ -1,13 +1,13 @@
 #pragma once
 
 #include <core/ecs/System.hpp>
-// TODO: Scene.components.hpp
-// TODO: Editor.components.hpp
-#include <editor/Selected.hpp>
-#include <editor/TransformGizmo.hpp>
-#include <scene/Camera.hpp>
-#include <scene/CameraControl.hpp>
-#include <scene/Transform.hpp>
+
+#include <editor/components/Selected.hpp>
+#include <editor/components/TransformGizmo.hpp>
+
+#include <scene/components/Camera.hpp>
+#include <scene/components/CameraControl.hpp>
+#include <scene/components/Transform.hpp>
 
 namespace eng
 {
