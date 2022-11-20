@@ -20,12 +20,12 @@ namespace eng
             Job& readWrite(TableRef<Resource> resource);
 
             template <typename Resource>
-            Job& readWrite(Resource resource)
+            Job& readWrite(Resource)
             {
                 return *this;
             }
 
-            Job& require(Job& other)
+            Job& require(Job&)
             {
                 return *this;
             }

@@ -27,11 +27,11 @@ namespace
 SparseIndex::Position SparseIndex::bitPos(uint32_t pos)
 {
     size_t index = pos / k_bitsPerBlock;
-    unsigned bit = pos - (index * k_bitsPerBlock);
+    size_t bit = pos - (index * k_bitsPerBlock);
 
     assert(bit >= 0 && bit < k_bitsPerBlock && "Bit index out of range");
 
-    return { index, bit };
+    return { index, static_cast<unsigned>(bit) };
 }
 
 void SparseIndex::insert(EntityId id)
@@ -226,9 +226,9 @@ bool SparseIndex::Iterator::operator!=(Iterator other) const
     return !(*this == other);
 }
 
-SparseIndex::Iterator::reference SparseIndex::Iterator::operator*() const
+SparseIndex::Iterator::value_type SparseIndex::Iterator::operator*() const
 {
-    return static_cast<EntityId>(m_pos);
+    return static_cast<SparseIndex::Iterator::value_type>(m_pos);
 }
 
 eng::SparseIndex eng::operator|(const SparseIndex& lhs, const SparseIndex& rhs)

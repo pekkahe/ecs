@@ -3,7 +3,7 @@
 
 using namespace eng;
 
-bool InputActions::check(InputAction action) const
+bool InputActions::check(InputAction) const
 {
     return false;
 }

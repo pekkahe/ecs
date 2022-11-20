@@ -30,14 +30,15 @@ namespace eng
         friend SparseIndex operator^(const SparseIndex& lhs, const SparseIndex& rhs);
 
     public:
-        class Iterator : public std::iterator<
-            std::input_iterator_tag,
-            EntityId,
-            uint32_t,
-            const EntityId*,
-            EntityId>
+        class Iterator
         {
         public:
+            using iterator_category = std::input_iterator_tag;
+            using value_type = EntityId;
+            using difference_type = EntityId;
+            using pointer = const EntityId*;
+            using reference = EntityId&;
+
             explicit Iterator(
                 const SparseIndex& container,
                 size_t size,
@@ -53,7 +54,7 @@ namespace eng
             bool operator==(Iterator other) const;
             bool operator!=(Iterator other) const;
             
-            reference operator*() const;
+            value_type operator*() const;
 
         private:
             const SparseIndex& m_container;

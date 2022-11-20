@@ -20,7 +20,7 @@ assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})
 
 target_sources(lib PRIVATE ${SRC_FILES})
 target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_compile_definitions(lib PRIVATE
+target_compile_definitions(lib PUBLIC
     NOMINMAX
     IMGUI_USER_CONFIG="ui/ImConfig.hpp")
 target_link_libraries(lib

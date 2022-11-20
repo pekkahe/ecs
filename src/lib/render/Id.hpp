@@ -17,11 +17,11 @@ namespace eng
             ~Id() = default;
             Id(const Id&) = default;
             Id& operator=(const Id&) = default;
-            Id(Id&& other) : m_value(other.m_value)
+            Id(Id&& other) noexcept : m_value(other.m_value)
             {
                 other.m_value = Invalid;
             }
-            Id& operator=(Id&& other)
+            Id& operator=(Id&& other) noexcept
             {
                 if (&other != this)
                 {

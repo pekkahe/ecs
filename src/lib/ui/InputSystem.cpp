@@ -18,20 +18,20 @@ void InputSystem::update(const Scene&)
         .execute([&](
             EntityId,
             const Selected&,
-            InputListener& listener)
+            InputListener&)
     {
 
     });
 }
 
-void InputSystem::onKeyInput(Window& window, const InputEvent& input)
+void InputSystem::onKeyInput(Window&, const InputEvent&)
 {
 }
 
-void InputSystem::onMouseButton(Window& window, const InputEvent& input)
+void InputSystem::onMouseButton(Window&, const InputEvent&)
 {
 }
 
-void InputSystem::onMouseCursor(Window& window, double2 position)
+void InputSystem::onMouseCursor(Window&, double2 /*position*/)
 {
 }

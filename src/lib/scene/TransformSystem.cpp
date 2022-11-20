@@ -18,7 +18,7 @@ TransformSystem::~TransformSystem()
 {
 }
 
-void TransformSystem::schedule(Scheduler& scheduler)
+void TransformSystem::schedule(Scheduler&)
 {
     // TODO: Scheduler
     //query()
@@ -178,7 +178,7 @@ void TransformSystem::transformCamera(
 
 Transform TransformSystem::transformGizmo(
     const Camera& camera,
-    const AABB& selectedBounds,
+    const AABB& /*selectedBounds*/,
     const TransformGizmo& transformGizmo,
     Transform& transform)
 {

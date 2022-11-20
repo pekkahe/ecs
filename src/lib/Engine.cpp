@@ -1,48 +1,45 @@
 #include <Precompiled.hpp>
-#include <core/Engine.hpp>
+#include <Engine.hpp>
 
 #include <scene/Scene.hpp>
 #include <ui/ImGui.hpp>
 
-using namespace eng;
-using namespace eng::gfx;
-
-namespace
+namespace engine
 {
-    void onGlfwError(int error, const char* description)
-    {
-        SHOE_LOG_ERROR("%s [GLFW #%d]", description, error);
-    }
+    
+void onGlfwError(int error, const char* description)
+{
+    SHOE_LOG_ERROR("%s [GLFW #%d]", description, error);
 }
 
-Engine::Engine()
+void init()
 {
     glfwSetErrorCallback(onGlfwError);
 
     if (!glfwInit())
     {
-        throw std::runtime_error("Error: Failed to initialize GLFW.");
+        assert(false && "Failed to initialize GLFW.");
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    imgui::init();
+    eng::imgui::init();
 }
 
-Engine::~Engine()
+void deinit()
 {
-    imgui::deinit();
+    eng::imgui::deinit();
 
     glfwTerminate();
 }
 
-void Engine::execute(std::shared_ptr<Window> window, std::shared_ptr<Scene> scene)
+void run(std::shared_ptr<eng::Window> window, std::shared_ptr<eng::Scene> scene)
 {
     while (window->pollEvents())
     {
-        imgui::beginFrame();
+        eng::imgui::beginFrame();
 
         // TODO: logic thread
 
@@ -56,9 +53,11 @@ void Engine::execute(std::shared_ptr<Window> window, std::shared_ptr<Scene> scen
         scene->renderer().render();
         scene->renderer().endFrame();
 
-        imgui::endFrame();
+        eng::imgui::endFrame();
         window->swapBuffers();
 
-        Time::endFrame();
+        eng::Time::endFrame();
     }
 }
+
+} // namespace ecs

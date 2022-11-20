@@ -46,7 +46,7 @@ void Renderer::beginFrame()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::render(const Scene& scene)
+void Renderer::render(const Scene&)
 {
 }
 
@@ -146,7 +146,7 @@ void Renderer::drawTwoTrianglesWithOwnBuffers()
         }
     };
 
-    unsigned int verticesCount = 18;
+    //unsigned int verticesCount = 18;
     
     // Generate Vertex Array Objects and Vertex Buffer Objects
     unsigned int VAO[2];
@@ -196,7 +196,7 @@ void Renderer::drawTwoTrianglesWithOwnBuffersAndPrograms()
         }
     };
 
-    unsigned int verticesCount = 18;
+    //unsigned int verticesCount = 18;
 
     // Generate Vertex Array Objects and Vertex Buffer Objects
     unsigned int VAO[2];

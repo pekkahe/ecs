@@ -79,8 +79,8 @@ void Shader::checkCompilationErrors(unsigned int value, const char* type)
 {
     int  success;
     char infoLog[512];
-
-    if (type == "PROGRAM")
+    
+    if (std::strcmp(type, "PROGRAM") == 0)
     {
         glGetProgramiv(value, GL_LINK_STATUS, &success);
         if (!success)

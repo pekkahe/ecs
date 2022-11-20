@@ -17,19 +17,15 @@ namespace
 Window::Window(int width, int height, const std::string& title)
 {
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    assert(m_window && "Failed to create OpenGL context.");
     m_windowSize = { width, height };
-
-    if (!m_window)
-    {
-        throw std::runtime_error("Error: Window or OpenGL context creation failed.");
-    }
-
+    
     glfwMakeContextCurrent(m_window);
     glfwSwapInterval(1); // Enable vsync
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
     {
-        throw std::runtime_error("Error: Failed to initialize OpenGL loader GLAD.");
+        assert(false && "Failed to initialize OpenGL loader GLAD.");
     }
 
     glfwSetWindowUserPointer(m_window, this);
@@ -88,7 +84,7 @@ void Window::onWindowResize(WindowResizeCallback callback)
     m_windowResizeCallbacks.emplace_back(callback);
 }
 
-void Window::onKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Window::onKeyInput(GLFWwindow* window, int key, int /*scancode*/, int action, int mods)
 {
     auto w = getUserWindow(window);
     w->m_inputState.setKey(key, action);

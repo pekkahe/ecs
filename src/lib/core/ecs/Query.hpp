@@ -75,7 +75,7 @@ namespace eng
         // Return sparse index containing all entity ids which match the query filter.
         SparseIndex index()
         {
-            if (sizeof...(Tables) == 0)
+            if constexpr (sizeof...(Tables) == 0)
             {
                 return SparseIndex();
             }

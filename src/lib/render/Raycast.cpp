@@ -122,7 +122,7 @@ bool eng::gfx::raycastObb(
     return true;
 }
 
-float eng::gfx::raycast(const Ray& ray, const AABB& aabb)
+float eng::gfx::raycast(const Ray&, const AABB&)
 {
     // TODO
     return 0.0f;

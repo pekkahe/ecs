@@ -39,7 +39,7 @@ void RenderSystem::update(const Scene&)
         .hasComponent<Added>()
         .hasComponent<Mesh>(m_meshTable)
         .execute([&](
-            EntityId id,
+            EntityId,
             const Added&,
             Mesh& mesh)
     {
@@ -74,7 +74,7 @@ void RenderSystem::update(const Scene&)
         .hasComponent<Transform>()
         .hasComponent<Mesh>(m_meshTable)
         .execute([&](
-            EntityId id,
+            EntityId,
             const Updated&,
             const Transform& transform,
             Mesh& mesh)
@@ -162,7 +162,7 @@ void RenderSystem::update(const Scene&)
         .hasComponent<Deleted>()
         .hasComponent<Mesh>(m_meshTable)
         .execute([&](
-            EntityId id, 
+            EntityId, 
             const Deleted&,
             Mesh& mesh)
     {
@@ -196,7 +196,7 @@ void RenderSystem::render()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
         .execute([&](
-            EntityId id, 
+            EntityId, 
             const Transform& transform,
             const Mesh& mesh)
     {
@@ -224,7 +224,7 @@ void RenderSystem::render()
         .hasComponent<Mesh>()
         .hasComponent<Hovered>()
         .execute([&](
-            EntityId id,
+            EntityId,
             const Transform& transform,
             const Mesh& mesh,
             const Hovered&)
@@ -262,7 +262,7 @@ void RenderSystem::render()
         .hasComponent<Mesh>()
         .hasComponent<Selected>()
         .execute([&](
-            EntityId id,
+            EntityId,
             const Transform& transform,
             const Mesh& mesh,
             const Selected&)
@@ -299,7 +299,7 @@ void RenderSystem::render()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
         .execute([&](
-            EntityId id,
+            EntityId,
             const Transform& transform,
             const Mesh& mesh)
     {
@@ -390,8 +390,8 @@ void RenderSystem::render()
         .hasComponent<Transform>()
         .hasComponent<Mesh>()
         .execute([&](
-            EntityId id,
-            const Transform& transform,
+            EntityId,
+            const Transform&,
             const Mesh& mesh)
     {
         vec3 pos = mesh.obb.position;

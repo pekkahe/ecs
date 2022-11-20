@@ -70,10 +70,10 @@ namespace eng
     public:
         // todo: replace direct input callbacks with processed 'KeyBindings'
 
-        virtual void onKeyInput(Window& window, const InputEvent& input) {}
-        virtual void onMouseButton(Window& window, const InputEvent& input) {}
-        virtual void onMouseCursor(Window& window, double2 position) {}
-        virtual void onMouseScroll(Window& window, double2 offset) {}
-        virtual void onWindowResize(Window& window, int2 size) {}
+        virtual void onKeyInput(Window&, const InputEvent&) {}
+        virtual void onMouseButton(Window&, const InputEvent&) {}
+        virtual void onMouseCursor(Window&, double2) {}
+        virtual void onMouseScroll(Window&, double2) {}
+        virtual void onWindowResize(Window&, int2) {}
     };
 }
