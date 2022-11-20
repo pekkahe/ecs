@@ -14,19 +14,34 @@ RenderSystem::RenderSystem(Database& db) :
     m_meshTable(db.createTable<Mesh>())
 {
     m_shaders.emplace_back(Shader(
-        "../../shaders/vertex.vert",
-        "../../shaders/fragment.frag"));
+        "shaders/vertex.vert",
+        "shaders/fragment.frag"));
     m_shaders.emplace_back(Shader(
-        "../../shaders/vertex.vert",
-        "../../shaders/fragment_single.frag"));
+        "shaders/vertex.vert",
+        "shaders/fragment_single.frag"));
     m_shaders.emplace_back(Shader(
-        "../../shaders/vertex.vert",
-        "../../shaders/fragment_single.frag"));
+        "shaders/vertex.vert",
+        "shaders/fragment_single.frag"));
 
     m_textures.emplace_back(Texture(
-        "../../data/container.jpg", GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
+        "data/container.jpg", GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
     m_textures.emplace_back(Texture(
-        "../../data/awesomeface.png", GL_REPEAT, GL_NEAREST, GL_RGBA));
+        "data/awesomeface.png", GL_REPEAT, GL_NEAREST, GL_RGBA));
+
+    //m_shaders.emplace_back(Shader(
+    //    (config.shaders / "vertex.vert").string(),
+    //    (config.shaders / "fragment.frag").string()));
+    //m_shaders.emplace_back(Shader(
+    //    (config.shaders / "vertex.vert").string(),
+    //    (config.shaders / "fragment_single.frag").string()));
+    //m_shaders.emplace_back(Shader(
+    //    (config.shaders / "vertex.vert").string(),
+    //    (config.shaders / "fragment_single.frag").string()));
+
+    //m_textures.emplace_back(Texture(
+    //    (config.data / "container.jpg").string(), GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
+    //m_textures.emplace_back(Texture(
+    //    (config.data / "awesomeface.png").string(), GL_REPEAT, GL_NEAREST, GL_RGBA));
 }
 
 RenderSystem::~RenderSystem()

@@ -15,4 +15,7 @@ if(EMSCRIPTEN)
         "-o Main.html")
 endif()
 
+target_copy_files(cli "data" "data")
+target_copy_files(cli "src/lib/render/shaders" "shaders")
+
 set_high_warning_level(cli)

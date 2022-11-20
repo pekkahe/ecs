@@ -41,21 +41,14 @@ void run(std::shared_ptr<eng::Window> window, std::shared_ptr<eng::Scene> scene)
     {
         eng::imgui::beginFrame();
 
-        // TODO: logic thread
-
         scene->update();
-
-        // ...
-
-        // TODO: render thread
-
+        
         scene->renderer().beginFrame();
         scene->renderer().render();
         scene->renderer().endFrame();
 
         eng::imgui::endFrame();
         window->swapBuffers();
-
         eng::Time::endFrame();
     }
 }

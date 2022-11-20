@@ -5,6 +5,8 @@
 #include <render/Shader.hpp>
 #include <render/Texture.hpp>
 
+#include <filesystem>
+
 namespace eng
 {
     class RenderSystem : public System

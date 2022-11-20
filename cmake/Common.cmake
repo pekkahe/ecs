@@ -7,13 +7,29 @@ function(assert_outsource_build)
 endfunction()
 
 function(assign_source_group ROOT)
-    foreach(_SOURCE_FILE IN ITEMS ${ARGN})
-        file(RELATIVE_PATH _REL_PATH "${ROOT}" "${_SOURCE_FILE}")
-        get_filename_component(_SOURCE_DIR "${_REL_PATH}" DIRECTORY)
+    foreach(_FILE IN ITEMS ${ARGN})
+        file(RELATIVE_PATH _REL_PATH "${ROOT}" "${_FILE}")
+        get_filename_component(_DIR "${_REL_PATH}" DIRECTORY)
         if(MSVC)
-            string(REPLACE "/" "\\" _SOURCE_DIR "${_SOURCE_DIR}")
+            string(REPLACE "/" "\\" _DIR "${_DIR}")
         endif()
-        source_group("${_SOURCE_DIR}" FILES "${_SOURCE_FILE}")
+        source_group("${_DIR}" FILES "${_FILE}")
+    endforeach()
+endfunction()
+
+function(target_copy_files TARGET_NAME SOURCE_DIR DEST_DIR)
+    file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/${SOURCE_DIR}/*.*")
+    
+    foreach(_SOURCE_FILE IN ITEMS ${SOURCE_FILES})
+        cmake_path(GET _SOURCE_FILE FILENAME _FILENAME)
+        set(_DEST_FILE "${DEST_DIR}/${_FILENAME}")
+    
+        file(COPY ${_SOURCE_FILE} DESTINATION ${DEST_DIR})
+        add_custom_command(
+            OUTPUT ${_DEST_FILE}
+            COMMAND ${CMAKE_COMMAND} -E copy
+                    ${_SOURCE_FILE}
+                    ${_DEST_FILE})
     endforeach()
 endfunction()
 
