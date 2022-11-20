@@ -2,6 +2,9 @@
 *.pch
 
 /.vs
+/.vscode
 /bin
 /build
 /out
+
+CMakeUserPresets.json

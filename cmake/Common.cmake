@@ -26,7 +26,7 @@ function(set_high_warning_level TARGET)
 endfunction()
 
 include(FetchContent)
-    
+
 function(fetch_gtest)
     FetchContent_Declare(
         googletest

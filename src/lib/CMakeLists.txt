@@ -1,4 +1,4 @@
-add_library(engine STATIC)
+add_library(lib STATIC)
 
 find_package(glad REQUIRED)
 find_package(imgui REQUIRED)
@@ -18,12 +18,12 @@ file(GLOB_RECURSE SRC_SHADER_FILES
 list(APPEND ${SRC_FILES} ${SRC_SHADER_FILES})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})
 
-target_sources(engine PRIVATE ${SRC_FILES})
-target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_compile_definitions(engine PRIVATE
+target_sources(lib PRIVATE ${SRC_FILES})
+target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_compile_definitions(lib PRIVATE
     NOMINMAX
     IMGUI_USER_CONFIG="ui/ImConfig.hpp")
-target_link_libraries(engine
+target_link_libraries(lib
     PUBLIC
         glad
         glm
@@ -33,4 +33,4 @@ target_link_libraries(engine
         stb
         OpenGL::GL)
 
-set_high_warning_level(engine)
+set_high_warning_level(lib)

@@ -6,7 +6,6 @@
 #ifdef _MSC_VER
     #pragma warning( push )
     #pragma warning( disable : 4201)
-    //#pragma warning( disable : 2220)
 #endif
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
