@@ -6,7 +6,7 @@
 #include <scene/Scene.hpp>
 #include <ui/Window.hpp>
 
-namespace eng
+namespace ecs
 {
     class Window;
     class Camera;

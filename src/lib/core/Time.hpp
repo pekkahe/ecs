@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace eng
+namespace ecs
 {
     class Time
     {

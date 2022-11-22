@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <core/ecs/Database.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 Database::Database() :
     m_added(createTable<Added>()),

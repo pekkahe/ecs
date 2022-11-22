@@ -5,7 +5,7 @@
 #include <render/components/Mesh.hpp>
 #include <scene/components/Transform.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 Scene::Scene(std::shared_ptr<Window> window) :
     m_window(std::move(window)),

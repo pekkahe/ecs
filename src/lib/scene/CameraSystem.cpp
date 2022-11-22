@@ -2,7 +2,7 @@
 #include <scene/CameraSystem.hpp>
 #include <scene/components/Transform.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 CameraSystem::CameraSystem(
     Database& db,

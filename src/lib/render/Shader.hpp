@@ -3,7 +3,7 @@
 #include <core/Core.hpp>
 #include <render/Id.hpp>
 
-namespace eng
+namespace ecs
 {
     namespace gfx
     {

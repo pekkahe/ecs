@@ -9,7 +9,7 @@
 
 #include <ui/Window.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 EditorSystem::EditorSystem(
     Database& db) :

@@ -2,7 +2,7 @@
 
 #include <core/ecs/System.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 void System::registerDatabase(const Database& db)
 {

@@ -3,7 +3,7 @@
 #include <core/ecs/Database.hpp>
 #include <core/ecs/Table.hpp>
 
-namespace eng
+namespace ecs
 {
     template <typename... Tables>
     class Query : public trait::no_copy

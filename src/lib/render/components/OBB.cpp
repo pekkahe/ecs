@@ -2,7 +2,7 @@
 
 #include <render/components/OBB.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 OBB::OBB() :
     position(0.0f),

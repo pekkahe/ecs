@@ -9,7 +9,7 @@
 #include <scene/CameraSystem.hpp>
 #include <scene/TransformSystem.hpp>
 
-namespace eng
+namespace ecs
 {
 
 

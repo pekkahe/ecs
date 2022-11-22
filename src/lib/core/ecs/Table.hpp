@@ -3,7 +3,7 @@
 #include <core/Core.hpp>
 #include <core/ecs/SparseIndex.hpp>
 
-namespace eng
+namespace ecs
 {
     class ITable 
     {

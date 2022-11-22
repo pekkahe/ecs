@@ -5,7 +5,7 @@
 
 struct GLFWwindow;
 
-namespace eng
+namespace ecs
 {
     class IWindowEventListener;
 

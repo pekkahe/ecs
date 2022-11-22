@@ -1,7 +1,6 @@
 #include <Precompiled.hpp>
 #include <ui/ImGui.hpp>
 
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -9,7 +8,7 @@
 
 namespace
 {
-    std::array<float, 16> unwrapMatrix(const eng::mat4& matrix)
+    std::array<float, 16> unwrapMatrix(const ecs::mat4& matrix)
     {
         const float* source = static_cast<const float*>(glm::value_ptr(matrix));
 
@@ -22,17 +21,14 @@ namespace
     }
 }
 
-void eng::imgui::init()
+void ecs::imgui::init()
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
-    
-    //const char* glsl_version = "#version 330 core"; // core -> es
-    ImGui_ImplOpenGL3_Init(NULL); // Use default GLSL version
 }
 
-void eng::imgui::deinit()
+void ecs::imgui::deinit()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -40,7 +36,7 @@ void eng::imgui::deinit()
 }
 
 //bool open = true;
-void eng::imgui::beginFrame()
+void ecs::imgui::beginFrame()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -50,13 +46,13 @@ void eng::imgui::beginFrame()
     //::ImGui::ShowDemoWindow(&open);
 }
 
-void eng::imgui::endFrame()
+void ecs::imgui::endFrame()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }
 
-bool eng::imgui::gizmoManipulate(
+bool ecs::imgui::gizmoManipulate(
     mat4& model, 
     const mat4& view,
     const mat4& projection,

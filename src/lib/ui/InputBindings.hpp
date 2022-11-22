@@ -2,7 +2,7 @@
 
 #include <core/Core.hpp>
 
-namespace eng
+namespace ecs
 {
     ENUM_FLAGS(InputAction)
     {

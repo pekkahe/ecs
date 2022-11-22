@@ -3,7 +3,7 @@
 
 #include <editor/components/Selected.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 InputSystem::InputSystem(Database& db, std::shared_ptr<Window> window) : 
     m_inputListenerTable(db.createTable<InputListener>())

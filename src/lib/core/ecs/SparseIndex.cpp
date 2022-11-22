@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <core/ecs/SparseIndex.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 namespace
 {
@@ -231,7 +231,7 @@ SparseIndex::Iterator::value_type SparseIndex::Iterator::operator*() const
     return static_cast<SparseIndex::Iterator::value_type>(m_pos);
 }
 
-eng::SparseIndex eng::operator|(const SparseIndex& lhs, const SparseIndex& rhs)
+ecs::SparseIndex ecs::operator|(const SparseIndex& lhs, const SparseIndex& rhs)
 {
     // TODO: Share code with member operator overload
 
@@ -261,7 +261,7 @@ eng::SparseIndex eng::operator|(const SparseIndex& lhs, const SparseIndex& rhs)
     return out;
 }
 
-eng::SparseIndex eng::operator&(const SparseIndex& lhs, const SparseIndex& rhs)
+ecs::SparseIndex ecs::operator&(const SparseIndex& lhs, const SparseIndex& rhs)
 {
     // TODO: Share code with member operator overload
 
@@ -291,7 +291,7 @@ eng::SparseIndex eng::operator&(const SparseIndex& lhs, const SparseIndex& rhs)
     return out;
 }
 
-eng::SparseIndex eng::operator^(const SparseIndex& lhs, const SparseIndex& rhs)
+ecs::SparseIndex ecs::operator^(const SparseIndex& lhs, const SparseIndex& rhs)
 {
     // TODO: Share code with member operator overload
 

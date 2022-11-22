@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <ui/InputBindings.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 bool InputActions::check(InputAction) const
 {

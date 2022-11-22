@@ -9,7 +9,7 @@
 #include <core/ecs/Table.hpp>
 
 
-namespace eng
+namespace ecs
 {
     // Central storage of the Entity Component System.
     // Stores entities and their components.

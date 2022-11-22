@@ -4,7 +4,7 @@
 #include <scene/components/CameraControl.hpp>
 #include <ui/Window.hpp>
 
-namespace eng
+namespace ecs
 {
     class CameraController : public IWindowEventListener
     {

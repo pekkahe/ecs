@@ -3,7 +3,7 @@
 #include <core/ecs/Table.hpp>
 #include <core/ecs/TestComponents.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 TEST(Table, Assign)
 {

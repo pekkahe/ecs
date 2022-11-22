@@ -1,6 +1,6 @@
 #pragma once
 
-namespace eng
+namespace ecs
 {
     using EntityId = uint32_t;
 

@@ -2,7 +2,7 @@ add_executable(tests)
 
 fetch_gtest()
 
-file(GLOB_RECURSE SRC_FILES 
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})

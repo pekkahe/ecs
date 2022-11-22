@@ -4,7 +4,7 @@
 
 // http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 // Additional reference: http://antongerdelan.net/opengl/raycasting.html
-bool eng::gfx::raycastObb(
+bool ecs::gfx::raycastObb(
     const Ray& ray,
     const AABB& aabb,
     const mat4& modelMatrix, 
@@ -122,13 +122,13 @@ bool eng::gfx::raycastObb(
     return true;
 }
 
-float eng::gfx::raycast(const Ray&, const AABB&)
+float ecs::gfx::raycast(const Ray&, const AABB&)
 {
     // TODO
     return 0.0f;
 }
 
-float eng::gfx::raycast(const Ray& ray, const OBB& obb)
+float ecs::gfx::raycast(const Ray& ray, const OBB& obb)
 {
     // Store half extents of the box
     vec3 size = obb.halfExtents;

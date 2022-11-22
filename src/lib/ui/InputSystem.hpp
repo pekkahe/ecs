@@ -5,7 +5,7 @@
 #include <ui/InputListener.hpp>
 #include <ui/Window.hpp>
 
-namespace eng
+namespace ecs
 {
     class InputSystem : public System, public IWindowEventListener
     {

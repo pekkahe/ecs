@@ -7,8 +7,8 @@
 #include <scene/Scene.hpp>
 #include <ui/Window.hpp>
 
-using namespace eng;
-using namespace eng::gfx;
+using namespace ecs;
+using namespace ecs::gfx;
 
 RenderSystem::RenderSystem(Database& db) :
     m_meshTable(db.createTable<Mesh>())

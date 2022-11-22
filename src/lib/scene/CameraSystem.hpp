@@ -8,7 +8,7 @@
 
 #include <ui/Window.hpp>
 
-namespace eng
+namespace ecs
 {
     class CameraSystem : public System
     {

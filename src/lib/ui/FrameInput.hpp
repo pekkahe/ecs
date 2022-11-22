@@ -4,7 +4,7 @@
 
 #include <bitset>
 
-namespace eng
+namespace ecs
 { 
     // Frame specific cached mouse and keyboard input state.
     class FrameInput

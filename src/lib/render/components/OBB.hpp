@@ -2,7 +2,7 @@
 
 #include <core/Datatypes.hpp>
 
-namespace eng
+namespace ecs
 {
     // Oriented bounding box.
     struct OBB

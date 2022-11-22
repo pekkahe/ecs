@@ -3,7 +3,7 @@
 #include <core/Core.hpp>
 #include <core/ecs/Table.hpp>
 
-namespace eng
+namespace ecs
 {
     class Scheduler
     {

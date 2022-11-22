@@ -3,7 +3,7 @@
 #include <core/Core.hpp>
 #include <core/ecs/IComponent.hpp>
 
-namespace eng
+namespace ecs
 {
     ENUM_FLAGS(CameraMovement)
     {

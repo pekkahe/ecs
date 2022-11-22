@@ -4,7 +4,7 @@
 #include <core/ecs/Query.hpp>
 #include <core/ecs/TestComponents.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 TEST(Query, IsExecutedOnceWhenComponentMatches)
 {

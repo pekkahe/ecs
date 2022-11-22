@@ -2,7 +2,7 @@
 
 #include <scene/components/Camera.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 // By convention, OpenGL is a right-handed system:
 // +x = right

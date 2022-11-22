@@ -20,7 +20,7 @@
     #pragma warning( pop )
 #endif
 
-namespace eng
+namespace ecs
 {
     template <typename T>
     struct Point2

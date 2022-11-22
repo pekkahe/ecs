@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <scene/CameraController.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 CameraController::CameraController(int2 initialViewportSize)
 {

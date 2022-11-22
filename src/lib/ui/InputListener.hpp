@@ -4,7 +4,7 @@
 #include <core/ecs/IComponent.hpp>
 #include <ui/InputBindings.hpp>
 
-namespace eng
+namespace ecs
 {
     class InputListener : public IComponent
     {

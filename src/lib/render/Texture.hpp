@@ -3,10 +3,10 @@
 #include <core/Core.hpp>
 #include <render/Id.hpp>
 
-#include <glad/glad.h>
+//#include <glad/glad.h>
 //#undef APIENTRY
 
-namespace eng
+namespace ecs
 {
     namespace gfx
     {

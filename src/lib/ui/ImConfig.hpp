@@ -70,6 +70,3 @@ namespace ImGui
     void MyFunction(const char* name, const MyMatrix44& v);
 }
 */
-
-// Use GLAD OpenGL loader
-#define IMGUI_IMPL_OPENGL_LOADER_GLAD

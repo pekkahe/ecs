@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <ui/FrameInput.hpp>
 
-namespace eng
+namespace ecs
 {
     void FrameInput::beginFrame()
     {

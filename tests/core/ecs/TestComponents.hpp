@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace eng
+namespace ecs
 {
     struct BoolComponent : public IComponent
     {

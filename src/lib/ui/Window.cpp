@@ -3,8 +3,9 @@
 
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
-using namespace eng;
+using namespace ecs;
 
 namespace
 {
@@ -25,7 +26,7 @@ Window::Window(int width, int height, const std::string& title)
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
     {
-        assert(false && "Failed to initialize OpenGL loader GLAD.");
+        assert(false && "Failed to initialize GLAD OpenGL loader.");
     }
 
     glfwSetWindowUserPointer(m_window, this);
@@ -35,8 +36,18 @@ Window::Window(int width, int height, const std::string& title)
     glfwSetScrollCallback(m_window, onMouseScroll);
     glfwSetFramebufferSizeCallback(m_window, onFramebufferSizeCallback);
 
-    // note: 'true' steals input from GLFW
-    ImGui_ImplGlfw_InitForOpenGL(m_window, false); 
+    //const char* glsl_version = "#version 130";
+    //const char* glsl_version = "#version 330 core"; // core -> es
+    if (!ImGui_ImplOpenGL3_Init(NULL)) // Use default GLSL version
+    {
+        assert(false && "ImGui failed to initialize OpenGL.");
+    }
+
+    // Note: "true" steals input from GLFW
+    if (!ImGui_ImplGlfw_InitForOpenGL(m_window, false))
+    {
+        assert(false && "ImGui failed to initialize window.");
+    }
 }
 
 Window::~Window()

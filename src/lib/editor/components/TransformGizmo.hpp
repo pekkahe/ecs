@@ -2,10 +2,11 @@
 
 #include <core/ecs/IComponent.hpp>
 
+#define IMGUI_USER_CONFIG <ui/ImConfig.hpp>
 #include <imgui.h>
 #include <ImGuizmo.h>
 
-namespace eng
+namespace ecs
 {
     class TransformGizmo : public IComponent
     {

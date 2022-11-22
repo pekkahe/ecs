@@ -2,7 +2,7 @@
 
 #include <render/components/AABB.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 AABB::AABB()
 {

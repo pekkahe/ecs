@@ -7,7 +7,7 @@
 
 #include <filesystem>
 
-namespace eng
+namespace ecs
 {
     class RenderSystem : public System
     {

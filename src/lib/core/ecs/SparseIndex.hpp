@@ -6,7 +6,7 @@
 #include <bitset>
 #include <limits>
 
-namespace eng
+namespace ecs
 {
     // TODO: Rename to DynamicBitset?
     class SparseIndex

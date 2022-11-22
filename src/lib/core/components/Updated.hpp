@@ -2,7 +2,7 @@
 
 #include <core/ecs/IComponent.hpp>
 
-namespace eng
+namespace ecs
 {
     class Updated : public IComponent
     {

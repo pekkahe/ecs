@@ -6,7 +6,7 @@
 #include <bitset>
 #include <limits>
 
-namespace eng
+namespace ecs
 {
     // TODO: Fixed size sparse set container. Currently not used, because
     // of fixed size requirement, but could be faster than SparseIndex.

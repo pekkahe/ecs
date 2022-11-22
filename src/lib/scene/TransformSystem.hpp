@@ -9,7 +9,7 @@
 #include <scene/components/CameraControl.hpp>
 #include <scene/components/Transform.hpp>
 
-namespace eng
+namespace ecs
 {
     class AABB;
 

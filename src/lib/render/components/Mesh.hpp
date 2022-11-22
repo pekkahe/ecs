@@ -6,7 +6,7 @@
 #include <render/components/AABB.hpp>
 #include <render/components/OBB.hpp>
 
-namespace eng
+namespace ecs
 {
     class Mesh : public IComponent
     {

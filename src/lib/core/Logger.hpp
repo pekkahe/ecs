@@ -6,7 +6,7 @@
 #include <windows.h>
 #endif
 
-namespace eng
+namespace ecs
 {
     enum class LogLevel
     {
@@ -15,7 +15,7 @@ namespace eng
     };
 
     template <typename... Args>
-    void shoeLog(eng::LogLevel level, const char* format, Args... args)
+    void shoeLog(ecs::LogLevel level, const char* format, Args... args)
     {
         std::FILE* output = (level == LogLevel::Info ? stdout : stderr);
         std::fprintf(output, format, args...);
@@ -32,10 +32,10 @@ namespace eng
 
 #define SHOE_LOG(format, ...) \
         do { \
-        eng::shoeLog(eng::LogLevel::Info, "[%s:%d] " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
+        ecs::shoeLog(ecs::LogLevel::Info, "[%s:%d] " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
         while (false)
 
 #define SHOE_LOG_ERROR(format, ...) \
         do { \
-        eng::shoeLog(eng::LogLevel::Error, "[%s:%d] ERROR: " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
+        ecs::shoeLog(ecs::LogLevel::Error, "[%s:%d] ERROR: " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
         while (false)

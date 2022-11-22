@@ -6,8 +6,8 @@
 
 #include <glad/glad.h>
 
-using namespace eng;
-using namespace eng::gfx;
+using namespace ecs;
+using namespace ecs::gfx;
 
 Texture::Texture(const std::string& path, int wrap, int filter, unsigned format)
 {

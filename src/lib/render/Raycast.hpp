@@ -5,7 +5,7 @@
 #include <render/components/OBB.hpp>
 #include <scene/components/Camera.hpp>
 
-namespace eng
+namespace ecs
 {
     namespace gfx
     {

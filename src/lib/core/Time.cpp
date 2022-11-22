@@ -1,7 +1,7 @@
 #include <Precompiled.hpp>
 #include <core/Time.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 constexpr std::chrono::milliseconds fixedFrameTime = std::chrono::milliseconds(16);
 

@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <ImGuizmo.h>
 
-namespace eng
+namespace ecs
 {
     namespace imgui
     {

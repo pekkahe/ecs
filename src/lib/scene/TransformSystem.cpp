@@ -6,7 +6,7 @@
 
 #include <ImGuizmo.h>
 
-using namespace eng;
+using namespace ecs;
 
 TransformSystem::TransformSystem(
     Database& db) :

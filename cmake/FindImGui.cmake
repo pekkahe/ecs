@@ -1,5 +1,7 @@
 add_library(imgui)
 
+find_package(OpenGL REQUIRED)
+
 set(IMGUI_DIR "${CMAKE_SOURCE_DIR}/external/imgui/1.88")
 set(IMGUI_SRC 
     "${IMGUI_DIR}/imgui.h"   
@@ -16,6 +18,8 @@ assign_source_group(${IMGUI_DIR} ${IMGUI_SRC})
 
 target_sources(imgui PRIVATE ${IMGUI_SRC})
 target_include_directories(imgui PUBLIC ${IMGUI_DIR})
-target_link_libraries(imgui PRIVATE glad glfw)
+target_link_libraries(imgui PUBLIC 
+    glfw
+    OpenGL::GL) 
 
 set_target_properties(imgui PROPERTIES FOLDER external)

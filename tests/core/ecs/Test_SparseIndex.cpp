@@ -5,7 +5,7 @@
 
 #include <array>
 
-using namespace eng;
+using namespace ecs;
 using namespace testing;
 
 TEST(SparseIndex, Insertion)

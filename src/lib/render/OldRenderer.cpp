@@ -5,8 +5,8 @@
 #include <scene/components/Camera.hpp>
 #include <ui/Window.hpp>
 
-using namespace eng;
-using namespace eng::gfx;
+using namespace ecs;
+using namespace ecs::gfx;
 
 Renderer::Renderer()
 {

@@ -12,7 +12,7 @@
             TableField.assign(id, std::forward<ComponentName>(component)); \
         }
 
-namespace eng
+namespace ecs
 {
     class Scene;
     class ISystem : public trait::no_copy

@@ -2,7 +2,7 @@
 
 #include <core/Datatypes.hpp>
 
-namespace eng
+namespace ecs
 {
     // Axis-aligned bounding box.
     class AABB

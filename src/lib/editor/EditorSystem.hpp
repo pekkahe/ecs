@@ -3,7 +3,7 @@
 #include <core/ecs/System.hpp>
 #include <editor/Components.hpp>
 
-namespace eng
+namespace ecs
 {
     class FrameInput;
 
