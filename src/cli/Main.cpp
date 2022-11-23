@@ -14,8 +14,7 @@ int main(int /*argc*/, char** /*argv*/)
     std::cout << "Running in " << std::filesystem::current_path() << std::endl;
     client::init();
 
-    auto window = std::make_shared<Window>(640, 480, "Engine");
-    
+    auto window = std::make_shared<Window>(640, 480, "Client");
 
     // TODO: Remove ctor dependency Scene->Window
     auto scene = std::make_shared<Scene>(window);
