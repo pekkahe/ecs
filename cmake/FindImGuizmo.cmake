@@ -1,15 +1,11 @@
-assert_is_set(EXT_DIR)
+add_library(imguizmo)
 
-add_library(ImGuizmo)
-
-set(IMGUIZMO_DIR "${EXT_DIR}/imguizmo")
+set(IMGUIZMO_DIR "${CMAKE_SOURCE_DIR}/external/imguizmo/1.83")
 set(IMGUIZMO_SRC "${IMGUIZMO_DIR}/ImGuizmo.cpp")
-set(IMGUIZMO_INCLUDE "${IMGUIZMO_DIR}")
+assign_source_group(${IMGUIZMO_DIR} ${IMGUIZMO_SRC})
 
-target_sources(ImGuizmo PRIVATE ${IMGUIZMO_SRC})
+target_sources(imguizmo PRIVATE ${IMGUIZMO_SRC})
+target_include_directories(imguizmo PUBLIC ${IMGUIZMO_DIR})
+target_link_libraries(imguizmo PRIVATE imgui)
 
-target_include_directories(ImGuizmo PUBLIC ${IMGUIZMO_INCLUDE})
-
-set_target_properties(ImGuizmo PROPERTIES FOLDER "External")
-
-assign_source_group("${IMGUIZMO_DIR}" ${IMGUIZMO_SRC})
+set_target_properties(imguizmo PROPERTIES FOLDER external)

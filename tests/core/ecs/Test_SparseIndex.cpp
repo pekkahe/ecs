@@ -5,7 +5,7 @@
 
 #include <array>
 
-using namespace eng;
+using namespace ecs;
 using namespace testing;
 
 TEST(SparseIndex, Insertion)
@@ -184,14 +184,14 @@ TEST(SparseIndex, PerformanceTest)
 
     for (size_t i = firstId; i <= lastId; ++i)
     {
-        index.insert(i);
+        index.insert(static_cast<EntityId>(i));
     }
 
     double elapsedInsert = timer.reset();
 
     for (size_t i = 0u; i < checks.size(); ++i)
     {
-        checks[i] = index.check(i);
+        checks[i] = index.check(static_cast<EntityId>(i));
     }
 
     double elapsedCheck = timer.reset();

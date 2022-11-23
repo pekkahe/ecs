@@ -4,7 +4,7 @@
 #include <core/ecs/Query.hpp>
 #include <core/ecs/TestComponents.hpp>
 
-using namespace eng;
+using namespace ecs;
 
 TEST(Query, IsExecutedOnceWhenComponentMatches)
 {
@@ -233,7 +233,7 @@ TEST(Query, FindComponentOfFirstMatchingEntity)
 
     auto& table1 = database.createTable<BoolComponent>();
     auto& table2 = database.createTable<NumberComponent>();
-    auto& table3 = database.createTable<TextComponent>();
+    database.createTable<TextComponent>();
 
     std::vector<EntityId> ids;
     ids.emplace_back(database.createEntity());
@@ -299,10 +299,10 @@ TEST(Query, PerformanceTest)
         .hasComponent<NumberComponent>()
         .hasComponent<TextComponent>()
         .execute([&](
-            EntityId id,
-            const BoolComponent& c1,
-            const NumberComponent& c2,
-            const TextComponent& c3) 
+            EntityId,
+            const BoolComponent&,
+            const NumberComponent&,
+            const TextComponent&) 
     {
         found++;
     });
