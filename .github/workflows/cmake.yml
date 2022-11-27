@@ -27,7 +27,7 @@ jobs:
       #  xvfb-run glxinfo
     
     - name: Install GLFW dependencies
-      run: sudo apt-get install xorg-dev
+      run: sudo apt-get update && sudo apt-get install xorg-dev
    
     #- name: Setup OpenGL
     #  run: xvfb-run glxinfo
