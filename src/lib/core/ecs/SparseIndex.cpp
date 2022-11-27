@@ -26,10 +26,10 @@ namespace
 
 SparseIndex::Position SparseIndex::bitPos(uint32_t pos)
 {
-    size_t index = pos / k_bitsPerBlock;
-    size_t bit = pos - (index * k_bitsPerBlock);
+    uint32_t index = pos / k_bitsPerBlock;
+    uint32_t bit = pos - (index * k_bitsPerBlock);
 
-    assert(bit >= 0 && bit < k_bitsPerBlock && "Bit index out of range");
+    assert(bit < k_bitsPerBlock && "Bit index out of range");
 
     return { index, static_cast<unsigned>(bit) };
 }

@@ -62,7 +62,7 @@ std::string Shader::readFile(const std::string& path)
         // Convert stream into string
         source = stringStream.str();
     }
-    catch (std::ifstream::failure e)
+    catch (const std::ifstream::failure& e)
     {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
     }

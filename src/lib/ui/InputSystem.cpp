@@ -5,7 +5,7 @@
 
 using namespace ecs;
 
-InputSystem::InputSystem(Database& db, std::shared_ptr<Window> window) : 
+InputSystem::InputSystem(Database& db, std::shared_ptr<Window> /*window*/) :
     m_inputListenerTable(db.createTable<InputListener>())
 {
 }

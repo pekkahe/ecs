@@ -6,16 +6,12 @@
 
 using namespace sche;
 
-#pragma region Static fields init
-
 std::vector<std::shared_ptr<Worker>> Scheduler::m_allWorkers;
 std::vector<std::unique_ptr<std::thread>> Scheduler::m_threads;
 std::queue<std::shared_ptr<Job>> Scheduler::m_jobs;
 std::queue<std::shared_ptr<Worker>> Scheduler::m_freeWorkers;
 std::mutex Scheduler::m_jobsMutex;
 std::mutex Scheduler::m_workersMutex;
-
-#pragma endregion
 
 void Scheduler::init(int workerThreads)
 {

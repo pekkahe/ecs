@@ -155,12 +155,14 @@ void RenderSystem::update(const Scene&)
 
             // OBB world position
             mat4 translate = glm::translate(mat4(1.0f), transform.position);
+            (void)translate;
             //vec4 position = translate * vec4(aabb.center(), 1.0f); // translate * rotate * vec4(aabb.center(), 1.0f);
             //position /= position.w;
 
             // OBB size
             mat4 scale = glm::scale(mat4(1.0f), transform.scale);
             vec4 halfExtents = scale * vec4(aabb.halfExtents(), 1.0f);
+            (void)halfExtents;
 
             //mesh.obb.position = vec3(position);
             //mesh.obb.halfExtents = vec3(halfExtents);

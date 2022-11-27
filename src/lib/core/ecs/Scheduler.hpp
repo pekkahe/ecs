@@ -3,6 +3,8 @@
 #include <core/Core.hpp>
 #include <core/ecs/Table.hpp>
 
+#include <typeindex>
+
 namespace ecs
 {
     class Scheduler
@@ -31,9 +33,8 @@ namespace ecs
             }
 
             template <typename Function>
-            void onExecute(Function f)
+            void onExecute(Function)
             {
-                //f()
             }
 
         private:
@@ -42,9 +43,8 @@ namespace ecs
             }
 
         private:
-            // key: std::type_info::hash_code()
-            std::unordered_map<size_t, bool> m_readResources;
-            std::unordered_map<size_t, bool> m_readWriteResources;
+            std::unordered_map<std::type_index, bool> m_readResources;
+            std::unordered_map<std::type_index, bool> m_readWriteResources;
         };
 
     public:
@@ -72,22 +72,18 @@ namespace ecs
     template <typename Resource>
     inline Scheduler::Job& Scheduler::Job::read()
     {
-        assert(!m_readWriteResources.count(typeid(Resource)) &&
-            "Resource already declared as 'readWrite'");
-
-        m_readResources[typeid(Resource).hash_code()] = true;
-
+        std::type_index typeId(typeid(Resource));
+        assert(!m_readWriteResources.count(typeId) && "Resource already declared as 'readWrite'");
+        m_readResources[typeId] = true;
         return *this;
     }
 
     template <typename Resource>
     inline Scheduler::Job& Scheduler::Job::readWrite(TableRef<Resource> resource)
     {
-        assert(!m_readResources.count(typeid(Resource).hash_code()) &&
-            "Resource already declared as 'read'");
-
-        m_readWriteResources[typeid(Resource)] = true;
-
+        std::type_index typeId(typeid(Resource));
+        assert(!m_readResources.count(typeId) && "Resource already declared as 'read'");
+        m_readWriteResources[typeId] = true;
         return *this;
     }
 }

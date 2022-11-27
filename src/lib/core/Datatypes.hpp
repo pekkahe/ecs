@@ -6,6 +6,10 @@
 #ifdef _MSC_VER
     #pragma warning( push )
     #pragma warning( disable : 4201)
+#elif __GNUC__
+    #pragma GCC diagnostic push
+    //#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #pragma GCC diagnostic ignored "-Wvolatile"
 #endif
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
@@ -18,6 +22,8 @@
 #include <glm/gtx/vec_swizzle.hpp>
 #ifdef _MSC_VER
     #pragma warning( pop )
+#elif __GNUC__
+    #pragma GCC diagnostic pop
 #endif
 
 namespace ecs
