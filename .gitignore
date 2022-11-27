@@ -1,10 +1,10 @@
 *.gch
 *.pch
 
-/.vs
-/.vscode
-/bin
-/build
-/out
+.vs/
+.vscode/
+bin/
+build/
+out/
 
 CMakeUserPresets.json
