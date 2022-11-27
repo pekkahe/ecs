@@ -1,5 +1,5 @@
 # ecs
-![master workflow](https://github.com/pekkahe/ecs/actions/workflows/master.yml/badge.svg)
+![master workflow](https://github.com/pekkahe/ecs/actions/workflows/build.yml/badge.svg)
 
 A simple 3D rendering engine for object manipulation.
 
