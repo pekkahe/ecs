@@ -16,10 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup OpenGL and install GLFW dependencies
-      if: ${{ matrix.os }} == ubuntu-latest
-      run: | 
-        sudo apt-get update && 
-        sudo apt-get install libgl-dev xorg-dev
+      if: matrix.os == "ubuntu-latest"
+      run: sudo apt-get update && sudo apt-get install libgl-dev xorg-dev
     - name: Configure
       run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ matrix.build }}
     - name: Build
