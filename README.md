@@ -1,4 +1,6 @@
 # ecs
+![master workflow](https://github.com/pekkahe/ecs/actions/workflows/master.yml/badge.svg)
+
 A simple 3D rendering engine for object manipulation.
 
 The goal of this project is to fiddle with ECS (Entity Component System) architecture and implement web-based tools on top of a C++ rendering engine.
