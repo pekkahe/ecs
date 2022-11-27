@@ -21,10 +21,13 @@ jobs:
     - uses: actions/checkout@v3
     # - uses: openrndr/setup-opengl@v1.1
     
-    - name: Test glxinfo
-      run: |
-        sudo apt-get install -y libgl-dev mesa-utils xvfb
-        xvfb-run glxinfo
+    - name: Setup OpenGL
+      run: sudo apt-get install libgl-dev
+      #  sudo apt-get install libgl-dev mesa-utils xvfb
+      #  xvfb-run glxinfo
+    
+    - name: Install GLFW dependencies
+      run: sudo apt install xorg-dev
    
     #- name: Setup OpenGL
     #  run: xvfb-run glxinfo
