@@ -1,4 +1,4 @@
-add_library(imgui)
+add_library(ImGui)
 
 find_package(OpenGL REQUIRED)
 
@@ -16,10 +16,10 @@ set(IMGUI_SRC
     "${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp")
 assign_source_group(${IMGUI_DIR} ${IMGUI_SRC})
 
-target_sources(imgui PRIVATE ${IMGUI_SRC})
-target_include_directories(imgui PUBLIC ${IMGUI_DIR})
-target_link_libraries(imgui PUBLIC 
+target_sources(ImGui PRIVATE ${IMGUI_SRC})
+target_include_directories(ImGui PUBLIC ${IMGUI_DIR})
+target_link_libraries(ImGui PUBLIC 
     glfw
     OpenGL::GL) 
 
-set_target_properties(imgui PROPERTIES FOLDER external)
+set_target_properties(ImGui PROPERTIES FOLDER external)

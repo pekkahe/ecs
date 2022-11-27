@@ -1,9 +1,9 @@
 add_library(lib STATIC)
 
-find_package(glad REQUIRED)
-find_package(imgui REQUIRED)
-find_package(imguizmo REQUIRED)
-find_package(stb REQUIRED)
+find_package(Glad REQUIRED)
+find_package(ImGui REQUIRED)
+find_package(ImGuizmo REQUIRED)
+find_package(Stb REQUIRED)
 find_package(OpenGL REQUIRED)
 
 fetch_glm()
@@ -25,12 +25,12 @@ target_compile_definitions(lib PUBLIC
     IMGUI_USER_CONFIG=<ui/ImConfig.hpp>)
 target_link_libraries(lib
     PUBLIC
-        glad
+        Glad
         glm
         glfw
-        imgui
-        imguizmo
-        stb
+        ImGui
+        ImGuizmo
+        Stb
         OpenGL::GL)
 
 set_high_warning_level(lib)
