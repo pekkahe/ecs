@@ -1,4 +1,4 @@
-name: master
+name: Build
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         build: [Debug, Release]
     steps:
-    - name: Fetch repository
+    - name: Checkout repository
       uses: actions/checkout@v3
     - name: Setup OpenGL
       if: matrix.os == 'ubuntu-latest'
@@ -24,9 +24,9 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install xorg-dev
     - name: Configure
-      run: cmake -B ${{ github.workspace }}/build/${{ matrix.os }}/${{ matrix.build }}/ -DCMAKE_BUILD_TYPE=${{ matrix.build }}
+      run: cmake -B ${{ github.workspace }}/build/ -DCMAKE_BUILD_TYPE=${{ matrix.build }}
     - name: Build
-      run: cmake --build ${{ github.workspace }}/build/${{ matrix.os }}/${{ matrix.build }}/ --config ${{ matrix.build }}
+      run: cmake --build ${{ github.workspace }}/build/ --config ${{ matrix.build }}
     - name: Test
-      working-directory: ${{ github.workspace }}/build/${{ matrix.os }}/${{ matrix.build }}/
+      working-directory: ${{ github.workspace }}/build/
       run: ctest -C ${{ matrix.build }}

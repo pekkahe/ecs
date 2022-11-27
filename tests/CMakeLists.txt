@@ -15,3 +15,5 @@ target_link_libraries(tests PRIVATE
     gmock)
 
 set_high_warning_level(tests)
+
+add_test(ecs-tests tests)
