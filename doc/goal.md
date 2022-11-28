@@ -51,4 +51,4 @@
 - Refactoring, minor improvements, *uuttu* branch.
 
 # Year 2022
-- Reboot: rewrite build system, add GitHub CI for Windows and Linux.
+- Rewrite build system, add GitHub CI (Windows and Linux).
