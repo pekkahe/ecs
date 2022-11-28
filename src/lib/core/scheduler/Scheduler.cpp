@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-using namespace sche;
+using namespace wip;
 
 std::vector<std::shared_ptr<Worker>> Scheduler::m_allWorkers;
 std::vector<std::unique_ptr<std::thread>> Scheduler::m_threads;

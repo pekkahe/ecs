@@ -5,7 +5,7 @@
 
 #include <condition_variable>
 
-namespace sche
+namespace wip
 {
     // Worker represents a worker thread for the job scheduler.
     class Worker : public trait::no_copy, public std::enable_shared_from_this<Worker>

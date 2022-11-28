@@ -2,7 +2,6 @@
 
 #include <core/ecs/IComponent.hpp>
 
-#define IMGUI_USER_CONFIG <ui/ImConfig.hpp>
 #include <imgui.h>
 #include <ImGuizmo.h>
 

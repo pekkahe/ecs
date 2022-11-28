@@ -1,11 +1,12 @@
-#include <core/scheduler/Scheduler.hpp>
 #include <core/scheduler/Worker.hpp>
+
 #include <core/Core.hpp>
+#include <core/scheduler/Scheduler.hpp>
 
-#include <mutex>
 #include <chrono>
+#include <mutex>
 
-using namespace sche;
+using namespace wip;
 
 Worker::Worker()
 {

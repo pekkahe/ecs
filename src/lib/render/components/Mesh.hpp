@@ -2,7 +2,6 @@
 
 #include <core/Core.hpp>
 #include <core/ecs/IComponent.hpp>
-
 #include <render/components/AABB.hpp>
 #include <render/components/OBB.hpp>
 

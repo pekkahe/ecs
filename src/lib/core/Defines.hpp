@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 #define MOVABLE_ONLY(T) \
         T(const T&) = delete; \
         T(T&&) = default; \

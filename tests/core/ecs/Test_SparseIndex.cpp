@@ -1,4 +1,4 @@
-#include <Precompiled.hpp>
+#include <Common.hpp>
 
 #include <core/Time.hpp>
 #include <core/ecs/SparseIndex.hpp>

@@ -1,4 +1,4 @@
-#include <Precompiled.hpp>
+#include <Common.hpp>
 
 #include <core/ecs/Table.hpp>
 #include <core/ecs/TestComponents.hpp>

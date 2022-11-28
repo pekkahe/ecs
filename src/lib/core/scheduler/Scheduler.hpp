@@ -1,14 +1,14 @@
 #pragma once
 
-#include <queue>
-#include <vector>
-#include <mutex>
-#include <thread>
-
 #include <core/scheduler/Job.hpp>
 #include <core/scheduler/Worker.hpp>
 
-namespace sche
+#include <mutex>
+#include <queue>
+#include <thread>
+#include <vector>
+
+namespace wip
 {
     class Scheduler
     {

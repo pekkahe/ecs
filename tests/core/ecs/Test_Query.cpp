@@ -1,4 +1,4 @@
-#include <Precompiled.hpp>
+#include <Common.hpp>
 
 #include <core/ecs/Database.hpp>
 #include <core/ecs/Query.hpp>

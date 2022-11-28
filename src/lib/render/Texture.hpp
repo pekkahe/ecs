@@ -3,9 +3,6 @@
 #include <core/Core.hpp>
 #include <render/Id.hpp>
 
-//#include <glad/glad.h>
-//#undef APIENTRY
-
 namespace ecs
 {
     namespace gfx

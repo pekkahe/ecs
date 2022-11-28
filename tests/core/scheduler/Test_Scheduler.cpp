@@ -1,12 +1,12 @@
-#include <Precompiled.hpp>
+#include <Common.hpp>
 
 #include <core/scheduler/Scheduler.hpp>
 
+#include <chrono>
 #include <condition_variable>
 #include <mutex>
-#include <chrono>
 
-using namespace sche;
+using namespace wip;
 
 std::condition_variable cv;
 std::mutex mutex;
