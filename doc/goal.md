@@ -1,28 +1,31 @@
-# Simple Service Oriented Game Engine _"Shoe"_
+# Project goals
 
 ## Focus areas
 * Multithreaded entity component system.
-* Good, service oriented API for external tools.
-* Highly modular architecture with configurable "plugin" dependencies.
-* Web based editor using modern web technologies (NodeJs+React/Vue?)
-* UWP based editor as well?
-* ZeroMQ communication (cross-thread/inter-process?)
-* NoSQL based asset database (MongoDB/Redis?)
-* WebGL rendering via Emscripten.
+* Service oriented API for external tools.
+* Modular architecture with configurable plugin dependencies.
+* Web editor (React/Vue).
+* UWP/.NET/.NET MAUI editor?
+* ZeroMQ communication (cross-thread/inter-process).
+* NoSQL based asset database (MongoDB/Redis).
+* WebAssembly support / WebGL rendering via Emscripten.
 
-### Future ideas
+## Future ideas
 - Physics engine based on Box3D or some other available library?
 - Scripting system?
-- Renderer improvements?
+- Improved renderer?
 
----
+# Year 2018
+*Simple Service Oriented Game Engine, "shoe"*
 
-## Stage 1 - **Done** 29.9.2018
+## Stage 1
 - First working prototype of ECS and OpenGL rendering.
 
   **Goal:** Proof of Concept and project kickoff.
 
-## Stage 2 - **Done** 15.11.2018
+  **Done:** 29.9.2018
+
+## Stage 2
 - Add entity transformation gizmos (ImGuizmo).
 - Add entity and scene creation (ImGui). **[postponed]**
 - Raycast mouse picking.
@@ -31,6 +34,8 @@
 - Improve input handling?
 
   **Goal:** Implement test bench for entity manipulation.
+
+  **Done:** 15.11.2018
 
 ## Stage 3 
 - Convert to WebGL using Emscripten.
@@ -41,3 +46,9 @@
 - Implement web editor controls (entity list, entity editor, etc.)
 
   **Goal:** Web based test bench for entity manipulation.
+
+# Year 2019~
+- Refactoring, minor improvements, *uuttu* branch.
+
+# Year 2022
+- Reboot: rewrite build system, add GitHub CI for Windows and Linux.
