@@ -1,4 +1,3 @@
-#include <Precompiled.hpp>
 #include <core/ecs/Database.hpp>
 
 using namespace ecs;

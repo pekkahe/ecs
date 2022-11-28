@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 #ifdef _MSC_VER
-#include <windows.h>
+    #include <windows.h>
 #endif
 
 namespace ecs
@@ -15,7 +15,7 @@ namespace ecs
     };
 
     template <typename... Args>
-    void shoeLog(ecs::LogLevel level, const char* format, Args... args)
+    void log(ecs::LogLevel level, const char* format, Args... args)
     {
         std::FILE* output = (level == LogLevel::Info ? stdout : stderr);
         std::fprintf(output, format, args...);
@@ -30,12 +30,12 @@ namespace ecs
     }
 }
 
-#define SHOE_LOG(format, ...) \
+#define ECS_LOG(format, ...) \
         do { \
-        ecs::shoeLog(ecs::LogLevel::Info, "[%s:%d] " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
+        ecs::log(ecs::LogLevel::Info, "[%s:%d] " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
         while (false)
 
-#define SHOE_LOG_ERROR(format, ...) \
+#define ECS_LOG_ERROR(format, ...) \
         do { \
-        ecs::shoeLog(ecs::LogLevel::Error, "[%s:%d] ERROR: " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
+        ecs::log(ecs::LogLevel::Error, "[%s:%d] ERROR: " format, __FILE__, __LINE__, ##__VA_ARGS__); } \
         while (false)

@@ -1,6 +1,4 @@
-#include <Precompiled.hpp>
 #include <render/OldRenderer.hpp>
-
 #include <core/ecs/Query.hpp>
 #include <scene/components/Camera.hpp>
 #include <ui/Window.hpp>

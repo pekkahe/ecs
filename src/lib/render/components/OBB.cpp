@@ -1,6 +1,6 @@
-#include <Precompiled.hpp>
-
 #include <render/components/OBB.hpp>
+
+#include <core/Core.hpp>
 
 using namespace ecs;
 

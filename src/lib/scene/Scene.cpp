@@ -1,4 +1,3 @@
-#include <Precompiled.hpp>
 #include <scene/Scene.hpp>
 
 #include <editor/components/TransformGizmo.hpp>

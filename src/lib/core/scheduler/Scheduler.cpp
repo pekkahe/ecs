@@ -1,7 +1,8 @@
-#include <Precompiled.hpp>
-
 #include <core/scheduler/Scheduler.hpp>
+
+#include <core/Core.hpp>
 #include <core/scheduler/Worker.hpp>
+
 #include <iostream>
 
 using namespace sche;

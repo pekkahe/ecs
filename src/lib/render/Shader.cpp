@@ -1,4 +1,3 @@
-#include <Precompiled.hpp>
 #include <render/Shader.hpp>
 
 #include <glad/glad.h>

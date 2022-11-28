@@ -1,5 +1,5 @@
-#include <Precompiled.hpp>
 #include <scene/CameraSystem.hpp>
+
 #include <scene/components/Transform.hpp>
 
 using namespace ecs;

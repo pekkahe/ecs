@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/Core.hpp>
 #include <core/components/Added.hpp>
 #include <core/components/Updated.hpp>
 #include <core/components/Deleted.hpp>

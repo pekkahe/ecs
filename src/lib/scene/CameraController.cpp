@@ -1,4 +1,3 @@
-#include <Precompiled.hpp>
 #include <scene/CameraController.hpp>
 
 using namespace ecs;

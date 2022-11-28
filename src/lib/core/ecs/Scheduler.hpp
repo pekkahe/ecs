@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/Core.hpp>
 #include <core/ecs/Table.hpp>
 
 #include <typeindex>

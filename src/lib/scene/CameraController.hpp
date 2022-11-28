@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/Core.hpp>
 #include <scene/components/CameraControl.hpp>
 #include <ui/Window.hpp>
 

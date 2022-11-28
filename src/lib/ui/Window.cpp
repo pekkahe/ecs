@@ -1,4 +1,3 @@
-#include <Precompiled.hpp>
 #include <ui/Window.hpp>
 
 #include <imgui.h>

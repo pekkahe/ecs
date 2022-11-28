@@ -1,5 +1,3 @@
-#include <Precompiled.hpp>
-
 #include <scene/components/Camera.hpp>
 
 using namespace ecs;

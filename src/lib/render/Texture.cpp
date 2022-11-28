@@ -1,10 +1,9 @@
-#include <Precompiled.hpp>
 #include <render/Texture.hpp>
 
+#include <core/Core.hpp>
+#include <glad/glad.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-
-#include <glad/glad.h>
 
 using namespace ecs;
 using namespace ecs::gfx;

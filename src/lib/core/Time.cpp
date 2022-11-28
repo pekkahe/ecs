@@ -1,5 +1,6 @@
-#include <Precompiled.hpp>
 #include <core/Time.hpp>
+
+#include <core/Core.hpp>
 
 using namespace ecs;
 

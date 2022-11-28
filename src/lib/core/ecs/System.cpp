@@ -1,5 +1,3 @@
-#include <Precompiled.hpp>
-
 #include <core/ecs/System.hpp>
 
 using namespace ecs;

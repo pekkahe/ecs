@@ -1,5 +1,6 @@
-#include <Precompiled.hpp>
 #include <core/ecs/Query.hpp>
+
+#include <core/Core.hpp>
 
 using namespace ecs;
 

@@ -1,10 +1,10 @@
-#include <Precompiled.hpp>
 #include <render/RenderSystem.hpp>
 
+#include <core/Core.hpp>
 #include <editor/components/Hovered.hpp>
 #include <editor/components/Selected.hpp>
-#include <scene/components/Transform.hpp>
 #include <scene/Scene.hpp>
+#include <scene/components/Transform.hpp>
 #include <ui/Window.hpp>
 
 using namespace ecs;
