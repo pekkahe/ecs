@@ -25,10 +25,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/${OUTPUT_DIR}")
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${OUTPUT_DIR}")
 
-add_subdirectory(src/cli)
+add_subdirectory(src/app)
 add_subdirectory(src/lib)
 
 # TODO: Fix unit tests build with Emscripten
 if(NOT EMSCRIPTEN)
-    add_subdirectory(tests)
+    add_subdirectory(test)
 endif()

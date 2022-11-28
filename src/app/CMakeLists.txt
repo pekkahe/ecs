@@ -1,16 +1,16 @@
-add_executable(cli)
+add_executable(app)
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})
 
-target_sources(cli PRIVATE ${SRC_FILES})
-target_include_directories(cli PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(cli PRIVATE lib)
+target_sources(app PRIVATE ${SRC_FILES})
+target_include_directories(app PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(app PRIVATE lib)
 
 if(EMSCRIPTEN)
-    target_link_options(cli PRIVATE 
+    target_link_options(app PRIVATE 
         "-v --emrun"
         "-s DEMANGLE_SUPPORT=1"
         "-s USE_GLFW=3 -s USE_WEBGL2=1"
@@ -18,7 +18,7 @@ if(EMSCRIPTEN)
         "-o Main.html")
 endif()
 
-target_copy_files(cli "data" "data")
-target_copy_files(cli "src/lib/render/shaders" "shaders")
+target_copy_files(app "data" "data")
+target_copy_files(app "src/lib/render/shaders" "shaders")
 
-set_high_warning_level(cli)
+set_high_warning_level(app)
