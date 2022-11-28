@@ -2,8 +2,7 @@
 
 #include <core/ecs/System.hpp>
 
-#include <editor/components/Selected.hpp>
-#include <editor/components/TransformGizmo.hpp>
+#include <editor/Components.hpp>
 
 #include <scene/components/Camera.hpp>
 #include <scene/components/CameraControl.hpp>

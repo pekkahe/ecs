@@ -1,8 +1,7 @@
 #include <render/RenderSystem.hpp>
 
 #include <core/Core.hpp>
-#include <editor/components/Hovered.hpp>
-#include <editor/components/Selected.hpp>
+#include <editor/Components.hpp>
 #include <scene/Scene.hpp>
 #include <scene/components/Transform.hpp>
 #include <ui/Window.hpp>

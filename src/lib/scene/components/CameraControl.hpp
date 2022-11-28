@@ -1,7 +1,6 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <core/ecs/IComponent.hpp>
 
 namespace ecs
 {
@@ -14,9 +13,8 @@ namespace ecs
         Right = 1 << 3
     };
 
-    class CameraControl : public IComponent
+    struct CameraControl
     {
-    public:
         float speed = 3.0f;
         float sensitivity = 0.05f;
         float zoom = 0.0f;
@@ -25,7 +23,6 @@ namespace ecs
 
         CameraMovement movement = CameraMovement::None;
 
-    public:
         bool isMoving(const CameraMovement& towards) const
         {
             return (movement & towards) == towards;

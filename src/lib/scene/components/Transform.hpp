@@ -1,18 +1,15 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <core/ecs/IComponent.hpp>
 
 namespace ecs
 {
-    class Transform : public IComponent
+    struct Transform
     {
-    public:
         vec3 position = vec3(0.0f, 0.0f, 0.0f);
         qua	 rotation = qua(1.0f, 0.0f, 0.0f, 0.0f);
         vec3 scale    = vec3(1.0f, 1.0f, 1.0f);
 
-    public:
         Transform() = default;
         Transform(vec3 pos) : position(pos) {}
         Transform(vec3 pos, qua rot) : position(pos), rotation(rot) {}

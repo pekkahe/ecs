@@ -1,6 +1,6 @@
 #include <scene/Scene.hpp>
 
-#include <editor/components/TransformGizmo.hpp>
+#include <editor/Components.hpp>
 #include <render/components/Mesh.hpp>
 #include <scene/components/Transform.hpp>
 

@@ -1,15 +1,13 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <core/ecs/IComponent.hpp>
 #include <render/components/AABB.hpp>
 #include <render/components/OBB.hpp>
 
 namespace ecs
 {
-    class Mesh : public IComponent
+    struct Mesh
     {
-    public:
         std::vector<vec3> vertices;
         std::vector<vec3> colors;
         std::vector<unsigned> indices;

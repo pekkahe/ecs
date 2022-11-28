@@ -1,6 +1,6 @@
 #include <ui/InputSystem.hpp>
 
-#include <editor/components/Selected.hpp>
+#include <editor/Components.hpp>
 
 using namespace ecs;
 

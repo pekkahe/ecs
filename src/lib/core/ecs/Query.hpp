@@ -3,6 +3,8 @@
 #include <core/ecs/Database.hpp>
 #include <core/ecs/Table.hpp>
 
+#include <concepts>
+
 namespace ecs
 {
     template <typename... Tables>
@@ -21,8 +23,6 @@ namespace ecs
         template <typename Component>
         auto hasComponent()
         {
-            assertComponent<Component>();
-
             return newQuery(m_database.table<Component>(), std::index_sequence_for<Tables...>());
         }
 
@@ -30,8 +30,6 @@ namespace ecs
         template <typename Component>
         auto hasComponent(TableRef<Component> table)
         {
-            assertComponent<Component>();
-
             return newQuery(table, std::index_sequence_for<Tables...>());
         }
 
@@ -62,8 +60,6 @@ namespace ecs
         template <typename Component>
         const Component* find()
         {
-            assertComponent<Component>();
-
             auto ids = hasComponent<Component>().ids();
             if (!ids.empty())
             {
@@ -142,13 +138,6 @@ namespace ecs
         }
 
     private:
-        template <typename Component>
-        constexpr void assertComponent()
-        {
-            static_assert(std::is_base_of<IComponent, Component>::value,
-                "Query argument must be a component");
-        }
-
         template <typename T, size_t... Is>
         auto newQuery(T&& table, std::index_sequence<Is...>)
         {

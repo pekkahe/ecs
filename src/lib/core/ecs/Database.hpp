@@ -1,12 +1,10 @@
 #pragma once
 
-#include <core/components/Added.hpp>
-#include <core/components/Updated.hpp>
-#include <core/components/Deleted.hpp>
+#include <core/Components.hpp>
 #include <core/ecs/EntityId.hpp>
-#include <core/ecs/IComponent.hpp>
 #include <core/ecs/Table.hpp>
 
+#include <concepts>
 
 namespace ecs
 {
@@ -57,9 +55,6 @@ namespace ecs
     template <typename Component>
     inline TableRef<Component> Database::createTable()
     {
-        static_assert(std::is_base_of<IComponent, Component>::value,
-            "Cannot create Table for other type than a component");
-
         static TableId id = tableId<Component>();
 
         assert(!m_tables.count(id) && "Table already created");

@@ -8,7 +8,7 @@
 namespace ecs
 {
     class Window;
-    class Camera;
+    struct Camera;
 
     namespace gfx
     {

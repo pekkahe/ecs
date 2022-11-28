@@ -1,5 +1,16 @@
 #pragma once
 
-#include <core/components/Added.hpp>
-#include <core/components/Deleted.hpp>
-#include <core/components/Updated.hpp>
+namespace ecs
+{
+    struct Added
+    {
+    };
+
+    struct Deleted
+    {
+    };
+
+    struct Updated
+    {
+    };
+}

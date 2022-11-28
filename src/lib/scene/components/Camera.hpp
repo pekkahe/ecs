@@ -1,7 +1,6 @@
 #pragma once
 
 #include <core/Core.hpp>
-#include <core/ecs/IComponent.hpp>
 
 namespace ecs
 {
@@ -13,9 +12,8 @@ namespace ecs
         vec3 direction = vec3(0);
     };
 
-    class Camera : public IComponent
+    struct Camera
     {
-    public:
         static const vec3 WorldUp;
 
         float fov = 45.0f;
@@ -27,7 +25,6 @@ namespace ecs
         mat4 viewMatrix = mat4(1.0f);
         mat4 projectionMatrix = mat4(1.0f);
 
-    public:
         // Transform screen position in Normalized Device Coordinates (NDC) into a ray with
         // a world space origin and direction.
         //   'normalizedPosition' : Screen position to transform in range [-1,-1] to [1,1].
