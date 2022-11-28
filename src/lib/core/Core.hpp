@@ -26,7 +26,6 @@
 
 #include <glad/glad.h>
 #undef APIENTRY // Fix warning C4005
-//#define GLFW_INCLUDE_ES3
 #include <GLFW/glfw3.h>
 #undef APIENTRY // Fix warning C4005
 
