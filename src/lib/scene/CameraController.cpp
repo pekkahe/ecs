@@ -24,7 +24,7 @@ bool CameraController::update(CameraControl& control)
 
         math::clamp(control.pitch, -89.0f, 89.0f);
     }
-
+    
     if (m_updated)
     {
         // Zooming doesn't require mouse capture
@@ -39,7 +39,7 @@ bool CameraController::update(CameraControl& control)
     return std::exchange(m_updated, false);
 }
 
-void CameraController::onKeyInput(Window&, const InputEvent& input)
+void CameraController::onKeyInput(Window& window, const InputEvent& input)
 {
     auto updateMovement = [&](int key, CameraMovement movement)
     {
@@ -67,16 +67,19 @@ void CameraController::onKeyInput(Window&, const InputEvent& input)
     updateMovement(GLFW_KEY_S, CameraMovement::Backward);
     updateMovement(GLFW_KEY_A, CameraMovement::Left);
     updateMovement(GLFW_KEY_D, CameraMovement::Right);
+
+    // Alternative control mode for touch pads
+    if (input.key == GLFW_KEY_C)
+    {
+        activate(input.action == GLFW_PRESS || input.action == GLFW_REPEAT, window);
+    }
 }
 
 void CameraController::onMouseButton(Window& window, const InputEvent& input)
 {
     if (input.key == GLFW_MOUSE_BUTTON_RIGHT)
     {
-        m_captured = input.action == GLFW_PRESS;
-        m_capturedCursorDelay = m_captured ? 1 : 0;
-
-        window.captureMouseCursor(m_captured);
+        activate(input.action == GLFW_PRESS, window);
     }
 }
 
@@ -122,4 +125,12 @@ void CameraController::onMouseScroll(Window&, double2 offset)
 {
     m_zoom = static_cast<float>(offset.y);
     m_updated = true;
+}
+
+void CameraController::activate(bool condition, Window& window)
+{
+    m_captured = condition;
+    m_capturedCursorDelay = m_captured ? 1 : 0;
+
+    window.captureMouseCursor(m_captured);
 }

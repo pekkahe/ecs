@@ -18,11 +18,13 @@ namespace ecs
         void onMouseScroll(Window& window, double2 offset) override;
 
     private:
+        void activate(bool condition, Window& window);
+
         bool m_firstMouse = true;
         bool m_updated = false;
         bool m_captured = false;
         int  m_capturedCursorDelay = 0;
-
+        
         CameraMovement m_movement = CameraMovement::None;
 
         double m_lastX = 0.0f;

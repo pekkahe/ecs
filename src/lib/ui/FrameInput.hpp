@@ -21,25 +21,18 @@ namespace ecs
         bool cursorCaptured = false;
 
     public:
-        // Maintain input state cache. Should be called each frame before setting new input state.
+        // Maintain input state cache. 
+        // Should be called each frame before setting new input state.
         void beginFrame();
 
-        // Set key state for a GLFW key code and action.
         void setKey(int key, int action);
-        // Return whether the specified GLFW key was pressed this frame.
         bool isKeyPressed(int key) const;
-        // Return whether the specified GLFW key was released this frame.
         bool isKeyReleased(int key) const;
-        // Return whether the specified GLFW key is currently pressed down.
         bool isKeyDown(int key) const;
 
-        // Set button state for a GLFW button code and action.
         void setButton(int button, int action);
-        // Return whether the specified GLFW button was pressed this frame.
         bool isButtonPressed(int button) const;
-        // Return whether the specified GLFW button was released this frame.
         bool isButtonReleased(int button) const;
-        // Return whether the specified GLFW button is currently pressed down.
         bool isButtonDown(int button) const;
 
     private:
