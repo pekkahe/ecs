@@ -29,12 +29,6 @@ namespace ecs
             void setMat4(const std::string& name, mat4 value) const;
 
         private:
-            std::string readFile(const std::string& path);
-
-            void compileShader(unsigned int shader, const char* source);
-            void checkCompilationErrors(unsigned int value, const char* type);
-
-        private:
             // The OpenGL shader program ID.
             Id m_id = Id::Invalid;
         };

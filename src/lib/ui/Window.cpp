@@ -35,9 +35,8 @@ Window::Window(int width, int height, const std::string& title)
     glfwSetScrollCallback(m_window, onMouseScroll);
     glfwSetFramebufferSizeCallback(m_window, onFramebufferSizeCallback);
 
-    //const char* glsl_version = "#version 130";
-    //const char* glsl_version = "#version 330 core"; // core -> es
-    if (!ImGui_ImplOpenGL3_Init(NULL)) // Use default GLSL version
+    //const char* glsl_version = "#version 330"; // core
+    if (!ImGui_ImplOpenGL3_Init(nullptr))
     {
         assert(false && "ImGui failed to initialize OpenGL.");
     }

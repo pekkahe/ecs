@@ -1,10 +1,11 @@
-#version 330 core
+#version 330
 out vec4 FragColor;
 
-in vec4 outColor;
-in vec3 outPos;
+in vec4 color;
+//in vec3 pos;
+//in vec2 texCoord;
 
 void main()
 {
-    FragColor = outColor; // vec4(outPos, 1.0);
+    FragColor = color; //vec4(color, 1.0);
 }
