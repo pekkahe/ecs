@@ -9,14 +9,6 @@ namespace ecs
 {
     namespace imgui
     {
-        void init();
-
-        void deinit();
-
-        void beginFrame();
-
-        void endFrame();
-
         bool gizmoManipulate(
             mat4& model,
             const mat4& view,

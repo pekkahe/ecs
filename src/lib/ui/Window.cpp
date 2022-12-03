@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <ImGuizmo.h>
 
 using namespace ecs;
 
@@ -12,10 +13,25 @@ namespace
     {
         return static_cast<Window*>(glfwGetWindowUserPointer(window));
     }
+
+    void onGlfwError(int error, const char* description)
+    {
+        ECS_LOG_ERROR("%s [GLFW #%d]", description, error);
+    }
 }
 
 Window::Window(int width, int height, const std::string& title)
 {
+    glfwSetErrorCallback(onGlfwError);
+    if (!glfwInit())
+    {
+        assert(false && "Failed to initialize GLFW.");
+    }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
     assert(m_window && "Failed to create OpenGL context.");
     m_windowSize = { width, height };
@@ -35,23 +51,32 @@ Window::Window(int width, int height, const std::string& title)
     glfwSetScrollCallback(m_window, onMouseScroll);
     glfwSetFramebufferSizeCallback(m_window, onFramebufferSizeCallback);
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+
+    // Note: "true" steals input from GLFW
+    if (!ImGui_ImplGlfw_InitForOpenGL(m_window, true))
+    {
+        assert(false && "ImGui failed to initialize window.");
+    }
+
     //const char* glsl_version = "#version 330"; // core
     if (!ImGui_ImplOpenGL3_Init(nullptr))
     {
         assert(false && "ImGui failed to initialize OpenGL.");
     }
-
-    // Note: "true" steals input from GLFW
-    if (!ImGui_ImplGlfw_InitForOpenGL(m_window, false))
-    {
-        assert(false && "ImGui failed to initialize window.");
-    }
 }
 
 Window::~Window()
 {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glfwSetWindowUserPointer(m_window, nullptr);
     glfwDestroyWindow(m_window);
+    glfwTerminate();
 }
 
 bool Window::pollEvents()
@@ -65,12 +90,22 @@ bool Window::pollEvents()
 
     glfwPollEvents();
 
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    ImGuizmo::BeginFrame();
+
+    // static bool open = true;
+    // if (open) { ::ImGui::ShowDemoWindow(&open); }
+
     return true;
 }
 
 void Window::swapBuffers()
 {
-    glfwMakeContextCurrent(m_window);
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
+
     glfwSwapBuffers(m_window);
 }
 

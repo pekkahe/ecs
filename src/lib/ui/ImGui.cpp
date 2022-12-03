@@ -3,8 +3,6 @@
 #include <core/Core.hpp>
 
 #include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
 #include <ImGuizmo.h>
 
 namespace
@@ -20,37 +18,6 @@ namespace
         }
         return dest;
     }
-}
-
-void ecs::imgui::init()
-{
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGui::StyleColorsDark();
-}
-
-void ecs::imgui::deinit()
-{
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-}
-
-//bool open = true;
-void ecs::imgui::beginFrame()
-{
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    ImGuizmo::BeginFrame();
-    
-    //::ImGui::ShowDemoWindow(&open);
-}
-
-void ecs::imgui::endFrame()
-{
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }
 
 bool ecs::imgui::gizmoManipulate(
