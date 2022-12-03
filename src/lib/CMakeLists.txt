@@ -13,12 +13,13 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 file(GLOB_RECURSE SRC_SHADER_FILES CONFIGURE_DEPENDS
-    "${CMAKE_SOURCE_DIR}/shaders/*.frag"
-    "${CMAKE_SOURCE_DIR}/shaders/*.vert")
-list(APPEND ${SRC_FILES} ${SRC_SHADER_FILES})
+    "${CMAKE_CURRENT_SOURCE_DIR}/render/shaders/*.frag"
+    "${CMAKE_CURRENT_SOURCE_DIR}/render/shaders/*.vert")
+
+assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})
 assign_source_group(${CMAKE_CURRENT_SOURCE_DIR} ${SRC_FILES})
 
-target_sources(lib PRIVATE ${SRC_FILES})
+target_sources(lib PRIVATE ${SRC_FILES} ${SRC_SHADER_FILES})
 target_include_directories(lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_definitions(lib PUBLIC
     NOMINMAX

@@ -51,4 +51,10 @@
 - Refactoring, minor improvements, *uuttu* branch.
 
 # Year 2022
-- Rewrite build system, add GitHub CI (Windows and Linux).
+- Rewrite build system. Include dependencies in repository.
+- Add GitHub Workflow (CI) for Windows and Linux. 
+- Add Dockerfile for Linux image.
+- TODO:
+  - Fix input when no mousewheel
+  - Improve ECS. Multithreading.
+  - Add arbitrary moving demo entities (Game of Life style)?
