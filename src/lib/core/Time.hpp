@@ -7,13 +7,13 @@ namespace ecs
     class Time
     {
     public:
-        static void endFrame();
+        static void endFrame(double elapsed);
 
         // Last frame time in seconds.
         static float deltaTime();
 
     private:
-        static double m_frameTime;
+        static double m_time;
         static float m_deltaTime;
     };
 

@@ -22,8 +22,8 @@ namespace ecs
         // Returns false if window should be closed.
         bool pollEvents();
 
-        // Swap the front and back buffers of this window.
-        void swapBuffers();
+        void beginFrame();
+        void endFrame();
 
         // Add an input and message event listener to this window.
         void addEventListener(std::shared_ptr<IWindowEventListener> listener);

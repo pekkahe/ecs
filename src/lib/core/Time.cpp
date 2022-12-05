@@ -6,18 +6,16 @@ using namespace ecs;
 
 constexpr std::chrono::milliseconds fixedFrameTime = std::chrono::milliseconds(16);
 
-double Time::m_frameTime = 0.0f;
+double Time::m_time = 0.0f;
 float Time::m_deltaTime = 0.0f;
 
 // todo: measure framerate
 // todo: fixed framerate 30/60 fps?
 
-void Time::endFrame()
+void Time::endFrame(double elapsed)
 {
-    double frameTime = glfwGetTime();
-
-    m_deltaTime = static_cast<float>(frameTime - m_frameTime);
-    m_frameTime = frameTime;
+    m_deltaTime = static_cast<float>(elapsed - m_time);
+    m_time = elapsed;
 }
 
 float Time::deltaTime()

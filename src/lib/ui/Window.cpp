@@ -87,9 +87,13 @@ bool Window::pollEvents()
     }
 
     m_inputState.beginFrame();
-
     glfwPollEvents();
 
+    return true;
+}
+
+void Window::beginFrame()
+{
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -97,16 +101,17 @@ bool Window::pollEvents()
 
     // static bool open = true;
     // if (open) { ::ImGui::ShowDemoWindow(&open); }
-
-    return true;
 }
 
-void Window::swapBuffers()
+void Window::endFrame()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 
     glfwSwapBuffers(m_window);
+
+    // NOTE: Now this includes both logic and rendering
+    ecs::Time::endFrame(glfwGetTime());
 }
 
 void Window::captureMouseCursor(bool capture)

@@ -32,7 +32,8 @@ void Scene::registerSystem(ISystem& system)
     system.registerDatabase(m_database);
 }
 
-void Scene::update()
+// TODO: Integrate input to ECS
+void Scene::update(const FrameInput& input)
 {
     // TODO: Thread-safe and lock-free entity creation and deletion within multithreaded
     //       system updates
@@ -83,10 +84,11 @@ void Scene::update()
         system->commitUpdated(m_database);
         system->commitDeleted(m_database);
     }
+
+    m_editorSystem.processInput(input);
     
     // TODO: Scheduler (currently update order matters)
     m_cameraSystem.update(*this);
-    // m_editorSystem.update(*this);
     m_transformSystem.update(*this);
     m_renderSystem.update(*this);
     
@@ -99,6 +101,13 @@ void Scene::update()
 
     m_database.purgeDeleted();
     m_database.clearTags();
+}
+
+void Scene::render()
+{
+    m_renderSystem.beginFrame();
+    m_renderSystem.render();
+    m_renderSystem.endFrame();
 }
 
 EntityId Scene::createEntity()

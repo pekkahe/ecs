@@ -20,7 +20,8 @@ namespace ecs
         Scene& operator=(Scene&&) = default;
 
         void registerSystem(ISystem& system);
-        void update();
+        void update(const FrameInput& input);
+        void render();
 
         // TODO: entity creation, move into factory class?
         EntityId createEntity();
