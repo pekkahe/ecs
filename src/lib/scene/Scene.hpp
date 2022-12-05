@@ -11,12 +11,10 @@
 
 namespace ecs
 {
-
-
     class Scene : public trait::no_copy
     {
     public:
-        Scene(std::shared_ptr<Window> window);
+        Scene();
         ~Scene();
         Scene(Scene&&) = default;
         Scene& operator=(Scene&&) = default;
@@ -30,17 +28,16 @@ namespace ecs
         EntityId createCube(vec3 position);
         EntityId createGizmo();
 
-        RenderSystem& renderer() { return m_renderSystem; }
+        RenderSystem& renderSystem() { return m_renderSystem; }
+        CameraSystem& cameraSystem() { return m_cameraSystem; }
+        EditorSystem& editorSystem() { return m_editorSystem; }
 
         // Read-only access to scene database. Only systems are
         // allowed to modify database content for their own tables.
         const Database& database() const { return m_database; }
-        const Window& window() const { return *m_window; }
 
     private:
         Database m_database;
-        std::shared_ptr<Window> m_window;
-
         std::vector<ISystem*> m_systems;
 
         TransformSystem m_transformSystem;

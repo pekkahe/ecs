@@ -6,11 +6,10 @@
 
 using namespace ecs;
 
-Scene::Scene(std::shared_ptr<Window> window) :
-    m_window(std::move(window)),
+Scene::Scene() :
     m_transformSystem(m_database),
     m_renderSystem(m_database),
-    m_cameraSystem(m_database, m_window),
+    m_cameraSystem(m_database),
     m_editorSystem(m_database)
 {
     registerSystem(m_transformSystem);
@@ -85,12 +84,12 @@ void Scene::update()
         system->commitDeleted(m_database);
     }
     
-    m_editorSystem.processInput(window().frameInput());
-
+    // TODO: Scheduler (currently update order matters)
+    m_cameraSystem.update(*this);
+    // m_editorSystem.update(*this);
     m_transformSystem.update(*this);
     m_renderSystem.update(*this);
-    m_cameraSystem.update(*this);
-
+    
     // TODO: multithreading, within system update or between updates?
     // causality scheduling (const, non-const) for individual queries?
     //for (auto system : m_systems)

@@ -4,26 +4,39 @@
 
 using namespace ecs;
 
-CameraSystem::CameraSystem(
-    Database& db,
-    std::shared_ptr<Window> window) :
+CameraSystem::CameraSystem(Database& db) :
     m_cameraTable(db.createTable<Camera>()),
-    m_cameraControlTable(db.createTable<CameraControl>()),
-    m_cameraController(std::make_shared<CameraController>(window->size()))
+    m_cameraControlTable(db.createTable<CameraControl>())
 {
-    window->addEventListener(m_cameraController);
-    window->onWindowResize([&](int2 size)
-    {
-        setAspectRatio(static_cast<float>(size.x) / size.y);
-    });
 }
 
 CameraSystem::~CameraSystem()
 {
 }
 
+void CameraSystem::registerWindow(Window& window)
+{
+    m_cameraController = std::make_shared<CameraController>(window.size());
+
+    window.addEventListener(m_cameraController);
+    window.onWindowResize([&](int2 size)
+    {
+        // TODO: Create Window/WindowState component? Could use Updated, Added...
+        query()
+            .hasComponent<Camera>(m_cameraTable)
+            .execute([&](
+                EntityId,
+                Camera& camera)
+                {
+                    camera.aspectRatio = static_cast<float>(size.x) / size.y;
+                });
+    });
+}
+
 void CameraSystem::update(const Scene&)
 {
+    assert(m_cameraController && "Window not registered");
+
     m_cameraControlTable.forEach(
         [&](EntityId id, CameraControl& control) 
     {
@@ -65,18 +78,5 @@ void CameraSystem::update(const Scene&)
             camera.aspectRatio,
             camera.nearPlane,
             camera.farPlane);
-    });
-}
-
-void CameraSystem::setAspectRatio(float aspectRatio)
-{
-    // TODO: Create Window/WindowState component? Could use Updated, Added...
-    query()
-        .hasComponent<Camera>(m_cameraTable)
-        .execute([&](
-            EntityId,
-            Camera& camera)
-    {
-        camera.aspectRatio = aspectRatio;
     });
 }

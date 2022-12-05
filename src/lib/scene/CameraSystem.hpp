@@ -17,11 +17,13 @@ namespace ecs
         ADD_COMPONENT_FUNCTION(CameraControl, m_cameraControlTable);
 
     public:
-        CameraSystem(Database& db, std::shared_ptr<Window> window);
+        CameraSystem(Database& db);
         ~CameraSystem() override;
 
-        void update(const Scene& scene) override;
+        void registerWindow(Window& window);
 
+        void update(const Scene& scene) override;
+        
         // QUERY:  'updateCameraController'
         // READS:  CameraControl
         // WRITES: (Updated)
@@ -33,8 +35,6 @@ namespace ecs
         // QUERY:  'updateCameraMatrices'
         // READS:  (Updated), Transform
         // WRITES: Camera
-        
-        void setAspectRatio(float aspectRatio);
 
     private:
         TableRef<Camera> m_cameraTable;
