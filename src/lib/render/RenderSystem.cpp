@@ -26,21 +26,6 @@ RenderSystem::RenderSystem(Database& db) :
         "data/container.jpg", GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
     m_textures.emplace_back(Texture(
         "data/awesomeface.png", GL_REPEAT, GL_NEAREST, GL_RGBA));
-
-    //m_shaders.emplace_back(Shader(
-    //    (config.shaders / "vertex.vert").string(),
-    //    (config.shaders / "fragment.frag").string()));
-    //m_shaders.emplace_back(Shader(
-    //    (config.shaders / "vertex.vert").string(),
-    //    (config.shaders / "fragment_single.frag").string()));
-    //m_shaders.emplace_back(Shader(
-    //    (config.shaders / "vertex.vert").string(),
-    //    (config.shaders / "fragment_single.frag").string()));
-
-    //m_textures.emplace_back(Texture(
-    //    (config.data / "container.jpg").string(), GL_CLAMP_TO_EDGE, GL_NEAREST, GL_RGB));
-    //m_textures.emplace_back(Texture(
-    //    (config.data / "awesomeface.png").string(), GL_REPEAT, GL_NEAREST, GL_RGBA));
 }
 
 RenderSystem::~RenderSystem()
@@ -256,7 +241,7 @@ void RenderSystem::render()
         m_shaders[1].setMat4("view", camera->viewMatrix);
         m_shaders[1].setMat4("projection", camera->projectionMatrix);
         m_shaders[1].setMat4("model", transform.modelMatrix());
-        m_shaders[2].setVec3("color", vec3(1.0f, 0.9f, 0.3f));
+        m_shaders[1].setVec3("color", vec3(1.0f, 0.9f, 0.3f));
         
         glBindVertexArray(mesh.VAO);
         glLineWidth(4.0f);

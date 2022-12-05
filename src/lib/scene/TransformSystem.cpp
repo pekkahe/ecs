@@ -195,7 +195,7 @@ Transform TransformSystem::transformGizmo(
 
     if (!gizmoUsed)
     {
-        Transform::identity();
+        return Transform::identity();
     }
 
     // Decompose manipulated values back into component
