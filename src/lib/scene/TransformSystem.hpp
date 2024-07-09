@@ -23,8 +23,7 @@ namespace ecs
 
         void update(const Scene& scene) override;
 
-        
-        void schedule(Scheduler& scheduler);
+        void schedule(/* Scheduler& scheduler */);
 
         void transformCamera(
             const CameraControl& cameraControl,

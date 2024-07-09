@@ -26,7 +26,7 @@ namespace wip
         static bool addWorker(std::shared_ptr<Worker> worker);
 
     private:
-        static std::vector<std::shared_ptr<Worker>> m_allWorkers;
+        static std::vector<std::shared_ptr<Worker>> m_workers;
         static std::vector<std::unique_ptr<std::thread>> m_threads;
 
         static std::queue<std::shared_ptr<Job>> m_jobs;

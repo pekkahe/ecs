@@ -7,7 +7,7 @@
 
 using namespace wip;
 
-std::vector<std::shared_ptr<Worker>> Scheduler::m_allWorkers;
+std::vector<std::shared_ptr<Worker>> Scheduler::m_workers;
 std::vector<std::unique_ptr<std::thread>> Scheduler::m_threads;
 std::queue<std::shared_ptr<Job>> Scheduler::m_jobs;
 std::queue<std::shared_ptr<Worker>> Scheduler::m_freeWorkers;
@@ -19,26 +19,26 @@ void Scheduler::init(int workerThreads)
     for (int i = 0; i < workerThreads; ++i)
     {
         auto w = std::make_shared<Worker>();
-        m_allWorkers.emplace_back(w);
-
-        auto t = std::make_unique<std::thread>(&Worker::run, std::move(w));
+        auto t = std::make_unique<std::thread>(&Worker::run, w);
+        
         m_threads.emplace_back(std::move(t));
+        m_workers.emplace_back(std::move(w));
     }
 }
 
 void Scheduler::stop()
 {
-    for (auto& w : m_allWorkers)
+    for (auto& w : m_workers)
     {
         w->stop();
     }
-    std::cout << "Stopped workers.\n";
+    std::cout << "Stopped workers." << std::endl;
 
     for (auto& t : m_threads)
     {
         t->join();
     }
-    std::cout << "Joined threads.\n";
+    std::cout << "Joined threads." << std::endl;
 }
 
 void Scheduler::addJob(std::shared_ptr<Job> job)
@@ -47,7 +47,7 @@ void Scheduler::addJob(std::shared_ptr<Job> job)
 
     // Assign the job to a free worker, if any available,
     // or add the job to the work queue
-    if (!m_freeWorkers.empty()) 
+    if (!m_freeWorkers.empty())
     {
         m_freeWorkers.front()->setWork(std::move(job));
 

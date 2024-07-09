@@ -3,86 +3,167 @@
 #include <core/ecs/Table.hpp>
 
 #include <typeindex>
+#include <mutex>
+#include <utility>
+#include <array>
 
-namespace ecs
-{
-    class Scheduler
-    {
-    public:
-        class Job
-        {
-            friend class Scheduler;
+// namespace ecs
+// {
+//     struct Schedule;
 
-        public:
-            template <typename Resource>
-            Job& read();
+//     class Scheduler
+//     {
+//     public:
+//         class Job
+//         {
+//             friend class Scheduler;
 
-            template <typename Resource>
-            Job& readWrite(TableRef<Resource> resource);
+//         public:
+//             template <typename Resource>
+//             Job& read();
 
-            template <typename Resource>
-            Job& readWrite(Resource)
-            {
-                return *this;
-            }
+//             template <typename Resource>
+//             Job& readWrite(TableRef<Resource> resource);
 
-            Job& require(Job&)
-            {
-                return *this;
-            }
+//             template <typename Resource>
+//             Job& readWrite(Resource);
 
-            template <typename Function>
-            void onExecute(Function)
-            {
-            }
+//             Job& require(Job&);
 
-        private:
-            void execute()
-            {
-            }
+//             template <typename Function>
+//             void onExecute(Function);
 
-        private:
-            std::unordered_map<std::type_index, bool> m_readResources;
-            std::unordered_map<std::type_index, bool> m_readWriteResources;
-        };
+//             const char* name() const;
 
-    public:
-        Job& job()
-        {
-            m_jobs.emplace_back(std::make_unique<Job>());
+//         private:
+//             void execute();
 
-            return *m_jobs.back().get();
-        }
+//         private:
+//             std::unordered_map<std::type_index, bool> m_readResources;
+//             std::unordered_map<std::type_index, bool> m_readWriteResources;
+//         };
 
-        void execute()
-        {
-            for (auto&& job : m_jobs)
-            {
-                job->execute();
-            }
+//     public:
+//         Job& addJob()
+//         {
+//             m_jobs.emplace_back(std::make_unique<Job>());
+//             return *m_jobs.back().get();
+//         }
 
-            m_jobs.clear();
-        }
+//         Schedule sort();
 
-    private:
-        std::vector<std::unique_ptr<Job>> m_jobs;
-    };
+//         // written first
+//         // read last
+//         // topological sort
+//         // error if any vertex unreachable
+//         // how to parallelize?
+//         // - iterate over vertices
+//         // - 
 
-    template <typename Resource>
-    inline Scheduler::Job& Scheduler::Job::read()
-    {
-        std::type_index typeId(typeid(Resource));
-        assert(!m_readWriteResources.count(typeId) && "Resource already declared as 'readWrite'");
-        m_readResources[typeId] = true;
-        return *this;
-    }
+//         void execute(const Schedule& schedule)
+//         {
+//             auto todo = graph.roots();
+            
+//             for (auto& job : todo)
+//             {
+//                 worker = workers.pop();
+//                 worker.start(job);
 
-    template <typename Resource>
-    inline Scheduler::Job& Scheduler::Job::readWrite(TableRef<Resource> resource)
-    {
-        std::type_index typeId(typeid(Resource));
-        assert(!m_readResources.count(typeId) && "Resource already declared as 'read'");
-        m_readWriteResources[typeId] = true;
-        return *this;
-    }
-}
+//                 if (job.completed())
+//                 {
+//                     next = graph.outgoing(job);
+//                 }
+//             }
+
+//             for (auto& job : pending)
+//             {
+
+//             }
+
+//             ///
+
+//             for (auto ptr = schedule.begin(); ptr < schedule.end(); )
+//             {
+//                 auto& group = *ptr;
+//                 Schedule::JobGroup pending;
+
+//                 for (auto& job : group)
+//                 {
+//                     if (job.pending())
+//                     {
+//                         pending.emplace_back(job);
+//                     }
+
+//                     if (!workers.empty())
+//                     {
+//                         worker = workers.pop();
+//                         worker.assign(job);
+//                         continue;
+//                     }
+
+//                     if (workSelf)
+//                     {
+//                         job->execute();
+//                     }
+
+//                     if (job.completed())
+//                     {
+//                         worker = job->worker().free();
+//                         workers.emplace_back(worker);
+//                     }
+//                 }
+
+//                 if (!pending.empty())
+//                 {
+//                     ptr++;
+//                 }
+//             }
+//         }
+
+//     private:
+//         std::vector<std::unique_ptr<Job>> m_jobs;
+//     };
+
+//     template <typename Resource>
+//     inline Scheduler::Job& Scheduler::Job::read()
+//     {
+//         std::type_index typeId(typeid(Resource));
+//         assert(!m_readWriteResources.count(typeId) && "Resource already declared as 'readWrite'");
+//         m_readResources[typeId] = true;
+//         return *this;
+//     }
+
+//     template <typename Resource>
+//     inline Scheduler::Job& Scheduler::Job::readWrite(TableRef<Resource> resource)
+//     {
+//         std::type_index typeId(typeid(Resource));
+//         assert(!m_readResources.count(typeId) && "Resource already declared as 'read'");
+//         m_readWriteResources[typeId] = true;
+//         return *this;
+//     }
+
+//     class JobGraph
+//     {
+//     public:
+//         using Job = Scheduler::Job;
+//         using JobPtr = Job*;
+//         using Vertex = JobPtr;
+
+//         JobGraph(const std::vector<JobPtr>& jobs)
+//         {
+//         }
+
+//         void addEdge(Vertex a, Vertex b);
+
+//         std::vector<Vertex> incoming(Vertex v);
+//         std::vector<Vertex> outgoing(Vertex v);
+//         std::vector<Vertex> roots(); // Those with incoming.empty()
+
+//     private:
+//         size_t indexOf(Vertex v);
+//         bool hasEdge(Vertex a, Vertex b); // ?
+
+//         std::unordered_map<const char*, size_t> indexMap;
+//         std::vector<std::vector<Vertex>> adjacencyList;
+//     };
+// }

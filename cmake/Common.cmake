@@ -20,14 +20,16 @@ endfunction()
 function(target_copy_files TARGET_NAME SOURCE_DIR DEST_DIR)
     file(GLOB SOURCE_FILES "${CMAKE_SOURCE_DIR}/${SOURCE_DIR}/*.*")
     foreach(_SOURCE_FILE IN ITEMS ${SOURCE_FILES})
-        #file(COPY ${_SOURCE_FILE} DESTINATION ${DEST_DIR})
+        ## file(COPY ${_SOURCE_FILE} DESTINATION ${DEST_DIR})
         cmake_path(GET _SOURCE_FILE FILENAME _FILENAME)
-        set(_DEST_FILE "${CMAKE_CURRENT_BINARY_DIR}/${DEST_DIR}/${_FILENAME}")
+        set(_DEST_FILE "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${DEST_DIR}/${_FILENAME}")
         add_custom_command(
             OUTPUT ${_DEST_FILE}
             COMMAND ${CMAKE_COMMAND} -E copy ${_SOURCE_FILE} ${_DEST_FILE}
             VERBATIM)
         target_sources(${TARGET_NAME} PRIVATE ${_DEST_FILE})
+
+        message("Copying \"${_SOURCE_FILE}\" to \"${_DEST_FILE}\"")
     endforeach()
 endfunction()
 

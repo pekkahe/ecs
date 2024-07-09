@@ -18,7 +18,7 @@ TransformSystem::~TransformSystem()
 {
 }
 
-void TransformSystem::schedule(Scheduler&)
+void TransformSystem::schedule(/* Scheduler& */)
 {
     // TODO: Scheduler
     //query()
@@ -35,7 +35,7 @@ void TransformSystem::schedule(Scheduler&)
     //});
 
     //auto& translateCamera = scheduler
-    //    .job()
+    //    .addJob()
     //    .read<Updated>()
     //    .read<CameraControl>()
     //    .readWrite<Transform>(m_transformTable);
