@@ -147,19 +147,21 @@ namespace ecs
                 table);
         }
 
+        // TODO: Shareable function
         template <size_t... Is, typename Tuple, typename F>
-        void forEach(std::index_sequence<Is...>, Tuple&& tuple, F&& f) 
+        static void forEach(std::index_sequence<Is...>, Tuple&& tuple, F&& f) 
         {
             // Unpack 'tuple' and execute 'f' for each value
             doInOrder([&] { f(std::get<Is>(std::forward<Tuple>(tuple))); }...);
         }
 
+        // TODO: Shareable function
         template <typename... F>
-        void doInOrder(F&&... f)
+        static void doInOrder(F&&... f)
         {
             // Use comma operator to call each function in parameter pack
-            int unused[] = { 0, ((void) std::forward<F>(f)(), 0)... };
-            (void) unused; // Prevent warning
+            [[maybe_unused]] int unused[] = { 0, ((void) std::forward<F>(f)(), 0)... };
+            // (void) unused; // Prevent warning
         }
 
         template <typename F, size_t... Is>

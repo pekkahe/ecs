@@ -22,8 +22,7 @@ void Worker::run()
         if (m_ready)
         {
             m_ready = false;
-            m_job->process();
-            m_job->finish();
+            m_job->run();
         }
 
         // Tell the scheduler to add us to the free worker pool

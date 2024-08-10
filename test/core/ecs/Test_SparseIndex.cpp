@@ -1,9 +1,12 @@
-#include <Common.hpp>
+// #include <Common.hpp>
 
 #include <core/Time.hpp>
 #include <core/ecs/SparseIndex.hpp>
 
 #include <array>
+
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 using namespace ecs;
 using namespace testing;

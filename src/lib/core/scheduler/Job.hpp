@@ -5,13 +5,6 @@ namespace wip
     class Job
     {
     public:
-        virtual void process() = 0;
-        virtual void finish() = 0;
-    };
-
-    class Contract
-    {
-        void readResources();
-        void writeResources();
+        virtual void run() = 0;
     };
 }

@@ -1,4 +1,6 @@
-#include <Common.hpp>
+// #include <test/Common.hpp>
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 int main(int argc, char **argv) 
 {

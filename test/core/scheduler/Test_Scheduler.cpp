@@ -1,4 +1,4 @@
-#include <Common.hpp>
+// #include <Common.hpp>
 
 #include <core/scheduler/Scheduler.hpp>
 
@@ -6,35 +6,31 @@
 #include <condition_variable>
 #include <mutex>
 
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 using namespace wip;
 
-std::condition_variable cv;
-std::mutex mutex;
+// TODO: Move to scope
+std::condition_variable test_cv;
 
 class TestJob : public Job 
 {
 public:
-    void process() override;
-    void finish() override;
+    void run() override;
 
-    bool processed = false;
-    bool finished = false;
+    bool completed = false;
 };
 
-void TestJob::process()
+void TestJob::run()
 {
-    processed = true;
+    completed = true;
+    test_cv.notify_all();
 }
 
-void TestJob::finish()
+TEST(Scheduler, Legacy)
 {
-    finished = true;
-
-    cv.notify_all();
-}
-
-TEST(Scheduler, Test)
-{
+    std::mutex mutex;
     std::unique_lock<std::mutex> lock(mutex);
 
     Scheduler::init(1);
@@ -43,12 +39,11 @@ TEST(Scheduler, Test)
 
     Scheduler::addJob(job);
     
-    cv.wait_for(lock, std::chrono::seconds(1));
+    test_cv.wait_for(lock, std::chrono::seconds(1));
 
     Scheduler::stop();
 
-    ASSERT_EQ(true, job->processed);
-    ASSERT_EQ(true, job->finished);
+    ASSERT_TRUE(job->completed);
 }
 
 //TEST(Scheduler, Test)

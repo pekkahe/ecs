@@ -1,16 +1,19 @@
-#include <Common.hpp>
+// #include <Common.hpp>
+#include <test/core/ecs/Components.hpp>
 
 #include <core/ecs/Table.hpp>
-#include <core/ecs/TestComponents.hpp>
+
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 using namespace ecs;
 
 TEST(Table, Assign)
 {
-    Table<BoolComponent> table;
+    Table<test::BoolComponent> table;
     EntityId id = 100u;
 
-    table.assign(id, BoolComponent(true));
+    table.assign(id, test::BoolComponent{true});
 
     EXPECT_EQ(1u, table.size());
     EXPECT_TRUE(table[id] != nullptr);
@@ -19,10 +22,10 @@ TEST(Table, Assign)
 
 TEST(Table, Remove)
 {
-    Table<BoolComponent> table;
+    Table<test::BoolComponent> table;
     EntityId id = 100u;
 
-    table.assign(id, BoolComponent(true));
+    table.assign(id, test::BoolComponent{true});
 
     EXPECT_EQ(1u, table.size());
     EXPECT_TRUE(table[id] != nullptr);

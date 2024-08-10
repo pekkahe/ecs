@@ -3,7 +3,6 @@
 #include <core/Core.hpp>
 #include <core/ecs/Database.hpp>
 #include <core/ecs/Query.hpp>
-#include <core/ecs/Scheduler.hpp>
 
 // Generate function definition for a component assignment function.
 #define ADD_COMPONENT_FUNCTION(ComponentName, TableField) \

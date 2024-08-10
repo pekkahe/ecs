@@ -1,8 +1,12 @@
-#include <Common.hpp>
+// #include <Common.hpp>
+
+#include <test/core/ecs/Components.hpp>
 
 #include <core/ecs/Database.hpp>
 #include <core/ecs/Query.hpp>
-#include <core/ecs/TestComponents.hpp>
+
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 using namespace ecs;
 
@@ -10,17 +14,17 @@ TEST(Query, IsExecutedOnceWhenComponentMatches)
 {
     Database database;
     
-    auto& table = database.createTable<BoolComponent>();
+    auto& table = database.createTable<test::BoolComponent>();
     auto id = database.createEntity();
 
-    table.assign(id, BoolComponent(true));
+    table.assign(id, test::BoolComponent{true});
 
     using ResultType = std::pair<EntityId, bool>;
     std::vector<ResultType> results;
 
     query(database)
-        .hasComponent<BoolComponent>()
-        .execute([&](EntityId id, const BoolComponent& c)
+        .hasComponent<test::BoolComponent>()
+        .execute([&](EntityId id, const test::BoolComponent& c)
     {
         results.emplace_back(std::make_pair(id, c.value));
     });
@@ -34,28 +38,28 @@ TEST(Query, IsExecutedOnceWhenAllComponentsMatch)
 {
     Database database;
 
-    auto& table1 = database.createTable<BoolComponent>();
-    auto& table2 = database.createTable<NumberComponent>();
-    auto& table3 = database.createTable<TextComponent>();
+    auto& table1 = database.createTable<test::BoolComponent>();
+    auto& table2 = database.createTable<test::NumberComponent>();
+    auto& table3 = database.createTable<test::TextComponent>();
 
     auto id = database.createEntity();
 
-    table1.assign(id, BoolComponent(true));
-    table2.assign(id, NumberComponent(10));
-    table3.assign(id, TextComponent("id"));
+    table1.assign(id, test::BoolComponent{true});
+    table2.assign(id, test::NumberComponent{10});
+    table3.assign(id, test::TextComponent{"id"});
 
     using ResultType = std::tuple<EntityId, bool, int, std::string>;
     std::vector<ResultType> results;
 
     query(database)
-        .hasComponent<BoolComponent>()
-        .hasComponent<NumberComponent>()
-        .hasComponent<TextComponent>()
+        .hasComponent<test::BoolComponent>()
+        .hasComponent<test::NumberComponent>()
+        .hasComponent<test::TextComponent>()
         .execute([&](
             EntityId id, 
-            const BoolComponent& c1,
-            const NumberComponent& c2,
-            const TextComponent& c3)
+            const test::BoolComponent& c1,
+            const test::NumberComponent& c2,
+            const test::TextComponent& c3)
     {
         results.emplace_back(std::make_tuple(
             id, 
@@ -75,32 +79,32 @@ TEST(Query, IsExecutedOnceForEachEntity)
 {
     Database database;
 
-    auto& table1 = database.createTable<BoolComponent>();
-    auto& table2 = database.createTable<NumberComponent>();
-    auto& table3 = database.createTable<TextComponent>();
+    auto& table1 = database.createTable<test::BoolComponent>();
+    auto& table2 = database.createTable<test::NumberComponent>();
+    auto& table3 = database.createTable<test::TextComponent>();
 
     std::vector<EntityId> ids;
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
 
-    table1.assign(ids[0], BoolComponent(true));
-    table2.assign(ids[0], NumberComponent(10));
-    table3.assign(ids[0], TextComponent("id0"));
-    table2.assign(ids[1], NumberComponent(20));
-    table1.assign(ids[1], BoolComponent(false));
-    table1.assign(ids[2], BoolComponent(true));
-    table3.assign(ids[2], TextComponent("id2"));
+    table1.assign(ids[0], test::BoolComponent{true});
+    table2.assign(ids[0], test::NumberComponent{10});
+    table3.assign(ids[0], test::TextComponent{"id0"});
+    table2.assign(ids[1], test::NumberComponent{20});
+    table1.assign(ids[1], test::BoolComponent{false});
+    table1.assign(ids[2], test::BoolComponent{true});
+    table3.assign(ids[2], test::TextComponent{"id2"});
 
     {
         using ResultType = std::tuple<EntityId, bool>;
         std::vector<ResultType> results;
 
         query(database)
-            .hasComponent<BoolComponent>()
+            .hasComponent<test::BoolComponent>()
             .execute([&](
                 EntityId id,
-                const BoolComponent& c)
+                const test::BoolComponent& c)
         {
             results.emplace_back(std::make_tuple(
                 id,
@@ -121,12 +125,12 @@ TEST(Query, IsExecutedOnceForEachEntity)
         std::vector<ResultType> results;
 
         query(database)
-            .hasComponent<BoolComponent>()
-            .hasComponent<NumberComponent>()
+            .hasComponent<test::BoolComponent>()
+            .hasComponent<test::NumberComponent>()
             .execute([&](
                 EntityId id,
-                const BoolComponent& c1,
-                const NumberComponent& c2)
+                const test::BoolComponent& c1,
+                const test::NumberComponent& c2)
         {
             results.emplace_back(std::make_tuple(
                 id,
@@ -148,14 +152,14 @@ TEST(Query, IsExecutedOnceForEachEntity)
         std::vector<ResultType> results;
 
         query(database)
-            .hasComponent<BoolComponent>()
-            .hasComponent<NumberComponent>()
-            .hasComponent<TextComponent>()
+            .hasComponent<test::BoolComponent>()
+            .hasComponent<test::NumberComponent>()
+            .hasComponent<test::TextComponent>()
             .execute([&](
                 EntityId id,
-                const BoolComponent& c1,
-                const NumberComponent& c2,
-                const TextComponent& c3)
+                const test::BoolComponent& c1,
+                const test::NumberComponent& c2,
+                const test::TextComponent& c3)
         {
             results.emplace_back(std::make_tuple(
                 id,
@@ -176,26 +180,26 @@ TEST(Query, IdsForMatchingEntities)
 {
     Database database;
 
-    auto& table1 = database.createTable<BoolComponent>();
-    auto& table2 = database.createTable<NumberComponent>();
-    auto& table3 = database.createTable<TextComponent>();
+    auto& table1 = database.createTable<test::BoolComponent>();
+    auto& table2 = database.createTable<test::NumberComponent>();
+    auto& table3 = database.createTable<test::TextComponent>();
 
     std::vector<EntityId> ids;
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
 
-    table1.assign(ids[0], BoolComponent(true));
-    table2.assign(ids[0], NumberComponent(0));
-    table3.assign(ids[0], TextComponent(""));
-    table2.assign(ids[1], NumberComponent(0));
-    table1.assign(ids[1], BoolComponent(true));
-    table1.assign(ids[2], BoolComponent(true));
-    table3.assign(ids[2], TextComponent(""));
+    table1.assign(ids[0], test::BoolComponent{true});
+    table2.assign(ids[0], test::NumberComponent{0});
+    table3.assign(ids[0], test::TextComponent{""});
+    table2.assign(ids[1], test::NumberComponent{0});
+    table1.assign(ids[1], test::BoolComponent{true});
+    table1.assign(ids[2], test::BoolComponent{true});
+    table3.assign(ids[2], test::TextComponent{""});
 
     {
         auto results = query(database)
-            .hasComponent<BoolComponent>()
+            .hasComponent<test::BoolComponent>()
             .ids();
 
         ASSERT_EQ(3u, results.size());
@@ -206,8 +210,8 @@ TEST(Query, IdsForMatchingEntities)
 
     {
         auto results = query(database)
-            .hasComponent<BoolComponent>()
-            .hasComponent<NumberComponent>()
+            .hasComponent<test::BoolComponent>()
+            .hasComponent<test::NumberComponent>()
             .ids();
 
         ASSERT_EQ(2u, results.size());
@@ -217,9 +221,9 @@ TEST(Query, IdsForMatchingEntities)
 
     {
         auto results = query(database)
-            .hasComponent<BoolComponent>()
-            .hasComponent<NumberComponent>()
-            .hasComponent<TextComponent>()
+            .hasComponent<test::BoolComponent>()
+            .hasComponent<test::NumberComponent>()
+            .hasComponent<test::TextComponent>()
             .ids();
 
         ASSERT_EQ(1u,       results.size());
@@ -231,24 +235,24 @@ TEST(Query, FindComponentOfFirstMatchingEntity)
 {
     Database database;
 
-    auto& table1 = database.createTable<BoolComponent>();
-    auto& table2 = database.createTable<NumberComponent>();
-    database.createTable<TextComponent>();
+    auto& table1 = database.createTable<test::BoolComponent>();
+    auto& table2 = database.createTable<test::NumberComponent>();
+    database.createTable<test::TextComponent>();
 
     std::vector<EntityId> ids;
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
     ids.emplace_back(database.createEntity());
 
-    table1.assign(ids[0], BoolComponent(true));
-    table2.assign(ids[1], NumberComponent(10));
-    table1.assign(ids[1], BoolComponent(false));
-    table1.assign(ids[2], BoolComponent(false));
-    table2.assign(ids[2], NumberComponent(0));
+    table1.assign(ids[0], test::BoolComponent{true});
+    table2.assign(ids[1], test::NumberComponent{10});
+    table1.assign(ids[1], test::BoolComponent{false});
+    table1.assign(ids[2], test::BoolComponent{false});
+    table2.assign(ids[2], test::NumberComponent{0});
 
-    auto result1 = query(database).find<BoolComponent>();
-    auto result2 = query(database).find<NumberComponent>();
-    auto result3 = query(database).find<TextComponent>();
+    auto result1 = query(database).find<test::BoolComponent>();
+    auto result2 = query(database).find<test::NumberComponent>();
+    auto result3 = query(database).find<test::TextComponent>();
 
     ASSERT_TRUE(result1 != nullptr);
     EXPECT_EQ(true, result1->value);
@@ -261,9 +265,9 @@ TEST(Query, PerformanceTest)
 {
     Database database;
 
-    auto& table1 = database.createTable<BoolComponent>();
-    auto& table2 = database.createTable<NumberComponent>();
-    auto& table3 = database.createTable<TextComponent>();
+    auto& table1 = database.createTable<test::BoolComponent>();
+    auto& table2 = database.createTable<test::NumberComponent>();
+    auto& table3 = database.createTable<test::TextComponent>();
 
     size_t count = 2000u;
 
@@ -271,38 +275,38 @@ TEST(Query, PerformanceTest)
     for (size_t i = 0; i < count; ++i)
     { 
         ids.emplace_back(database.createEntity());
-        table1.assign(ids.back(), BoolComponent(true));
+        table1.assign(ids.back(), test::BoolComponent{true});
         
         ids.emplace_back(database.createEntity());
-        table1.assign(ids.back(), BoolComponent(false));
-        table2.assign(ids.back(), NumberComponent(10));
+        table1.assign(ids.back(), test::BoolComponent{false});
+        table2.assign(ids.back(), test::NumberComponent{10});
 
         ids.emplace_back(database.createEntity());
-        table1.assign(ids.back(), BoolComponent(true));
-        table3.assign(ids.back(), TextComponent("text"));
+        table1.assign(ids.back(), test::BoolComponent{true});
+        table3.assign(ids.back(), test::TextComponent{"text"});
 
         ids.emplace_back(database.createEntity());
-        table2.assign(ids.back(), NumberComponent(100));
-        table3.assign(ids.back(), TextComponent("text"));
+        table2.assign(ids.back(), test::NumberComponent{100});
+        table3.assign(ids.back(), test::TextComponent{"text"});
 
         ids.emplace_back(database.createEntity());
-        table1.assign(ids.back(), BoolComponent(false));
-        table2.assign(ids.back(), NumberComponent(1000));
-        table3.assign(ids.back(), TextComponent("text"));
+        table1.assign(ids.back(), test::BoolComponent{false});
+        table2.assign(ids.back(), test::NumberComponent{1000});
+        table3.assign(ids.back(), test::TextComponent{"text"});
     }
     
     size_t found = 0u;
     Timer timer = Timer::start();
 
     query(database)
-        .hasComponent<BoolComponent>()
-        .hasComponent<NumberComponent>()
-        .hasComponent<TextComponent>()
+        .hasComponent<test::BoolComponent>()
+        .hasComponent<test::NumberComponent>()
+        .hasComponent<test::TextComponent>()
         .execute([&](
             EntityId,
-            const BoolComponent&,
-            const NumberComponent&,
-            const TextComponent&) 
+            const test::BoolComponent&,
+            const test::NumberComponent&,
+            const test::TextComponent&) 
     {
         found++;
     });
